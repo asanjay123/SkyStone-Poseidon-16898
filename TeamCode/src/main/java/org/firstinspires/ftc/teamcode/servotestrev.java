@@ -9,7 +9,7 @@ import com.qualcomm.robotcore.util.Range;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-@TeleOp(name = "Servo Rev Contols", group = "rev")
+@TeleOp(name = "Servo Rev Contols", group = "test")
 /**
  * Main Class that holds the user control code.
  * Implements LinearOpMode
