@@ -31,7 +31,7 @@ public class TeleOps extends OpMode {
     @Override
     public void loop() {
 
-        drive = gamepad1.left_stick_y;  // Negative because the gamepad is weird
+        drive = -gamepad1.left_stick_y;  // Negative because the gamepad is weird
         strafe = gamepad1.left_stick_x;
         rotate = gamepad1.right_stick_x;
 

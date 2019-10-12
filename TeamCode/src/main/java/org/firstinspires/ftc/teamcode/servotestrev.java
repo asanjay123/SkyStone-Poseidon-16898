@@ -1,13 +1,8 @@
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
-import com.qualcomm.robotcore.util.Range;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 @TeleOp(name = "Servo Rev Contols", group = "test")
 /**
@@ -18,22 +13,41 @@ public class servotestrev extends OpMode {
 
 
     Servo   servo;
+    Servo servo1;
+    Servo servo2;
     double position;
 
     @Override
     public void init(){
         servo = hardwareMap.servo.get("servo");
-        position = .1;
+        servo1 = hardwareMap.servo.get("servo1");
+        servo2 = hardwareMap.servo.get("servo2");
+        position = 1;
+
+        servo1.setPosition(-.16);
+        servo2.setPosition(.02);
+
     }
 
     @Override
     public void loop() {
 
+        if (gamepad2.right_stick_y <=  -1 && gamepad2.right_stick_y < 0){
+            servo1.setPosition(servo1.getPosition() - .01);
+        }
+        if (gamepad2.right_stick_y <=  1 && gamepad2.right_stick_y > 0){
+            servo1.setPosition(servo1.getPosition() + .01);
+        }
+
+        telemetry.addData("Servo 1", servo1.getPosition());
+        telemetry.addData("Servo 2", servo2.getPosition());
+        telemetry.update();
+
         if (gamepad2.x){
             position = 0;
         }
         if (gamepad2.y){
-            position = .33;
+            position = .43;
         }
         if (gamepad2.b){
             position = .67;
@@ -42,5 +56,8 @@ public class servotestrev extends OpMode {
             position = 1;
         }
         servo.setPosition(position);
+
+
+
     }
 }
