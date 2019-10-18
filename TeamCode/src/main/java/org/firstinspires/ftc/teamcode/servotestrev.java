@@ -23,22 +23,23 @@ public class servotestrev extends OpMode {
         servo1 = hardwareMap.servo.get("servo1");
         servo2 = hardwareMap.servo.get("servo2");
         position = 1;
-
-        servo1.setPosition(-.16);
+        servo.setPosition(1);
+        servo1.setPosition(0.216);
         servo2.setPosition(.02);
+
 
     }
 
     @Override
     public void loop() {
-
+        /**
         if (gamepad2.right_stick_y <=  -1 && gamepad2.right_stick_y < 0){
             servo1.setPosition(servo1.getPosition() - .01);
         }
         if (gamepad2.right_stick_y <=  1 && gamepad2.right_stick_y > 0){
             servo1.setPosition(servo1.getPosition() + .01);
         }
-
+        */
         telemetry.addData("Servo 1", servo1.getPosition());
         telemetry.addData("Servo 2", servo2.getPosition());
         telemetry.update();

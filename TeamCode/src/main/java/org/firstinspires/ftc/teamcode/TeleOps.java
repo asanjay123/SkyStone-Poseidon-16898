@@ -41,9 +41,9 @@ public class TeleOps extends OpMode {
         double backRightPower = drive + strafe - rotate;
 
         frontLeft.setPower(frontLeftPower);
-        backLeft.setPower(backLeftPower);
+        backLeft.setPower(backLeftPower/0.71474);
         frontRight.setPower(frontRightPower);
-        backRight.setPower(backRightPower);
+        backRight.setPower(backRightPower/0.71474);
 
     }
 }
