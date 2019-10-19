@@ -31,19 +31,19 @@ public class TeleOps extends OpMode {
     @Override
     public void loop() {
 
-        drive = -gamepad1.left_stick_y;  // Negative because the gamepad is weird
-        strafe = gamepad1.left_stick_x;
-        rotate = gamepad1.right_stick_x;
+        drive = -gamepad1.right_stick_y;
+        strafe = gamepad1.right_stick_x;
+        rotate = -gamepad1.left_stick_x;
 
         double frontLeftPower = drive + strafe + rotate;
         double backLeftPower = drive - strafe + rotate;
         double frontRightPower = drive - strafe - rotate;
         double backRightPower = drive + strafe - rotate;
 
-        frontLeft.setPower(frontLeftPower);
-        backLeft.setPower(backLeftPower/0.71474);
-        frontRight.setPower(frontRightPower);
-        backRight.setPower(backRightPower/0.71474);
+        frontLeft.setPower(frontLeftPower/2);
+        backLeft.setPower(backLeftPower/0.71474/2);
+        frontRight.setPower(frontRightPower/2);
+        backRight.setPower(backRightPower/0.71474/2);
 
     }
 }
