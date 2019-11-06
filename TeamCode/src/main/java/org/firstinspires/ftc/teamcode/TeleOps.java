@@ -16,6 +16,8 @@ public class TeleOps extends OpMode {
     DcMotor frontRight;
     DcMotor backRight;
 
+    double nitro;
+
     @Override
     public void init(){
         frontLeft = hardwareMap.dcMotor.get("frontleft");
@@ -25,6 +27,8 @@ public class TeleOps extends OpMode {
 
         backLeft.setDirection(DcMotorSimple.Direction.REVERSE);
         frontLeft.setDirection(DcMotorSimple.Direction.REVERSE);
+
+        nitro = 2.0;
 
     }
 
@@ -40,10 +44,18 @@ public class TeleOps extends OpMode {
         double frontRightPower = drive - strafe - rotate;
         double backRightPower = drive + strafe - rotate;
 
-        frontLeft.setPower(frontLeftPower/2);
-        backLeft.setPower(backLeftPower/0.71474/2);
-        frontRight.setPower(frontRightPower/2);
-        backRight.setPower(backRightPower/0.71474/2);
+        frontLeft.setPower(frontLeftPower*0.71474/nitro);
+        backLeft.setPower(backLeftPower/nitro);
+        frontRight.setPower(frontRightPower*0.71474/nitro);
+        backRight.setPower(backRightPower/nitro);
 
+        if (gamepad1.a){
+            nitro = 1;
+        }
+        if (gamepad1.b){
+            nitro = 2;
+        }
+        telemetry.addData("Nitro Type: ", nitro);
+        telemetry.update();
     }
 }
