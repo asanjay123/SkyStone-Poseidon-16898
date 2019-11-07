@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.hardware.Servo;
 
 @TeleOp(name = "Teleops", group = "")
 public class TeleOps extends OpMode {
@@ -15,6 +16,11 @@ public class TeleOps extends OpMode {
     DcMotor backLeft;
     DcMotor frontRight;
     DcMotor backRight;
+    DcMotor armmotor;
+
+    Servo   servo;
+    Servo servo1;
+    Servo servo2;
 
     double nitro;
 
@@ -24,11 +30,20 @@ public class TeleOps extends OpMode {
         backLeft = hardwareMap.dcMotor.get("backleft");
         frontRight = hardwareMap.dcMotor.get("frontright");
         backRight = hardwareMap.dcMotor.get("backright");
+        armmotor = hardwareMap.dcMotor.get("arm");
 
         backLeft.setDirection(DcMotorSimple.Direction.REVERSE);
         frontLeft.setDirection(DcMotorSimple.Direction.REVERSE);
 
         nitro = 2.0;
+
+        servo = hardwareMap.servo.get("servo");
+        servo1 = hardwareMap.servo.get("servo1");
+        servo2 = hardwareMap.servo.get("servo2");
+        servo.setPosition(1);
+        servo1.setPosition(0.216);
+        servo2.setPosition(.02);
+
 
     }
 
@@ -55,6 +70,15 @@ public class TeleOps extends OpMode {
         if (gamepad1.b){
             nitro = 2;
         }
+
+        if (gamepad1.dpad_up){
+            armmotor.setPower(0.5);
+        }else if (gamepad1.dpad_down){
+            armmotor.setPower(-0.5);
+        }else{
+            armmotor.setPower(0);
+        }
+
         telemetry.addData("Nitro Type: ", nitro);
         telemetry.update();
     }

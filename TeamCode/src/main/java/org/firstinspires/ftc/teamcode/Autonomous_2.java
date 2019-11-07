@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-@Autonomous(name = "Autonomous 1", group = "")
+@Autonomous(name = "Autonomous 2", group = "")
 public class Autonomous_2 extends LinearOpMode {
 
     DcMotor frontLeft;
