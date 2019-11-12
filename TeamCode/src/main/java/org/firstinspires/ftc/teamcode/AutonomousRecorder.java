@@ -18,7 +18,6 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.Servo;
 
 @Autonomous(name = "RECORD", group = "")
-@Disabled
 public class AutonomousRecorder extends OpMode {
     File file = new File(Environment.getExternalStorageDirectory() + "/" + File.separator + "movements.txt");
 
@@ -94,16 +93,18 @@ public class AutonomousRecorder extends OpMode {
     public void loop() {
 
 
-        if((System.currentTimeMillis() - currentTime) > times.get(tIndex)) {
+        if((System.currentTimeMillis() - currentTime) >= times.get(tIndex)) {
 
             blIndex+=1;
-            blIndex+=1;
+            brIndex+=1;
+            flIndex+=1;
             frIndex+=1;
             tIndex+=1;
             if(tIndex > (times.size()-1)) {
 
-                return;
 
+
+                int x = 5/0;
             }
 
             currentTime = System.currentTimeMillis();
@@ -112,9 +113,9 @@ public class AutonomousRecorder extends OpMode {
         }
 
         backLeft.setPower(backLeftList.get(blIndex));
-        backRight.setPower(backLeftList.get(brIndex));
-        frontLeft.setPower(backLeftList.get(flIndex));
-        frontRight.setPower(backLeftList.get(frIndex));
+        backRight.setPower(backRightList.get(brIndex));
+        frontLeft.setPower(frontLeftList.get(flIndex));
+        frontRight.setPower(frontRightList.get(frIndex));
 
     }
 

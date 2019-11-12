@@ -16,7 +16,6 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 @TeleOp(name = "TeleopsRecorder", group = "")
-@Disabled
 public class MovementRecorder extends OpMode {
     File file = new File(Environment.getExternalStorageDirectory() + "/" + File.separator + "movements.txt");
 
