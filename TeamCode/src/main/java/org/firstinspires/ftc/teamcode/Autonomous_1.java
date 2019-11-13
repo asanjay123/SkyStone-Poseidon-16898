@@ -17,6 +17,7 @@ public class Autonomous_1 extends LinearOpMode {
     double COUNTS_PER_MOTOR_REV;
     double     DRIVE_GEAR_REDUCTION;
     double     WHEEL_DIAMETER_INCHES;
+
     double     COUNTS_PER_INCH;
     ElapsedTime runtime = new ElapsedTime();
 
@@ -28,7 +29,7 @@ public class Autonomous_1 extends LinearOpMode {
 
 
         initValues();
-        driveWithEncoder(.2, 24, 24, 60);
+        driveWithEncoder(.25, 24, 24, 30);
 
 
 
@@ -47,9 +48,9 @@ public class Autonomous_1 extends LinearOpMode {
 
 
 
-        COUNTS_PER_MOTOR_REV    = 1440 ;
-        DRIVE_GEAR_REDUCTION    = 2.0 ;
-        WHEEL_DIAMETER_INCHES   = 4.0 ;
+        COUNTS_PER_MOTOR_REV    = 537.6;
+        DRIVE_GEAR_REDUCTION    = 19.2 ;
+        WHEEL_DIAMETER_INCHES   = 3.93701 ;
         COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) / (WHEEL_DIAMETER_INCHES * 3.1415);
 
     }
@@ -62,35 +63,38 @@ public class Autonomous_1 extends LinearOpMode {
         int newLeftTarget;
         int newRightTarget;
 
-        if (opModeIsActive()) {
+
+
+
 
 
 
             newLeftTarget = backLeft.getCurrentPosition() + (int)(leftInches * COUNTS_PER_INCH);
             newRightTarget = backRight.getCurrentPosition() + (int)(rightInches * COUNTS_PER_INCH);
+
+
             backLeft.setTargetPosition(newLeftTarget);
             backRight.setTargetPosition(newRightTarget);
-
-            backLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            backRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
+        backLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        backRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             runtime.reset();
-            backLeft.setPower(Math.abs(speed)*.71);
-            backRight.setPower(Math.abs(speed)*.71);
+            backLeft.setPower(Math.abs(speed));
+            backRight.setPower(Math.abs(speed));
             frontLeft.setPower(Math.abs(speed));
             frontRight.setPower(Math.abs(speed));
 
 
-
-            while (opModeIsActive() &&
-                    (runtime.seconds() < timeoutS) &&
-                    (backLeft.isBusy() && backRight.isBusy())) {
+            while (
+                      backLeft.getCurrentPosition() < newLeftTarget &&
+                backRight.getCurrentPosition() < newRightTarget )
+                           {
 
                 telemetry.addData("Path1",  "Running to %7d :%7d", newLeftTarget,  newRightTarget);
                 telemetry.addData("Path2",  "Running at %7d :%7d",
                         backLeft.getCurrentPosition(),
                         backRight.getCurrentPosition());
                 telemetry.update();
+
             }
 
             backLeft.setPower(0);
@@ -102,7 +106,7 @@ public class Autonomous_1 extends LinearOpMode {
             backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
             //  sleep(250);
-        }
+
     }
 
 }
