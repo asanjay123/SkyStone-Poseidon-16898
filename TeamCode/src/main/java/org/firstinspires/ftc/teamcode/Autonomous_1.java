@@ -24,14 +24,9 @@ public class Autonomous_1 extends LinearOpMode {
     @Override
     public void runOpMode(){
 
-
-
-
-
         initValues();
-        driveWithEncoder(.25, 24, 24, 30);
-
-
+        driveWithEncoder(.2, .1, .1, 30);
+        driveWithStrafe(0, 0, 0, 0);
 
 
     }
@@ -42,13 +37,25 @@ public class Autonomous_1 extends LinearOpMode {
         frontRight = hardwareMap.dcMotor.get("frontright");
         backRight = hardwareMap.dcMotor.get("backright");
 
-        backLeft.setDirection(DcMotorSimple.Direction.REVERSE);
-        frontLeft.setDirection(DcMotorSimple.Direction.REVERSE);
+        backRight.setDirection(DcMotorSimple.Direction.REVERSE);
+        frontRight.setDirection(DcMotorSimple.Direction.REVERSE);
+
+
+        double drive = 0;
+        double strafe = 1;
+        double rotate = 0;
+
+
+        double frontLeftPower = drive + strafe - rotate;
+        double backLeftPower = drive - strafe - rotate;
+        double frontRightPower = drive - strafe + rotate;
+        double backRightPower = drive + strafe + rotate;
 
 
 
 
-        COUNTS_PER_MOTOR_REV    = 537.6;
+
+        COUNTS_PER_MOTOR_REV    = 28;
         DRIVE_GEAR_REDUCTION    = 19.2 ;
         WHEEL_DIAMETER_INCHES   = 3.93701 ;
         COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) / (WHEEL_DIAMETER_INCHES * 3.1415);
@@ -56,6 +63,55 @@ public class Autonomous_1 extends LinearOpMode {
     }
 
 
+    public void driveWithStrafe(double speed, double strafeLeft, double strafeRight, double rotate) {
+        int newLeftTarget;
+        int newRightTarget;
+
+
+
+
+
+
+
+        newLeftTarget = backLeft.getCurrentPosition() + (int)(strafeLeft * COUNTS_PER_INCH);
+        newRightTarget = backRight.getCurrentPosition() + (int)(strafeRight * COUNTS_PER_INCH);
+
+
+        backLeft.setTargetPosition(newLeftTarget);
+        backRight.setTargetPosition(newRightTarget);
+        backLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        backRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        runtime.reset();
+        backLeft.setPower(Math.abs(speed));
+        backRight.setPower(Math.abs(speed));
+        frontLeft.setPower(Math.abs(speed));
+        frontRight.setPower(Math.abs(speed));
+
+
+        while (
+                backLeft.getCurrentPosition() < newLeftTarget &&
+                        backRight.getCurrentPosition() < newRightTarget )
+        {
+
+            telemetry.addData("Path1",  "Running to %7d :%7d", newLeftTarget,  newRightTarget);
+            telemetry.addData("Path2",  "Running at %7d :%7d",
+                    backLeft.getCurrentPosition(),
+                    backRight.getCurrentPosition());
+            telemetry.update();
+
+        }
+
+        backLeft.setPower(0);
+        backRight.setPower(0);
+        frontLeft.setPower(0);
+        frontRight.setPower(0);
+
+        backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+        //  sleep(250);
+
+    }
 
     public void driveWithEncoder(double speed,
                              double leftInches, double rightInches,
@@ -75,8 +131,8 @@ public class Autonomous_1 extends LinearOpMode {
 
             backLeft.setTargetPosition(newLeftTarget);
             backRight.setTargetPosition(newRightTarget);
-        backLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        backRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            backLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            backRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             runtime.reset();
             backLeft.setPower(Math.abs(speed));
             backRight.setPower(Math.abs(speed));

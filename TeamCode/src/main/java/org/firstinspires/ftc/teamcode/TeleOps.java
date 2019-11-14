@@ -16,12 +16,13 @@ public class TeleOps extends OpMode {
     DcMotor backLeft;
     DcMotor frontRight;
     DcMotor backRight;
-    DcMotor armmotor;
+    //DcMotor armmotor;
 
     Servo   servo;
     Servo servo1;
     Servo servo2;
     Servo hook;
+    double position;
 
     double nitro;
 
@@ -31,12 +32,13 @@ public class TeleOps extends OpMode {
         backLeft = hardwareMap.dcMotor.get("backleft");
         frontRight = hardwareMap.dcMotor.get("frontright");
         backRight = hardwareMap.dcMotor.get("backright");
-        armmotor = hardwareMap.dcMotor.get("arm");
+
+        //armmotor = hardwareMap.dcMotor.get("arm");
         hook = hardwareMap.servo.get("hook");
 
 
-        backLeft.setDirection(DcMotorSimple.Direction.REVERSE);
-        frontLeft.setDirection(DcMotorSimple.Direction.REVERSE);
+        frontRight.setDirection(DcMotorSimple.Direction.REVERSE);
+        backRight.setDirection(DcMotorSimple.Direction.REVERSE);
 
         nitro = 2.0;
 
@@ -47,23 +49,24 @@ public class TeleOps extends OpMode {
         servo1.setPosition(0.216);
         servo2.setPosition(.02);
 
-
+        position = 1;
     }
 
     @Override
     public void loop() {
-        hook.setPosition(0);
 
-        if(gamepad2.x) {
 
-            hook.setPosition(0.25);
+
+        if(gamepad1.x) {
+
+            hook.setPosition(0.3);
 
         }
 
 
-        if(gamepad2.y) {
+        if(gamepad1.y) {
 
-            hook.setPosition(0);
+            hook.setPosition(0.65);
 
         }
 
@@ -72,14 +75,14 @@ public class TeleOps extends OpMode {
         strafe = gamepad1.right_stick_x;
         rotate = -gamepad1.left_stick_x;
 
-        double frontLeftPower = drive + strafe + rotate;
-        double backLeftPower = drive - strafe + rotate;
-        double frontRightPower = drive - strafe - rotate;
-        double backRightPower = drive + strafe - rotate;
+        double frontLeftPower = drive + strafe - rotate;
+        double backLeftPower = drive - strafe - rotate;
+        double frontRightPower = drive - strafe + rotate;
+        double backRightPower = drive + strafe + rotate;
 
-        frontLeft.setPower(frontLeftPower*0.71474/nitro);
+        frontLeft.setPower(frontLeftPower/nitro);
         backLeft.setPower(backLeftPower/nitro);
-        frontRight.setPower(frontRightPower*0.71474/nitro);
+        frontRight.setPower(frontRightPower/nitro);
         backRight.setPower(backRightPower/nitro);
 
         if (gamepad1.a){
@@ -89,7 +92,7 @@ public class TeleOps extends OpMode {
             nitro = 2;
         }
 
-
+        /**
         if (gamepad1.dpad_up){
             armmotor.setPower(0.5);
         }else if (gamepad1.dpad_down){
@@ -97,6 +100,58 @@ public class TeleOps extends OpMode {
         }else{
             armmotor.setPower(0);
         }
+*/
+
+
+        if (gamepad2.x){
+            position = 0;
+        }
+        if (gamepad2.y){
+            position = .43;
+        }
+        if (gamepad2.b){
+            position = .67;
+        }
+        if (gamepad2.a){
+            position = 1;
+        }
+        servo.setPosition(position);
+
+        if (gamepad2.dpad_up){
+            try{
+                servo1.setPosition(servo1.getPosition() + .01);
+            }catch(Exception e){
+                int x = 5;
+            }
+
+        }
+        if (gamepad2.dpad_down){
+            try{
+                servo1.setPosition(servo1.getPosition() - .01);
+            }catch(Exception e){
+                int x = 5;
+            }
+        }
+
+        if (gamepad2.dpad_left){
+            try{
+                servo2.setPosition(servo2.getPosition() + .01);
+            }catch(Exception e){
+                int x = 5;
+            }
+
+        }
+        if (gamepad2.dpad_right){
+            try{
+                servo2.setPosition(servo2.getPosition() - .01);
+            }catch(Exception e){
+                int x = 5;
+            }
+        }
+
+
+
+
 
         telemetry.addData("Nitro Type: ", nitro);
         telemetry.update();
