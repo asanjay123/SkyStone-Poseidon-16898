@@ -16,7 +16,7 @@ public class TeleOps extends OpMode {
     DcMotor backLeft;
     DcMotor frontRight;
     DcMotor backRight;
-    //DcMotor armmotor;
+    DcMotor armmotor;
 
     Servo   servo;
     Servo servo1;
@@ -33,7 +33,7 @@ public class TeleOps extends OpMode {
         frontRight = hardwareMap.dcMotor.get("frontright");
         backRight = hardwareMap.dcMotor.get("backright");
 
-        //armmotor = hardwareMap.dcMotor.get("arm");
+        armmotor = hardwareMap.dcMotor.get("arm");
         hook = hardwareMap.servo.get("hook");
 
 
@@ -92,7 +92,7 @@ public class TeleOps extends OpMode {
             nitro = 2;
         }
 
-        /**
+
         if (gamepad1.dpad_up){
             armmotor.setPower(0.5);
         }else if (gamepad1.dpad_down){
@@ -100,8 +100,6 @@ public class TeleOps extends OpMode {
         }else{
             armmotor.setPower(0);
         }
-*/
-
 
         if (gamepad2.x){
             position = 0;
