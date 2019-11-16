@@ -28,22 +28,28 @@ public class Autonomous_1 extends LinearOpMode {
     public void runOpMode(){
 
         /**Initialize autonomous
-         * Strafe to the corner
-         * Move backward
+         * Strafe a certain measurement
+         * Move backward about 4 ft
          * Latch onto  platform
+         * drive straight
          * Drive right (Forward straight, turn right)[not rotate]
          * Drive back after platform is rotated 90 degrees
          * Unlatch
          * Drive forward and stop under bar
          */
         initValues();
-        driveWithStrafe(0, 0, 0, 0);
-        driveWithEncoder(.2, -0.1, -0.1, 30);
-        hook.setPosition(0.3);
-        driveWithEncoder(.2, 0.1, 0.1, 30);
-        driveWithEncoder(.2, -0.1, -0.1, 30);
         hook.setPosition(0.65);
-        driveWithEncoder(0.2, .1, .1, 30);
+        driveWithStrafe(.1, -200,0, 0);
+
+        /**
+         driveWithEncoder(.2, -48, -48, 30);
+         hook.setPosition(0.3);
+         driveWithEncoder(.2, 24, 24, 30);
+
+         */
+
+        //hook.setPosition(0.65);
+        //driveWithStrafe(0,5, 0);
 
 
 
@@ -83,13 +89,14 @@ public class Autonomous_1 extends LinearOpMode {
 
 
     //Method to strafe
-    public void driveWithStrafe(double speed, double strafeLeft, double strafeRight, double rotate) {
+    public void driveWithStrafe(double speed, double strafeRight, double strafeLeft, double rotate) {
+
         int newLeftTarget;
         int newRightTarget;
 
 
-        newLeftTarget = backLeft.getCurrentPosition() + (int)(strafeLeft * COUNTS_PER_INCH);
-        newRightTarget = backRight.getCurrentPosition() + (int)(strafeRight * COUNTS_PER_INCH);
+        newLeftTarget = backLeft.getCurrentPosition() + (int)(strafeRight * COUNTS_PER_INCH);
+        newRightTarget = backRight.getCurrentPosition() + (int)(strafeLeft * COUNTS_PER_INCH);
 
 
         backLeft.setTargetPosition(newLeftTarget);
@@ -97,10 +104,24 @@ public class Autonomous_1 extends LinearOpMode {
         backLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         backRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         runtime.reset();
-        backLeft.setPower(Math.abs(speed));
-        backRight.setPower(Math.abs(speed));
-        frontLeft.setPower(Math.abs(speed));
-        frontRight.setPower(Math.abs(speed));
+        
+        if (strafeRight > 0){
+            //Strafe right
+            backLeft.setPower(speed);
+            backRight.setPower(speed);
+            frontLeft.setPower(speed);
+            frontRight.setPower(speed);
+        }
+        else if (strafeLeft > 0){
+            //Strafe left
+            backLeft.setPower(1);
+            backRight.setPower(-1);
+            frontLeft.setPower(-1);
+            frontRight.setPower(1);
+
+
+        }
+
 
 
         while (
@@ -126,6 +147,13 @@ public class Autonomous_1 extends LinearOpMode {
 
         //  sleep(250);
 
+
+
+
+
+
+
+
     }
 
     public void driveWithEncoder(double speed,
@@ -145,10 +173,10 @@ public class Autonomous_1 extends LinearOpMode {
             backLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             backRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             runtime.reset();
-            backLeft.setPower(Math.abs(speed));
-            backRight.setPower(Math.abs(speed));
-            frontLeft.setPower(Math.abs(speed));
-            frontRight.setPower(Math.abs(speed));
+            backLeft.setPower(speed);
+            backRight.setPower(speed);
+            frontLeft.setPower(speed);
+            frontRight.setPower(speed);
 
 
             while (
