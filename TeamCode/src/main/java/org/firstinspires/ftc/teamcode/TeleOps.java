@@ -45,11 +45,12 @@ public class TeleOps extends OpMode {
         servo = hardwareMap.servo.get("servo");
         servo1 = hardwareMap.servo.get("servo1");
         servo2 = hardwareMap.servo.get("servo2");
-        servo.setPosition(1);
+        position = 0;
+        servo.setPosition(position);
         servo1.setPosition(0.216);
         servo2.setPosition(.02);
 
-        position = 1;
+
     }
 
     @Override
@@ -100,18 +101,13 @@ public class TeleOps extends OpMode {
         }else{
             armmotor.setPower(0);
         }
-
-        if (gamepad2.x){
+        if (gamepad2.x)
             position = 0;
-        }
         if (gamepad2.y){
-            position = .43;
+            position = 0.05;
         }
         if (gamepad2.b){
-            position = .67;
-        }
-        if (gamepad2.a){
-            position = 1;
+            position = .68;
         }
         servo.setPosition(position);
 
@@ -133,7 +129,7 @@ public class TeleOps extends OpMode {
 
         if (gamepad2.dpad_left){
             try{
-                servo2.setPosition(servo2.getPosition() + .01);
+                servo2.setPosition(.75);
             }catch(Exception e){
                 int x = 5;
             }
@@ -141,7 +137,7 @@ public class TeleOps extends OpMode {
         }
         if (gamepad2.dpad_right){
             try{
-                servo2.setPosition(servo2.getPosition() - .01);
+                servo2.setPosition(.25);
             }catch(Exception e){
                 int x = 5;
             }

@@ -39,14 +39,31 @@ public class Autonomous_1 extends LinearOpMode {
          */
         initValues();
         hook.setPosition(0.65);
-        driveWithStrafe(.1, -200,0, 0);
+        //driveWithStrafe(.2, -200, 0);
 
-        /**
-         driveWithEncoder(.2, -48, -48, 30);
-         hook.setPosition(0.3);
+        strafeWithTime(7, .2, 'l');
+
+
+
+
+
          driveWithEncoder(.2, 24, 24, 30);
+         //hook.setPosition(0.3);
+        strafeWithTime(2.6, .2, 'b');
+         hook.setPosition(0.3);
+         sleep(500);
 
-         */
+        //strafeWithTime(2,0.2,'l');
+         driveWithEncoder(.20, 75, 75,50);
+        strafeWithTime(0.75,0.2,'l');
+        driveWithEncoder(0.3,12,12,30);
+        hook.setPosition(.65);
+        sleep(500);
+
+        strafeWithTime(9, .2, 'r');
+
+         //driveWithEncoder(0.5, 150, 150, 30);
+
 
         //hook.setPosition(0.65);
         //driveWithStrafe(0,5, 0);
@@ -55,7 +72,6 @@ public class Autonomous_1 extends LinearOpMode {
 
     }
 
-    //Initialize values
     public void initValues(){
         frontLeft = hardwareMap.dcMotor.get("frontleft");
         backLeft = hardwareMap.dcMotor.get("backleft");
@@ -66,6 +82,7 @@ public class Autonomous_1 extends LinearOpMode {
         //Defining front and back using clockwise and counterclockwise movement
         // of the wheels
         backRight.setDirection(DcMotorSimple.Direction.REVERSE);
+                //Initialize values.REVERSE);
         frontRight.setDirection(DcMotorSimple.Direction.REVERSE);
 
 
@@ -89,14 +106,14 @@ public class Autonomous_1 extends LinearOpMode {
 
 
     //Method to strafe
-    public void driveWithStrafe(double speed, double strafeRight, double strafeLeft, double rotate) {
+    public void driveWithStrafe(double speed, double strafe, double rotate) {
 
         int newLeftTarget;
         int newRightTarget;
 
 
-        newLeftTarget = backLeft.getCurrentPosition() + (int)(strafeRight * COUNTS_PER_INCH);
-        newRightTarget = backRight.getCurrentPosition() + (int)(strafeLeft * COUNTS_PER_INCH);
+        newLeftTarget = backLeft.getCurrentPosition() + (int)(strafe * COUNTS_PER_INCH);
+        newRightTarget = backRight.getCurrentPosition() + (int)(strafe * COUNTS_PER_INCH);
 
 
         backLeft.setTargetPosition(newLeftTarget);
@@ -105,19 +122,19 @@ public class Autonomous_1 extends LinearOpMode {
         backRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         runtime.reset();
         
-        if (strafeRight > 0){
+        if (strafe > 0){
             //Strafe right
             backLeft.setPower(speed);
             backRight.setPower(speed);
             frontLeft.setPower(speed);
             frontRight.setPower(speed);
         }
-        else if (strafeLeft > 0){
+        else if (strafe < 0){
             //Strafe left
-            backLeft.setPower(1);
-            backRight.setPower(-1);
-            frontLeft.setPower(-1);
-            frontRight.setPower(1);
+            backLeft.setPower(-speed);
+            backRight.setPower(speed);
+            frontLeft.setPower(speed);
+            frontRight.setPower(-speed);
 
 
         }
@@ -156,6 +173,38 @@ public class Autonomous_1 extends LinearOpMode {
 
     }
 
+    public void strafeWithTime(double time, double power, char direction){
+        long initialTime = System.currentTimeMillis();
+        double finalTime = initialTime + time*1000;
+
+        if (direction == 'l'){
+            backLeft.setPower(power);
+            backRight.setPower(-power);
+            frontLeft.setPower(-power);
+            frontRight.setPower(power);
+        }
+
+        if (direction == 'r'){
+            backLeft.setPower(-power);
+            backRight.setPower(power);
+            frontLeft.setPower(power);
+            frontRight.setPower(-power);
+        }
+        if (direction == 'b'){
+            backLeft.setPower(-power);
+            backRight.setPower(-power);
+            frontLeft.setPower(-power);
+            frontRight.setPower(-power);
+        }
+        while (System.currentTimeMillis() < finalTime){
+
+        }
+        backLeft.setPower(0);
+        backRight.setPower(0);
+        frontLeft.setPower(0);
+        frontRight.setPower(0);
+    }
+
     public void driveWithEncoder(double speed,
                              double leftInches, double rightInches,
                              double timeoutS) {
@@ -167,14 +216,23 @@ public class Autonomous_1 extends LinearOpMode {
             newLeftTarget = backLeft.getCurrentPosition() + (int)(leftInches * COUNTS_PER_INCH);
             newRightTarget = backRight.getCurrentPosition() + (int)(rightInches * COUNTS_PER_INCH);
 
+            if (speed > 0){
 
-            backLeft.setTargetPosition(newLeftTarget);
-            backRight.setTargetPosition(newRightTarget);
+                backLeft.setTargetPosition(newLeftTarget);
+                backRight.setTargetPosition(newRightTarget);
+            }else{
+                backLeft.setTargetPosition(-newLeftTarget);
+                backRight.setTargetPosition(-newRightTarget);
+
+            }
             backLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             backRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             runtime.reset();
+
             backLeft.setPower(speed);
             backRight.setPower(speed);
+
+
             frontLeft.setPower(speed);
             frontRight.setPower(speed);
 
@@ -191,7 +249,6 @@ public class Autonomous_1 extends LinearOpMode {
                 telemetry.update();
 
             }
-
             backLeft.setPower(0);
             backRight.setPower(0);
             frontLeft.setPower(0);
