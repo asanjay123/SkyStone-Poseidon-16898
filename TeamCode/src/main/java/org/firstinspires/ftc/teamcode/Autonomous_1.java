@@ -47,15 +47,15 @@ public class Autonomous_1 extends LinearOpMode {
 
 
 
-        strafeWithTime(7, .2, 'l');
+        strafeWithTime(2, .4, 'l');
 
 
 
 
 
-         driveWithEncoder(.2, 24, 24, 30);
-         //hook.setPosition(0.3);
-        strafeWithTime(2.6, .2, 'b');
+         driveWithEncoder(.2, 10, 10, 30);
+
+         strafeWithTime(2.6, .2, 'b');
          hook.setPosition(0.3);
          sleep(500);
 
@@ -63,7 +63,7 @@ public class Autonomous_1 extends LinearOpMode {
          driveWithEncoder(.20, 40, 40,50);
          hook.setPosition(.65);
         strafeWithTime(0.75,0.2,'r');
-        hook.setPosition(.3);
+        /*hook.setPosition(.3);
         driveWithEncoder(0.3,0,24,30);
         hook.setPosition(.65);
         sleep(500);
@@ -79,8 +79,7 @@ public class Autonomous_1 extends LinearOpMode {
         //hook.setPosition(0.65);
         //driveWithStrafe(0,5, 0);
 
-
-
+*/
     }
 
     public void initValues(){
