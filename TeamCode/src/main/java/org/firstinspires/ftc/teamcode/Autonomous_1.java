@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-@Autonomous(name = "Autonomous 1", group = "")
+@Autonomous(name = "Autonomous Left Tray", group = "")
 public class Autonomous_1 extends LinearOpMode {
 
     /**Define all values */
@@ -40,29 +40,32 @@ public class Autonomous_1 extends LinearOpMode {
         initValues();
         hook.setPosition(0.65);
         //driveWithStrafe(.2, -200, 0);
-
-
-
-
-
-
-
-        strafeWithTime(2, .4, 'l');
-
-
-
-
+        strafeWithTime(1.33, .4, 'l');
 
          driveWithEncoder(.2, 10, 10, 30);
 
-         strafeWithTime(2.6, .2, 'b');
+         strafeWithTime(1.6, .28, 'b');
          hook.setPosition(0.3);
          sleep(500);
 
         //strafeWithTime(2,0.2,'l');
-         driveWithEncoder(.20, 40, 40,50);
-         hook.setPosition(.65);
-        strafeWithTime(0.75,0.2,'r');
+        driveWithEncoder(.35, 55, 55,50);
+        hook.setPosition(.65);
+        sleep(500);
+        strafeWithTime(1,0.23,'r');
+        strafeWithTime(1.2, 0.4, 'b');
+        strafeWithTime(0.1,0.3,'p');
+        hook.setPosition(0.3);
+        sleep(500);
+        strafeWithTime(2.3,0.6,'p');
+        strafeWithTime(0.9,0.23,'l');
+        strafeWithTime(1, 0.4, 'b');
+        strafeWithTime(1,0.6,'q');
+        strafeWithTime(1, 0.4, 'b');
+        hook.setPosition(0.65);
+        driveWithEncoder(.4, 40, 40, 50);
+
+
         /*hook.setPosition(.3);
         driveWithEncoder(0.3,0,24,30);
         hook.setPosition(.65);
@@ -205,6 +208,18 @@ public class Autonomous_1 extends LinearOpMode {
             backRight.setPower(-power);
             frontLeft.setPower(-power);
             frontRight.setPower(-power);
+        }
+        if (direction == 'p'){
+            backLeft.setPower(power);
+            backRight.setPower(-power);
+            frontLeft.setPower(power);
+            frontRight.setPower(-power);
+        }
+        if (direction == 'q'){
+            backLeft.setPower(-power);
+            backRight.setPower(power);
+            frontLeft.setPower(-power);
+            frontRight.setPower(power);
         }
         while (System.currentTimeMillis() < finalTime){
 
