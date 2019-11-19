@@ -45,10 +45,10 @@ public class TeleOps extends OpMode {
         servo = hardwareMap.servo.get("servo");
         servo1 = hardwareMap.servo.get("servo1");
         servo2 = hardwareMap.servo.get("servo2");
-        position = 0.68;
+        position = 0.8;
         servo.setPosition(position);
         servo1.setPosition(0.216);
-        servo2.setPosition(.22);
+        servo2.setPosition(0);
 
 
     }
@@ -94,20 +94,20 @@ public class TeleOps extends OpMode {
         }
 
 
-        if (gamepad1.dpad_up){
-            armmotor.setPower(0.5);
-        }else if (gamepad1.dpad_down){
-            armmotor.setPower(-0.5);
+        if (gamepad1.right_trigger > 0 && gamepad1.left_trigger==0){
+            armmotor.setPower(-0.8*gamepad1.right_trigger);
+        }else if (gamepad1.left_trigger > 0 && gamepad1.right_trigger==0){
+            armmotor.setPower(0.8*gamepad1.left_trigger);
         }else{
             armmotor.setPower(0);
         }
         if (gamepad2.x)
-            position = 0;
+            position = 0.02;
         if (gamepad2.y){
-            position = 0.05;
+            position = 0.08;
         }
         if (gamepad2.b){
-            position = .68;
+            position = 0.8;
         }
         servo.setPosition(position);
 
@@ -127,9 +127,11 @@ public class TeleOps extends OpMode {
             }
         }
 
+        servo2.setPosition(0);
+
         if (gamepad2.dpad_left){
             try{
-                servo2.setPosition(.22);
+                servo2.setPosition(0);
             }catch(Exception e){
                 int x = 5;
             }
@@ -137,18 +139,16 @@ public class TeleOps extends OpMode {
         }
         if (gamepad2.dpad_right){
             try{
-                servo2.setPosition(.22);
+                servo2.setPosition(0);
             }catch(Exception e){
+
                 int x = 5;
             }
         }
 
-        telemetry.addData("psotion:", servo2.getPosition());
-        telemetry.update();
+        telemetry.addData("Nitro: ", (nitro == 1) ? "On":"Off");
+        telemetry.addData("Twisty Position: ", servo2.getPosition());
 
-
-
-        telemetry.addData("Nitro Type: ", nitro);
         telemetry.update();
     }
 }
