@@ -38,6 +38,7 @@ public class Autonomous_1 extends LinearOpMode {
          * Drive forward and stop under bar
          */
         initValues();
+        waitForStart();
         hook.setPosition(0.65);
         //driveWithStrafe(.2, -200, 0);
         strafeWithTime(1.33, .4, 'l');
