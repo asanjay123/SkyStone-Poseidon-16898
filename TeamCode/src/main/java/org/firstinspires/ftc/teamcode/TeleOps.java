@@ -94,10 +94,10 @@ public class TeleOps extends OpMode {
         }
 
 
-        if (gamepad1.right_trigger > 0 && gamepad1.left_trigger==0){
-            armmotor.setPower(-0.8*gamepad1.right_trigger);
-        }else if (gamepad1.left_trigger > 0 && gamepad1.right_trigger==0){
-            armmotor.setPower(0.8*gamepad1.left_trigger);
+        if (gamepad1.right_bumper){
+            armmotor.setPower(-.8);
+        }else if (gamepad1.left_bumper){
+            armmotor.setPower(0.8);
         }else{
             armmotor.setPower(0);
         }
