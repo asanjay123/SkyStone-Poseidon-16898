@@ -51,16 +51,16 @@ public class AutonomousLeftNew extends LinearOpMode {
 
         driveWithEncoder(.2, 10, 10, 30);
 
-        strafeWithTime(1.6, .28, 'b');
+        strafeWithTime(1.4, .28, 'b');
         hook.setPosition(0.3);
         sleep(500);
 
 
-        strafeWithTime(1.75,1,'e');
+        strafeWithTime(1.5,1,'e');
 
         strafeWithTime(1.4,0.8,'b');
         hook.setPosition(0.65);
-        driveWithEncoder(.4, 40, 40, 30);
+        driveWithEncoder(.4, 36, 36, 30);
 
         /* //strafeWithTime(2,0.2,'l');
         driveWithEncoder(.35, 55, 55,50);
@@ -246,9 +246,9 @@ public class AutonomousLeftNew extends LinearOpMode {
         if(direction == 'a')  {
 
 
-            backLeft.setPower(power/2);
+            backLeft.setPower(power/7);
             backRight.setPower(power);
-            frontLeft.setPower(power/2);
+            frontLeft.setPower(power/7);
             frontRight.setPower(power);
 
         }

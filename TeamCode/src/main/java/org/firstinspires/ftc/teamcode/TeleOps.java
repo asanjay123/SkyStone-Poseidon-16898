@@ -92,18 +92,16 @@ public class TeleOps extends OpMode {
             nitro = 2;
         }
 
-        if (gamepad1.right_trigger > 0){
+        if (gamepad1.left_trigger > 0){
             nitro = 4;
-        }else if (gamepad1.left_trigger > 0){
-            nitro = 1;
         }else{
             nitro = 2;
         }
 
 
-        if (gamepad1.right_bumper){
+        if (gamepad2.right_bumper){
             armmotor.setPower(-.8);
-        }else if (gamepad1.left_bumper){
+        }else if (gamepad2.left_bumper){
             armmotor.setPower(0.8);
         }else{
             armmotor.setPower(0);
