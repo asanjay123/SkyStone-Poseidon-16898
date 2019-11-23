@@ -104,7 +104,6 @@ public class AutoRightSkystone extends LinearOpMode {
         //for(int i = 0; i<3; i++) {
 
             pickUp();
-        //    strafeWithTime(1,0.3,'l');
 
         //}
 

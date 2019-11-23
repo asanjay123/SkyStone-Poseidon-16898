@@ -47,6 +47,8 @@ public class AutonomousRightNew extends LinearOpMode {
         sleep(500);
         hook.setPosition(0.65);
         //driveWithStrafe(.2, -200, 0);
+        strafeWithTime(0.17, .4, 'b');
+
         strafeWithTime(1.33, .4, 'r');
 
         driveWithEncoder(.2, 10, 10, 30);
@@ -56,7 +58,7 @@ public class AutonomousRightNew extends LinearOpMode {
         sleep(500);
 
 
-        strafeWithTime(1.5,1,'a');
+        strafeWithTime(1.9,1,'a');
 
         strafeWithTime(1.4,0.8,'b');
         hook.setPosition(0.65);
