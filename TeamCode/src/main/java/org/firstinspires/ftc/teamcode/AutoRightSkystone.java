@@ -1,3 +1,32 @@
+/* Copyright (c) 2019 FIRST. All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without modification,
+ * are permitted (subject to the limitations in the disclaimer below) provided that
+ * the following conditions are met:
+ *
+ * Redistributions of source code must retain the above copyright notice, this list
+ * of conditions and the following disclaimer.
+ *
+ * Redistributions in binary form must reproduce the above copyright notice, this
+ * list of conditions and the following disclaimer in the documentation and/or
+ * other materials provided with the distribution.
+ *
+ * Neither the name of FIRST nor the names of its contributors may be used to endorse or
+ * promote products derived from this software without specific prior written permission.
+ *
+ * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS
+ * LICENSE. THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+ * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE
+ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+ * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
@@ -7,106 +36,134 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-@Autonomous(name = "Autonomous Left Tray New", group = "")
-public class AutonomousLeftNew extends LinearOpMode {
+import org.firstinspires.ftc.robotcore.external.ClassFactory;
+import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
+import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
+import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
 
-    /**Define all values */
+import java.util.List;
+
+/**
+ * This 2019-2020 OpMode illustrates the basics of using the TensorFlow Object Detection API to
+ * determine the position of the Skystone game elements.
+ *
+ * Use Android Studio to Copy this Class, and Paste it into your team's code folder with a new name.
+ * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list.
+ *
+ * IMPORTANT: In order to use this OpMode, you need to obtain your own Vuforia license key as
+ * is explained below.
+ */
+@Autonomous(name ="Right Skystone", group = "Concept")
+
+public class AutoRightSkystone extends LinearOpMode {
+
+    double position;
+
+    boolean skystoneFound;
+    int skystonePos;
     DcMotor frontLeft;
     DcMotor backLeft;
     DcMotor frontRight;
     DcMotor backRight;
-    Servo   servo;
     Servo hook;
     double  ElapsedTime;
     double COUNTS_PER_MOTOR_REV;
     double     DRIVE_GEAR_REDUCTION;
     double     WHEEL_DIAMETER_INCHES;
-    double position;
 
     double     COUNTS_PER_INCH;
-    ElapsedTime runtime = new ElapsedTime();
+    DcMotor armmotor;
+
+    Servo   servo;
+    Servo servo1;
+    Servo servo2;
+
+    com.qualcomm.robotcore.util.ElapsedTime runtime = new ElapsedTime();
+    /*
+     * IMPORTANT: You need to obtain your own license key to use Vuforia. The string below with which
+     * 'parameters.vuforiaLicenseKey' is initialized is for illustration only, and will not function.
+     * A Vuforia 'Development' license key, can be obtained free of charge from the Vuforia developer
+     * web site at https://developer.vuforia.com/license-manager.
+     *
+     * Vuforia license keys are always 380 characters long, and look as if they contain mostly
+     * random data. As an example, here is a example of a fragment of a valid key:
+     *      ... yIgIzTqZ4mWjk9wd3cZO9T1axEqzuhxoGlfOOI2dRzKS4T0hQ8kT ...
+     * Once you've obtained a license key, copy the string from the Vuforia web site
+     * and paste it in to your code on the next line, between the double quotes.
+     */
+
+
 
     @Override
-    public void runOpMode(){
-
-
-        /**Initialize autonomous
-         * Strafe a certain measurement
-         * Move backward about 4 ft
-         * Latch onto  platform
-         * drive straight
-         * Drive right (Forward straight, turn right)[not rotate]
-         * Drive back after platform is rotated 90 degrees
-         * Unlatch
-         * Drive forward and stop under bar
-         */
+    public void runOpMode() {
+        // The TFObjectDetector uses the camera frames from the VuforiaLocalizer, so we create that
+        // first.
         initValues();
-        waitForStart();
-        position = 0.7;
-        servo.setPosition(position);
-        sleep(500);
-        hook.setPosition(0.65);
-        //driveWithStrafe(.2, -200, 0);
-        strafeWithTime(0.17, .4, 'b');
+        sleep(1000);
+        driveWithEncoder(0.4,3,3,30);
+        //for(int i = 0; i<3; i++) {
 
-        strafeWithTime(1.33, .4, 'l');
+            pickUp();
+        //    strafeWithTime(1,0.3,'l');
 
-        driveWithEncoder(.2, 10, 10, 30);
-
-        strafeWithTime(1.4, .3, 'b');
-        hook.setPosition(0.3);
-        sleep(500);
+        //}
 
 
-        strafeWithTime(1.9,1,'e');
-
-        strafeWithTime(1.4,0.8,'b');
-        hook.setPosition(0.65);
-        driveWithEncoder(.4, 36, 36, 30);
-
-        /* //strafeWithTime(2,0.2,'l');
-        driveWithEncoder(.35, 55, 55,50);
-        hook.setPosition(.65);
-        strafeWithTime(0.3,0.23,'r');
-        sleep(500);
-        strafeWithTime(0.5,0.23,'p');
-        strafeWithTime(1.2, 0.4, 'b');
-        strafeWithTime(0.1,0.3,'p');
-        strafeWithTime(.25, .3, 'p');
-        strafeWithTime(.2, .2, 'b');
-        hook.setPosition(0.3);
-        sleep(500);
-        strafeWithTime(2.3,0.6,'p');
-        strafeWithTime(0.9,0.23,'l');
-        strafeWithTime(1, 0.4, 'b');
-        strafeWithTime(1,0.6,'q');
-        strafeWithTime(1, 0.4, 'b');
-        hook.setPosition(0.65);
-        driveWithEncoder(.4, 40, 40, 50);
 
 
-        /*hook.setPosition(.3);
-        driveWithEncoder(0.3,0,24,30);
-        hook.setPosition(.65);
-        sleep(500);
-
-
-        strafeWithTime(1, .2, 'l');
-        driveWithEncoder(.3, 10, 10, 30);
-        strafeWithTime(7, .2, 'b');
-
-         //driveWithEncoder(0.5, 150, 150, 30);
-
-
-        //hook.setPosition(0.65);
-        //driveWithStrafe(0,5, 0);
-
-*/
     }
 
-    public void initValues(){
-        servo = hardwareMap.servo.get("servo");
+        /**
+         * Activate TensorFlow Object Detection before we wait for the start command.
+         * Do it here so that the Camera Stream window will have the TensorFlow annotations visible.
+            servo1.setPosition(0.7);
 
+            armmotor.setPower(-0.8);
+            sleep(600);
+
+            servo.setPosition(0.08);
+            servo1.setPosition(0.216);
+            armmotor.setPower(0.8);
+            sleep(600);
+
+        }
+
+        if (tfod != null) {
+            tfod.shutdown();
+        }
+    }
+
+    /**
+     * Initialize the Vuforia localization engine.
+     */
+
+    public void pickUp() {
+        servo1.setPosition(0.75);
+        sleep(600);
+
+        driveWithEncoder(0.4,12.5,12.5,30);
+        servo1.setPosition(0);
+        sleep(800);
+        strafeWithTime(1.4,0.2,'p');
+        driveWithEncoder(0.4,5,5,30);
+        servo1.setPosition(0.75);
+
+     /*   strafeWithTime(0.5,0.5,'b');
+        strafeWithTime(3,0.6,'r');
+        servo2.setPosition(0.5);
+        strafeWithTime(3,0.6,'l'); */
+
+
+    }
+    public void initValues(){
+        armmotor = hardwareMap.dcMotor.get("arm");
+        servo = hardwareMap.servo.get("servo");
+        servo1 = hardwareMap.servo.get("servo1");
+        servo2 = hardwareMap.servo.get("servo2");
+        position = 0.08;
+        servo.setPosition(position);
+        servo1.setPosition(0.216);
+        servo2.setPosition(0);
 
         frontLeft = hardwareMap.dcMotor.get("frontleft");
         backLeft = hardwareMap.dcMotor.get("backleft");
@@ -138,9 +195,6 @@ public class AutonomousLeftNew extends LinearOpMode {
         COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) / (WHEEL_DIAMETER_INCHES * 3.1415);
 
     }
-
-
-    //Method to strafe
     public void driveWithStrafe(double speed, double strafe, double rotate) {
 
         int newLeftTarget;
@@ -243,27 +297,6 @@ public class AutonomousLeftNew extends LinearOpMode {
             frontLeft.setPower(-power);
             frontRight.setPower(power);
         }
-
-        //arcLeft
-        if(direction == 'a')  {
-
-
-            backLeft.setPower(power/7);
-            backRight.setPower(power);
-            frontLeft.setPower(power/7);
-            frontRight.setPower(power);
-
-        }
-
-        if(direction == 'e') {
-
-            backLeft.setPower(power);
-            backRight.setPower(power/7);
-            frontLeft.setPower(power);
-            frontRight.setPower(power/7);
-
-
-        }
         while (System.currentTimeMillis() < finalTime){
 
         }
@@ -328,5 +361,4 @@ public class AutonomousLeftNew extends LinearOpMode {
         //  sleep(250);
 
     }
-
 }

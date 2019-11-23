@@ -94,8 +94,12 @@ public class TeleOps extends OpMode {
 
         if (gamepad1.left_trigger > 0){
             nitro = 4;
-        }else{
+        }else if (gamepad1.right_trigger > 0) {
+            nitro = 1;
+        }
+        else{
             nitro = 2;
+
         }
 
 
@@ -151,7 +155,7 @@ public class TeleOps extends OpMode {
             }
         }
 
-        telemetry.addData("Nitro: ", (nitro == 1) ? "On":"Off");
+        telemetry.addData("Nitro: ", (nitro == 1) ? "High":( (nitro==2) ? "Medium":"Low"));
         telemetry.addData("Twisty Position: ", servo2.getPosition());
 
         telemetry.update();
