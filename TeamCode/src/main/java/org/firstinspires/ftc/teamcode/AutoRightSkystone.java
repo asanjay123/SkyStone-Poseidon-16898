@@ -114,7 +114,8 @@ public class AutoRightSkystone extends LinearOpMode {
         strafeWithTime(4, .2, 'b');
         pickUp();
         driveWithEncoder(.1, 22, 22, 30);
-
+        servo2.setPosition(1);
+        sleep(1000);
         //}
 
     }

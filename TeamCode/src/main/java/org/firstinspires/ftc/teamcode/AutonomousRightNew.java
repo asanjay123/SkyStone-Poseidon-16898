@@ -22,6 +22,8 @@ public class AutonomousRightNew extends LinearOpMode {
     double     DRIVE_GEAR_REDUCTION;
     double     WHEEL_DIAMETER_INCHES;
     double position;
+    Servo servo2;
+
 
     double     COUNTS_PER_INCH;
     ElapsedTime runtime = new ElapsedTime();
@@ -63,6 +65,7 @@ public class AutonomousRightNew extends LinearOpMode {
         strafeWithTime(1.4,0.8,'b');
         hook.setPosition(0.65);
         driveWithEncoder(.4, 36, 36, 30);
+        servo2.setPosition(1);
 
         /* //strafeWithTime(2,0.2,'l');
         driveWithEncoder(.35, 55, 55,50);
@@ -113,6 +116,8 @@ public class AutonomousRightNew extends LinearOpMode {
         frontRight = hardwareMap.dcMotor.get("frontright");
         backRight = hardwareMap.dcMotor.get("backright");
         hook = hardwareMap.servo.get("hook");
+        servo2 = hardwareMap.servo.get("servo2");
+
 
         //Defining front and back using clockwise and counterclockwise movement
         // of the wheels
