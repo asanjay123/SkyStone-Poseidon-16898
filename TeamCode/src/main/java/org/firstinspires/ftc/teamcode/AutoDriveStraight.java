@@ -53,9 +53,9 @@ import java.util.List;
  * IMPORTANT: In order to use this OpMode, you need to obtain your own Vuforia license key as
  * is explained below.
  */
-@Autonomous(name ="Right Skystone", group = "Concept")
+@Autonomous(name ="Drive Straight", group = "Concept")
 
-public class AutoRightSkystone extends LinearOpMode {
+public class AutoDriveStraight extends LinearOpMode {
 
     double position;
 
@@ -100,101 +100,64 @@ public class AutoRightSkystone extends LinearOpMode {
         // first.
         initValues();
         waitForStart();
-        //driveWithEncoder(0.4,3,3,30);
+        driveWithEncoder(0.4,1.75,1.75,30);
         //for(int i = 0; i<3; i++) {
 
         pickUp();
-        driveWithEncoder(.1, 12, 12, 30);
-        servo.setPosition(.7);
-        sleep(1000);
-        strafeWithTime(2.2, .2, 'b');
-        reversePickUp();
-        driveWithEncoder(.1, 1, 1, 30);
-        strafeWithTime(.85, .2, 'l');
-        strafeWithTime(4, .2, 'b');
-        pickUp();
-        driveWithEncoder(.1, 22, 22, 30);
-
-        //}
-
-    }
-
-        /**
-         * Activate TensorFlow Object Detection before we wait for the start command.
-         * Do it here so that the Camera Stream window will have the TensorFlow annotations visible.
-            servo1.setPosition(0.7);
-
-            armmotor.setPower(-0.8);
-            sleep(600);
-
-            servo.setPosition(0.08);
-            servo1.setPosition(0.216);
-            armmotor.setPower(0.8);
-            sleep(600);
-
-        }
-
-        if (tfod != null) {
-            tfod.shutdown();
-        }
     }
 
     /**
+     * Activate TensorFlow Object Detection before we wait for the start command.
+     * Do it here so that the Camera Stream window will have the TensorFlow annotations visible.
+     servo1.setPosition(0.7);
+
+     armmotor.setPower(-0.8);
+     sleep(600);
+
+     servo.setPosition(0.08);
+     servo1.setPosition(0.216);
+     armmotor.setPower(0.8);
+     sleep(600);
+
+     }
+
+     if (tfod != null) {
+     tfod.shutdown();
+     }
+     }
+
+     /**
      * Initialize the Vuforia localization engine.
      */
 
-        public void reversePickUp() {
-
-            strafeWithTime(1.22,0.3,'q');
-            strafeWithTime(1.55,.3, 'b');
-
-
-            sleep(1000);
-
-
-
-
-
-
-
-        }
-
     public void pickUp() {
-
+//        servo1.setPosition(0.75);
+//        sleep(600);
+//
 //        armmotor.setPower(-0.5);
 //        sleep(300);
 //        armmotor.setPower(0);
-
-
-
-//        servo1.setPosition(0.75);
-//        sleep(600);
-
-        driveWithEncoder(0.25,25,25,30);
-        servo.setPosition(0.0);
-
-
-//       armmotor.setPower(0.5);
-        sleep(1000);
-//        armmotor.setPower(0);
 //
+//
+        driveWithEncoder(0.5,36,36,30);
 //        servo1.setPosition(0);
 //        sleep(800);
-
-
-
-        strafeWithTime(0.5, 0.3, 'b');
-        strafeWithTime(1.4,0.3,'p');
-        driveWithEncoder(0.4,23,23,30);
-
-
+//
+//       armmotor.setPower(0.5);
+//        sleep(300);
+//        armmotor.setPower(0);
+//
+//
+//        strafeWithTime(1.4,0.3,'p');
+//        driveWithEncoder(0.4,20,20,30);
 //        servo1.setPosition(0.75);
-
+//        sleep(800);
+//
 
 
      /*   strafeWithTime(0.5,0.5,'b');
         strafeWithTime(3,0.6,'r');
-
+        servo2.setPosition(0.5);
         strafeWithTime(3,0.6,'l'); */
 
 
@@ -204,8 +167,10 @@ public class AutoRightSkystone extends LinearOpMode {
         servo = hardwareMap.servo.get("servo");
         servo1 = hardwareMap.servo.get("servo1");
         servo2 = hardwareMap.servo.get("servo2");
-        position = 0.1;
-
+//        position = 0.1;
+//        servo.setPosition(position);
+//        servo1.setPosition(0.216);
+//        servo2.setPosition(0);
 
         frontLeft = hardwareMap.dcMotor.get("frontleft");
         backLeft = hardwareMap.dcMotor.get("backleft");
