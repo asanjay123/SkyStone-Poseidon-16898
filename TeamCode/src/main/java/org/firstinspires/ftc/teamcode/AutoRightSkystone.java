@@ -104,13 +104,13 @@ public class AutoRightSkystone extends LinearOpMode {
         //for(int i = 0; i<3; i++) {
 
         pickUp();
-        driveWithEncoder(.1, 12, 12, 30);
+        driveWithEncoder(.15, 14, 14, 30);
         servo.setPosition(.7);
         sleep(1000);
         strafeWithTime(2.2, .2, 'b');
         reversePickUp();
         driveWithEncoder(.1, 1, 1, 30);
-        strafeWithTime(.85, .2, 'l');
+        strafeWithTime(.85, .3, 'l');
         strafeWithTime(4, .2, 'b');
         pickUp();
         driveWithEncoder(.1, 22, 22, 30);
