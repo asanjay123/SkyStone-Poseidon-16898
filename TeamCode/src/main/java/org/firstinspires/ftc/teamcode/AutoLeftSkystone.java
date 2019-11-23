@@ -53,9 +53,9 @@ import java.util.List;
  * IMPORTANT: In order to use this OpMode, you need to obtain your own Vuforia license key as
  * is explained below.
  */
-@Autonomous(name ="Right Skystone", group = "Concept")
+@Autonomous(name ="Left Skystone", group = "Concept")
 
-public class AutoRightSkystone extends LinearOpMode {
+public class AutoLeftSkystone extends LinearOpMode {
 
     double position;
 
@@ -110,7 +110,7 @@ public class AutoRightSkystone extends LinearOpMode {
         strafeWithTime(2.2, .2, 'b');
         reversePickUp();
         driveWithEncoder(.1, 1, 1, 30);
-        strafeWithTime(.85, .2, 'l');
+        strafeWithTime(.85, .2, 'r');
         strafeWithTime(4, .2, 'b');
         pickUp();
         driveWithEncoder(.1, 22, 22, 30);
@@ -119,39 +119,39 @@ public class AutoRightSkystone extends LinearOpMode {
 
     }
 
-        /**
-         * Activate TensorFlow Object Detection before we wait for the start command.
-         * Do it here so that the Camera Stream window will have the TensorFlow annotations visible.
-            servo1.setPosition(0.7);
-
-            armmotor.setPower(-0.8);
-            sleep(600);
-
-            servo.setPosition(0.08);
-            servo1.setPosition(0.216);
-            armmotor.setPower(0.8);
-            sleep(600);
-
-        }
-
-        if (tfod != null) {
-            tfod.shutdown();
-        }
-    }
-
     /**
+     * Activate TensorFlow Object Detection before we wait for the start command.
+     * Do it here so that the Camera Stream window will have the TensorFlow annotations visible.
+     servo1.setPosition(0.7);
+
+     armmotor.setPower(-0.8);
+     sleep(600);
+
+     servo.setPosition(0.08);
+     servo1.setPosition(0.216);
+     armmotor.setPower(0.8);
+     sleep(600);
+
+     }
+
+     if (tfod != null) {
+     tfod.shutdown();
+     }
+     }
+
+     /**
      * Initialize the Vuforia localization engine.
      */
 
-        public void reversePickUp() {
+    public void reversePickUp() {
 
-            strafeWithTime(1.22,0.3,'q');
-            strafeWithTime(1.55,.3, 'b');
+        strafeWithTime(1.22,0.3,'p');
+        strafeWithTime(1.55,.3, 'b');
 
 
-            sleep(1000);
+        sleep(1000);
 
-        }
+    }
 
     public void pickUp() {
 
@@ -165,14 +165,16 @@ public class AutoRightSkystone extends LinearOpMode {
         servo.setPosition(0.0);
         sleep(1000);
 
+
 //       armmotor.setPower(0.5);
 //       armmotor.setPower(0);
 //       servo1.setPosition(0);
 //       sleep(800);
 
         strafeWithTime(0.5, 0.3, 'b');
-        strafeWithTime(1.4,0.3,'p');
+        strafeWithTime(1.4,0.3,'q');
         driveWithEncoder(0.4,23,23,30);
+
 
 //        servo1.setPosition(0.75);
      /*   strafeWithTime(0.5,0.5,'b');
