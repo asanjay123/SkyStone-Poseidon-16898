@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-@Autonomous(name = "Autonomous Left Tray New", group = "")
+@Autonomous(name = "Autonomous Left Tray New No Park", group = "")
 public class AutonomousLeftNew extends LinearOpMode {
 
     /**Define all values */
@@ -59,13 +59,14 @@ public class AutonomousLeftNew extends LinearOpMode {
         sleep(500);
 
 
-        strafeWithTime(1.9,1,'e');
+        strafeWithTime(2.3,1,'e');
 
         strafeWithTime(1.4,0.8,'b');
         hook.setPosition(0.65);
+        /**
         driveWithEncoder(.4, 36, 36, 30);
         servo2.setPosition(1);
-
+        */
 
         /* //strafeWithTime(2,0.2,'l');
         driveWithEncoder(.35, 55, 55,50);

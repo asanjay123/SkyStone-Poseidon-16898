@@ -7,8 +7,8 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-@Autonomous(name = "Autonomous Right Tray New No Park", group = "")
-public class AutonomousRightNew extends LinearOpMode {
+@Autonomous(name = "Autonomous Left Tray New Park Bridge", group = "")
+public class AutonomousLeftParkBridge extends LinearOpMode {
 
     /**Define all values */
     DcMotor frontLeft;
@@ -16,14 +16,13 @@ public class AutonomousRightNew extends LinearOpMode {
     DcMotor frontRight;
     DcMotor backRight;
     Servo   servo;
+    Servo servo2;
     Servo hook;
     double  ElapsedTime;
     double COUNTS_PER_MOTOR_REV;
     double     DRIVE_GEAR_REDUCTION;
     double     WHEEL_DIAMETER_INCHES;
     double position;
-    Servo servo2;
-
 
     double     COUNTS_PER_INCH;
     ElapsedTime runtime = new ElapsedTime();
@@ -51,23 +50,25 @@ public class AutonomousRightNew extends LinearOpMode {
         //driveWithStrafe(.2, -200, 0);
         strafeWithTime(0.17, .4, 'b');
 
-        strafeWithTime(1.33, .4, 'r');
+        strafeWithTime(1.33, .4, 'l');
 
         driveWithEncoder(.2, 10, 10, 30);
 
-        strafeWithTime(1.4, .28, 'b');
+        strafeWithTime(1.4, .3, 'b');
         hook.setPosition(0.3);
         sleep(500);
 
 
-        strafeWithTime(1.9,1,'a');
+        strafeWithTime(2.3,1,'e');
 
         strafeWithTime(1.4,0.8,'b');
         hook.setPosition(0.65);
-        /**
+        strafeWithTime(.65, .3, 'r');
+        strafeWithTime(.3, .3, 'b');
         driveWithEncoder(.4, 36, 36, 30);
         servo2.setPosition(1);
-        */
+
+
         /* //strafeWithTime(2,0.2,'l');
         driveWithEncoder(.35, 55, 55,50);
         hook.setPosition(.65);
