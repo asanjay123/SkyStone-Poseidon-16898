@@ -76,10 +76,10 @@ public class RightSkystoneDetection extends LinearOpMode {
         driveWithEncoder(.4, 20.5, 20.5, 30);
         sleep(1000);
         for (int i = 0; i < 2; i++) {
-            backLeft.setPower(.2);
-            backRight.setPower(-.2);
-            frontLeft.setPower(-.5);
-            frontRight.setPower(.2);
+            backLeft.setPower(.1);
+            backRight.setPower(-.1);
+            frontLeft.setPower(-.25);
+            frontRight.setPower(.1);
             while (!runScanner()) {
                 //strafeWithTime(.18, .2, 'l');
             }
