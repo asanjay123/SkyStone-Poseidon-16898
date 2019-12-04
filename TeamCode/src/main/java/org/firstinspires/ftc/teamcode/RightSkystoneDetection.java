@@ -73,28 +73,37 @@ public class RightSkystoneDetection extends LinearOpMode {
     //    hook.setPosition(0.65);
         //driveWithStrafe(.2, -200, 0);
 
-        driveWithEncoder(.4, 16, 16, 30);
+        driveWithEncoder(.4, 18.5, 18.5, 30);
         sleep(1000);
         for (int i = 0; i < 2; i++) {
+            backLeft.setPower(.2);
+            backRight.setPower(-.2);
+            frontLeft.setPower(-.5);
+            frontRight.setPower(.2);
             while (!runScanner()) {
-                strafeWithTime(.22, .44, 'l');
-                sleep(1000);
-                strafeWithTime(.15, .2, 'q');
-                sleep(1000);
+                //strafeWithTime(.18, .2, 'l');
             }
             strafeWithTime(.15, .44, 'l');
             strafeWithTime(.1, .2, 'q');
 
-            driveWithEncoder(.2, 7, 7, 30);
+            driveWithEncoder(.2, 8, 8, 30);
             servo.setPosition(0);
             sleep(1000);
-            strafeWithTime(0.7, 0.2, 'b');
+            strafeWithTime(0.85, 0.2, 'b');
             strafeWithTime(1.9, .2, 'p');
             driveWithEncoder(.2, 60, 60, 30);
             servo.setPosition(.7);
-            sleep(1000);
-            strafeWithTime(4, .2, 'b');
-            strafeWithTime(1.9, .2, 'q');
+            if (i == 0){
+                sleep(1000);
+                strafeWithTime(4, .2, 'b');
+                strafeWithTime(1.9, .2, 'q');
+            }
+
+            else {
+
+                strafeWithTime(2,.2,'b');
+
+            }
         }
 
     }
