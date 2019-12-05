@@ -86,8 +86,7 @@ public class RightSkystoneDetection extends LinearOpMode {
                 strafeWithTime(.13, .3, 'e');
                 sleep(200);
             }
-            strafeWithTime(.15, .44, 'l');
-            strafeWithTime(.1, .2, 'q');
+
 
             driveWithEncoder(.2, 8, 8, 30);
             servo.setPosition(0);
