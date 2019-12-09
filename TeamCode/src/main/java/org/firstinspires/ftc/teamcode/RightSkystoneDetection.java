@@ -83,7 +83,7 @@ public class RightSkystoneDetection extends LinearOpMode {
                 frontLeft.setPower(-.45);
                 frontRight.setPower(.15);
                 sleep(400);
-                strafeWithTime(.13, .3, 'e');
+                strafeWithTime(.03, .3, 'e');
                 sleep(200);
             }
 
@@ -93,12 +93,13 @@ public class RightSkystoneDetection extends LinearOpMode {
             sleep(1000);
             strafeWithTime(0.85, 0.2, 'b');
             strafeWithTime(1.9, .2, 'p');
-            driveWithEncoder(.2, 60, 60, 30);
+            driveWithEncoder(.3, 60, 60, 30);
             servo.setPosition(.7);
             if (i == 0){
                 sleep(1000);
                 strafeWithTime(4, .2, 'b');
-                strafeWithTime(1.9, .2, 'q');
+                strafeWithTime(1.25, .25, 'q');
+                driveWithEncoder(.3,5,5,30);
             }
 
             else {
@@ -114,7 +115,7 @@ public class RightSkystoneDetection extends LinearOpMode {
         int tfodMonitorViewId = hardwareMap.appContext.getResources().getIdentifier(
                 "tfodMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         TFObjectDetector.Parameters tfodParameters = new TFObjectDetector.Parameters(tfodMonitorViewId);
-        tfodParameters.minimumConfidence = 0.47;
+        tfodParameters.minimumConfidence = 0.6;
         tfod = ClassFactory.getInstance().createTFObjectDetector(tfodParameters, vuforia);
         tfod.loadModelFromAsset(TFOD_MODEL_ASSET, LABEL_FIRST_ELEMENT, LABEL_SECOND_ELEMENT);
     }
