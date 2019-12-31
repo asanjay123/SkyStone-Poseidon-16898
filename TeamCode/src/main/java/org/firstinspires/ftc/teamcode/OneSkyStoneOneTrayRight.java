@@ -14,8 +14,8 @@ import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
 
 import java.util.List;
 
-@Autonomous(name = "Right Skystone 2 blocks detection", group = "")
-public class RightSkystoneDetection extends LinearOpMode {
+@Autonomous(name = "Auto Right Skystone Tray", group = "")
+public class OneSkyStoneOneTrayRight extends LinearOpMode {
 
     /**Define all values */
 
@@ -70,12 +70,12 @@ public class RightSkystoneDetection extends LinearOpMode {
         position = 0.7;
         servo.setPosition(position);
         sleep(500);
-    //    hook.setPosition(0.65);
+        //    hook.setPosition(0.65);
         //driveWithStrafe(.2, -200, 0);
 
         driveWithEncoder(.4, 20.5, 20.5, 30);
         sleep(1000);
-        for (int i = 0; i < 2; i++) {
+
             servo.setPosition(.7);
             while (!runScanner()) {
                 backLeft.setPower(.15);
@@ -91,31 +91,36 @@ public class RightSkystoneDetection extends LinearOpMode {
             driveWithEncoder(.2, 8, 8, 30);
             servo.setPosition(0);
             sleep(1000);
-            strafeWithTime(0.85, 0.2, 'b');
+            strafeWithTime(1.25, 0.2, 'b');
             strafeWithTime(2.25, .2, 'p');
             driveWithEncoder(.3, 75, 75, 30);
             servo.setPosition(.7);
             sleep(500);
+            strafeWithTime(2.2, .2, 'p');
+            strafeWithTime(2, .2, 'b');
+
+
+        hook.setPosition(0.3);
+        sleep(1000);
+        strafeWithTime(2.3,1,'e');
+        strafeWithTime(2,0.8,'b');
+        hook.setPosition(0.65);
+        strafeWithTime(.3, .3, 'b');
+        driveWithEncoder(.4, 36, 36, 30);
+        servo2.setPosition(1);
+
+
+
+            /**
+            sleep(500);
             strafeWithTime(1, .2, 'b');
             servo.setPosition(0);
             sleep(200);
-
-            if (i == 0){
-                sleep(1000);
-                strafeWithTime(4, .2, 'b');
-                servo.setPosition(.7);
-                strafeWithTime(1.75, .25, 'q');
-                driveWithEncoder(.3,3,3,30);
-            }
-
-            else {
-
-                strafeWithTime(2,.2,'b');
-
-            }
-        }
+            */
 
     }
+
+
 
     private void initTfod() {
         int tfodMonitorViewId = hardwareMap.appContext.getResources().getIdentifier(

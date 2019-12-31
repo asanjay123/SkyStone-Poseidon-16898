@@ -119,10 +119,10 @@ public class TeleOps extends OpMode {
         if (gamepad2.x)
             position = 0.02;
         if (gamepad2.y){
-            position = 0.08;
+            position = 0.14;
         }
         if (gamepad2.b){
-            position = 0.7;
+            position = 0.8;
         }
 
         try {
