@@ -73,38 +73,42 @@ public class OneSkyStoneOneTrayRight extends LinearOpMode {
         //    hook.setPosition(0.65);
         //driveWithStrafe(.2, -200, 0);
 
-        driveWithEncoder(.4, 20.5, 20.5, 30);
+        driveWithEncoder(.4, 18.5, 18.5, 30);
         sleep(1000);
 
             servo.setPosition(.7);
-            while (!runScanner()) {
+            while (!runScanner())
+            {
                 backLeft.setPower(.15);
                 backRight.setPower(-.15);
                 frontLeft.setPower(-.45);
                 frontRight.setPower(.15);
-                sleep(400);
-                strafeWithTime(.03, .3, 'e');
-                sleep(200);
+                sleep(350);
+                strafeWithTime(.03, .5, 'e');
+                //strafeWithTime(.02, .3, 'q');
+                sleep(500);
             }
-
 
             driveWithEncoder(.2, 8, 8, 30);
             servo.setPosition(0);
             sleep(1000);
-            strafeWithTime(1.25, 0.2, 'b');
-            strafeWithTime(2.25, .2, 'p');
-            driveWithEncoder(.3, 75, 75, 30);
+            strafeWithTime(.65, 0.3, 'b');
+            strafeWithTime(1.65, .225, 'p');
+            driveWithEncoder(.3, 82.5, 82.5, 30);
             servo.setPosition(.7);
             sleep(500);
-            strafeWithTime(2.2, .2, 'p');
-            strafeWithTime(2, .2, 'b');
+            strafeWithTime(1.2, .3, 'p');
+            strafeWithTime(1.5, .2, 'b');
 
 
         hook.setPosition(0.3);
         sleep(1000);
         strafeWithTime(2.3,1,'e');
-        strafeWithTime(2,0.8,'b');
+        strafeWithTime(1.5,0.8,'b');
         hook.setPosition(0.65);
+        servo.setPosition(0);
+        sleep(1000);
+        strafeWithTime(0.25, .3, 'q');
         strafeWithTime(.3, .3, 'b');
         driveWithEncoder(.4, 36, 36, 30);
         servo2.setPosition(1);
