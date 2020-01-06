@@ -66,6 +66,7 @@ public class AutonomousRightParkBridge extends LinearOpMode {
         hook.setPosition(0.65);
         strafeWithTime(.75, .3, 'l');
         strafeWithTime(.4, .3, 'b');
+        servo.setPosition(0.14);
         driveWithEncoder(.4, 36, 36, 30);
 
         servo2.setPosition(1);

@@ -18,6 +18,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.Servo;
 
 @Autonomous(name = "RECORD", group = "")
+@Disabled
 public class AutonomousRecorder extends OpMode {
     File file = new File(Environment.getExternalStorageDirectory() + "/" + File.separator + "movements.txt");
 

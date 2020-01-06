@@ -14,8 +14,8 @@ import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
 
 import java.util.List;
 
-@Autonomous(name = "Auto Right Skystone Tray", group = "")
-public class OneSkyStoneOneTrayRight extends LinearOpMode {
+@Autonomous(name = "Auto Left Skystone Tray", group = "")
+public class OneSkyStoneOneTrayLeft extends LinearOpMode {
 
     /**Define all values */
 
@@ -73,42 +73,48 @@ public class OneSkyStoneOneTrayRight extends LinearOpMode {
         //    hook.setPosition(0.65);
         //driveWithStrafe(.2, -200, 0);
 
-        driveWithEncoder(.4, 18.5, 18.5, 30);
+        driveWithEncoder(.4, 16.5, 16.5, 30);
         sleep(1000);
 
-            servo.setPosition(.7);
-            while (!runScanner())
-            {
-                backLeft.setPower(.15);
-                backRight.setPower(-.15);
-                frontLeft.setPower(-.45);
-                frontRight.setPower(.15);
-                sleep(350);
-                strafeWithTime(.03, .5, 'e');
-                //strafeWithTime(.02, .3, 'q');
-                sleep(500);
-            }
+        servo.setPosition(.7);
+        strafeWithTime(.05, .5, 'a');
 
-            driveWithEncoder(.2, 8, 8, 30);
-            servo.setPosition(0);
-            sleep(1000);
-            strafeWithTime(.65, 0.3, 'b');
-            strafeWithTime(1.65, .225, 'p');
-            driveWithEncoder(.3, 82.5, 82.5, 30);
-            servo.setPosition(.7);
-            sleep(500);
-            strafeWithTime(1.2, .3, 'p');
-            strafeWithTime(1.5, .2, 'b');
+        while (!runScanner())
+        {
+            backLeft.setPower(-.25);
+            backRight.setPower(.15);
+            frontLeft.setPower(.45);
+            frontRight.setPower(-.15);
+            sleep(300);
+            //strafeWithTime(.03, .5, 'a');
+            //strafeWithTime(.02, .3, 'q');
+            backLeft.setPower(0);
+            backRight.setPower(0);
+            frontLeft.setPower(0);
+            frontRight.setPower(0);
+            sleep(1500);
+        }
+
+        driveWithEncoder(.2, 8, 8, 30);
+        servo.setPosition(0);
+        sleep(1000);
+        strafeWithTime(.65, 0.3, 'b');
+        strafeWithTime(1.65, .225, 'q');
+        driveWithEncoder(.3, 82.5, 82.5, 30);
+        servo.setPosition(.7);
+        sleep(500);
+        strafeWithTime(1.2, .3, 'q');
+        strafeWithTime(1.5, .2, 'b');
 
 
         hook.setPosition(0.3);
         sleep(1000);
-        strafeWithTime(2.3,1,'e');
+        strafeWithTime(2.1,1,'a');
         strafeWithTime(1.5,0.8,'b');
         hook.setPosition(0.65);
         servo.setPosition(0);
         sleep(1000);
-        strafeWithTime(0.25, .3, 'q');
+        strafeWithTime(0.25, .3, 'p');
         strafeWithTime(.3, .3, 'b');
         servo.setPosition(0.14);
         driveWithEncoder(.4, 36, 36, 30);
@@ -116,12 +122,12 @@ public class OneSkyStoneOneTrayRight extends LinearOpMode {
 
 
 
-            /**
-            sleep(500);
-            strafeWithTime(1, .2, 'b');
-            servo.setPosition(0);
-            sleep(200);
-            */
+        /**
+         sleep(500);
+         strafeWithTime(1, .2, 'b');
+         servo.setPosition(0);
+         sleep(200);
+         */
 
     }
 

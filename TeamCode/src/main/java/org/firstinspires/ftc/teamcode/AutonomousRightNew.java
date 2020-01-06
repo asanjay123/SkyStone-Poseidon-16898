@@ -61,7 +61,7 @@ public class AutonomousRightNew extends LinearOpMode {
 
 
         strafeWithTime(1.9,1,'a');
-
+        servo.setPosition(0.14);
         strafeWithTime(1.4,0.8,'b');
         hook.setPosition(0.65);
         /**
