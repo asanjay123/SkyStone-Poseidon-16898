@@ -93,14 +93,14 @@ public class AutoRightSkystone extends LinearOpMode {
         }
 
 
-        strafeWithTime(.3, .5, 'b');
+        strafeWithTime(.2, .5, 'b');
         servo.setPosition(0.14);
         sleep(200);
         driveWithEncoder(.3, 13, 13, 30);
         servo1.setPosition(0);
         sleep(200);
 
-        strafeWithTime(.65, 0.35, 'b');
+        strafeWithTime(.45, 0.35, 'b');
         if (i==0) {
             strafeWithTime(0.1, .4, 'p');
         }
@@ -108,23 +108,24 @@ public class AutoRightSkystone extends LinearOpMode {
             strafeWithTime(0.8, .4, 'p');
         }
 
-        driveWithEncoder(.4, 20, 20, 30);
+        driveWithEncoder(.4, 40, 40, 30);
 
         servo1.setPosition(0.8);
+        sleep(500);
 
-        strafeWithTime(1.5, .3, 'b');
+        strafeWithTime(3, .3, 'b');
 
 
 
         servo.setPosition(0.7);
         sleep(500);
-        strafeWithTime(0.8, .4, 'q');
+        strafeWithTime(0.7, .4, 'q');
 
 
-        strafeWithTime(.3, .5, 'b');
+        strafeWithTime(.15, .5, 'b');
         servo.setPosition(0.14);
         sleep(200);
-        driveWithEncoder(.3, 13, 13, 30);
+        driveWithEncoder(.3, 18, 18, 30);
         servo1.setPosition(0);
         sleep(200);
 
@@ -133,9 +134,9 @@ public class AutoRightSkystone extends LinearOpMode {
             strafeWithTime(0.1, .4, 'p');
         }
         else {
-            strafeWithTime(0.8, .4, 'p');
+            strafeWithTime(0.65, .4, 'p');
         }
-        driveWithEncoder(.4, 20, 20, 30);
+        driveWithEncoder(.4, 35, 35, 30);
         servo1.setPosition(0.8);
 
 
