@@ -1,36 +1,6 @@
-/* Copyright (c) 2019 FIRST. All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted (subject to the limitations in the disclaimer below) provided that
- * the following conditions are met:
- *
- * Redistributions of source code must retain the above copyright notice, this list
- * of conditions and the following disclaimer.
- *
- * Redistributions in binary form must reproduce the above copyright notice, this
- * list of conditions and the following disclaimer in the documentation and/or
- * other materials provided with the distribution.
- *
- * Neither the name of FIRST nor the names of its contributors may be used to endorse or
- * promote products derived from this software without specific prior written permission.
- *
- * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS
- * LICENSE. THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
- * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
- * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
- * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE
- * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
- * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
- * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
- * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
- * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */
-
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -44,151 +14,150 @@ import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
 
 import java.util.List;
 
-/**
- * This 2019-2020 OpMode illustrates the basics of using the TensorFlow Object Detection API to
- * determine the position of the Skystone game elements.
- *
- * Use Android Studio to Copy this Class, and Paste it into your team's code folder with a new name.
- * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list.
- *
- * IMPORTANT: In order to use this OpMode, you need to obtain your own Vuforia license key as
- * is explained below.
- */
-@Autonomous(name ="Right Skystone (Don't Use)", group = "Concept")
-@Disabled
+@Autonomous(name = "Auto Right Skystone", group = "")
 public class AutoRightSkystone extends LinearOpMode {
 
-    double position;
+    /**Define all values */
 
-    boolean skystoneFound;
-    int skystonePos;
+    private static final String VUFORIA_KEY =
+            "AYB3aIf/////AAABmVsFy8hU5UyTr8m8XGdHacUpYHHs5DLZRsZZEecjQWh++KemDvtSZd2zzmehn3XuFnGrndzQv7Py1zgNj7A27g4QunIq3mUlk/Z7A6vHHjQ0f+DJ1yG2k+r7TcDUakert9hDcu8xmsrzl2Zvw3uj0o4zPB0ASxrTaV8/0J3/Pg3uo5nn6gBk8oBt/jlhJuvtS5l8Ayw/wKJbtbM0xBnQBovbT8GVyGO0V/bDN+gdBegIznVYk0rx/2EYXRBB9+Id/DWbdSX/4laPQT0zpc5CHyxLcSY7ZdoBi8+NLn7g80nRFhAiM+KRMeHOghdTu0QHVGXgWVMZR4ZWEdqU+xmPX/X1Hm5MZvYfams5nZP/JjRL";
+
+    private VuforiaLocalizer vuforia;
+
+    private TFObjectDetector tfod;
+
+    private static final String TFOD_MODEL_ASSET = "Skystone.tflite";
+    private static final String LABEL_FIRST_ELEMENT = "Stone";
+    private static final String LABEL_SECOND_ELEMENT = "Skystone";
+
     DcMotor frontLeft;
     DcMotor backLeft;
     DcMotor frontRight;
     DcMotor backRight;
+    Servo   servo;
     Servo hook;
     double  ElapsedTime;
     double COUNTS_PER_MOTOR_REV;
     double     DRIVE_GEAR_REDUCTION;
     double     WHEEL_DIAMETER_INCHES;
+    double position;
+    DcMotor armmotor;
+    Servo servo1;
+
 
     double     COUNTS_PER_INCH;
-    DcMotor armmotor;
-
-    Servo   servo;
-    Servo servo1;
-    Servo servo2;
-
-    com.qualcomm.robotcore.util.ElapsedTime runtime = new ElapsedTime();
-    /*
-     * IMPORTANT: You need to obtain your own license key to use Vuforia. The string below with which
-     * 'parameters.vuforiaLicenseKey' is initialized is for illustration only, and will not function.
-     * A Vuforia 'Development' license key, can be obtained free of charge from the Vuforia developer
-     * web site at https://developer.vuforia.com/license-manager.
-     *
-     * Vuforia license keys are always 380 characters long, and look as if they contain mostly
-     * random data. As an example, here is a example of a fragment of a valid key:
-     *      ... yIgIzTqZ4mWjk9wd3cZO9T1axEqzuhxoGlfOOI2dRzKS4T0hQ8kT ...
-     * Once you've obtained a license key, copy the string from the Vuforia web site
-     * and paste it in to your code on the next line, between the double quotes.
-     */
-
-
+    ElapsedTime runtime = new ElapsedTime();
 
     @Override
-    public void runOpMode() {
-        // The TFObjectDetector uses the camera frames from the VuforiaLocalizer, so we create that
-        // first.
+    public void runOpMode(){
+
+
+        /**Initialize autonomous
+         * Strafe a certain measurement
+         * Move backward about 4 ft
+         * Latch onto  platform
+         * drive straight
+         * Drive right (Forward straight, turn right)[not rotate]
+         * Drive back after platform is rotated 90 degrees
+         * Unlatch
+         * Drive forward and stop under bar
+         */
         initValues();
+        initVuforia();
+        initTfod();
+        tfod.activate();
+
         waitForStart();
-        //driveWithEncoder(0.4,3,3,30);
-        //for(int i = 0; i<3; i++) {
+        position = 0.7;
+        servo.setPosition(position);
+        sleep(500);
+        hook.setPosition(0.65);
+        driveWithStrafe(.2, -200, 0);
 
-        pickUp();
-        driveWithEncoder(.15, 14, 14, 30);
-        servo.setPosition(.7);
-        sleep(1000);
-        strafeWithTime(2.2, .2, 'b');
-        reversePickUp();
-        driveWithEncoder(.1, 1, 1, 30);
-        strafeWithTime(.85, .3, 'l');
-        strafeWithTime(4, .2, 'b');
-        pickUp();
-        driveWithEncoder(.1, 22, 22, 30);
-        servo2.setPosition(1);
-        sleep(1000);
-        //}
 
-    }
+        driveWithEncoder(.4, 18.5, 18.5, 30);
+        sleep(1000);
+
+        while (!runScanner())
+        {
+            backLeft.setPower(.17);
+            backRight.setPower(-.15);
+            frontLeft.setPower(-.45);
+            frontRight.setPower(.15);
+            sleep(375);
+            strafeWithTime(.03, .5, 'e');
+            //strafeWithTime(.02, .3, 'q');
+            sleep(600);
+        }
+        strafeWithTime(.3, .5, 'b');
+        servo.setPosition(0.1);
+
+        driveWithEncoder(.3, 12, 12, 30);
+        servo1.setPosition(0);
+        sleep(1000);
+        strafeWithTime(.25, 0.5, 'b');
+        strafeWithTime(1.3, .25, 'p');
+
+        driveWithEncoder(.3, 65, 65, 30);
+//        strafeWithTime(1.3, .25, 'q');
+//
+//        servo.setPosition(0.1);
+//        servo1.setPosition(0);
+//        sleep(500);
+//
+//        armmotor.setPower(0.8);
+//        sleep(800);
+//        armmotor.setPower(0);
+//        sleep(800);
+//
+//        driveWithEncoder(.3, 5, 5, 30);
+//        sleep(800);
+//        servo1.setPosition(0.8);
+//        sleep(800);
+//
+//        strafeWithTime(0.3, 0.5, 'b');
+//        servo.setPosition(0.14);
+//
+//        armmotor.setPower(-0.8);
+//        sleep(800);
+//        armmotor.setPower(0);
+//
+//        strafeWithTime(1.3, .25, 'p');
+        servo1.setPosition(0.8);
+        sleep(500);
+        //strafeWithTime(1.2, .3, 'p');
+        strafeWithTime(.3, .3, 'b');
+        strafeWithTime(.7, .3, 'b');
+
 
         /**
-         * Activate TensorFlow Object Detection before we wait for the start command.
-         * Do it here so that the Camera Stream window will have the TensorFlow annotations visible.
-            servo1.setPosition(0.7);
-
-            armmotor.setPower(-0.8);
-            sleep(600);
-
-            servo.setPosition(0.08);
-            servo1.setPosition(0.216);
-            armmotor.setPower(0.8);
-            sleep(600);
-
-        }
-
-        if (tfod != null) {
-            tfod.shutdown();
-        }
-    }
-
-    /**
-     * Initialize the Vuforia localization engine.
-     */
-
-        public void reversePickUp() {
-
-            strafeWithTime(1.22,0.3,'q');
-            strafeWithTime(1.55,.3, 'b');
-
-
-            sleep(1000);
-
-        }
-
-    public void pickUp() {
-
-//        armmotor.setPower(-0.5);
-//        sleep(300);
-//        armmotor.setPower(0);
-//        servo1.setPosition(0.75);
-//        sleep(600);
-
-        driveWithEncoder(0.25,25,25,30);
-        servo.setPosition(0.0);
-        sleep(1000);
-
-//       armmotor.setPower(0.5);
-//       armmotor.setPower(0);
-//       servo1.setPosition(0);
-//       sleep(800);
-
-        strafeWithTime(0.5, 0.3, 'b');
-        strafeWithTime(1.4,0.3,'p');
-        driveWithEncoder(0.4,23,23,30);
-
-//        servo1.setPosition(0.75);
-     /*   strafeWithTime(0.5,0.5,'b');
-        strafeWithTime(3,0.6,'r');
-        strafeWithTime(3,0.6,'l'); */
-
+         sleep(500);
+         strafeWithTime(1, .2, 'b');
+         servo.setPosition(0);
+         sleep(200);
+         */
 
     }
+
+
+
+    private void initTfod() {
+        int tfodMonitorViewId = hardwareMap.appContext.getResources().getIdentifier(
+                "tfodMonitorViewId", "id", hardwareMap.appContext.getPackageName());
+        TFObjectDetector.Parameters tfodParameters = new TFObjectDetector.Parameters(tfodMonitorViewId);
+        tfodParameters.minimumConfidence = 0.65;
+        tfod = ClassFactory.getInstance().createTFObjectDetector(tfodParameters, vuforia);
+        tfod.loadModelFromAsset(TFOD_MODEL_ASSET, LABEL_FIRST_ELEMENT, LABEL_SECOND_ELEMENT);
+    }
+
     public void initValues(){
-        armmotor = hardwareMap.dcMotor.get("arm");
+
+
+
+
+
         servo = hardwareMap.servo.get("servo");
-        servo1 = hardwareMap.servo.get("servo1");
-        servo2 = hardwareMap.servo.get("servo2");
-        position = 0.1;
+        armmotor = hardwareMap.dcMotor.get("arm");
 
 
         frontLeft = hardwareMap.dcMotor.get("frontleft");
@@ -196,6 +165,8 @@ public class AutoRightSkystone extends LinearOpMode {
         frontRight = hardwareMap.dcMotor.get("frontright");
         backRight = hardwareMap.dcMotor.get("backright");
         hook = hardwareMap.servo.get("hook");
+        servo1 = hardwareMap.servo.get("servo1");
+
 
         //Defining front and back using clockwise and counterclockwise movement
         // of the wheels
@@ -205,7 +176,7 @@ public class AutoRightSkystone extends LinearOpMode {
 
 
         double drive = 0;
-        double strafe = 0;
+        double strafe = 1;
         double rotate = 0;
 
         /**Movements for each motor*/
@@ -221,6 +192,55 @@ public class AutoRightSkystone extends LinearOpMode {
         COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) / (WHEEL_DIAMETER_INCHES * 3.1415);
 
     }
+
+
+    public boolean runScanner(){
+        if (tfod != null) {
+            // getUpdatedRecognitions() will return null if no new information is available since
+            // the last time that call was made.
+            List<Recognition> updatedRecognitions = tfod.getUpdatedRecognitions();
+            if (updatedRecognitions != null) {
+                telemetry.addData("# Object Detected", updatedRecognitions.size());
+
+                // step through the list of recognitions and display boundary info.
+                int i = 0;
+                for (Recognition recognition : updatedRecognitions) {
+                    telemetry.addData(String.format("label (%d)", i), recognition.getLabel());
+                    telemetry.addData(String.format("  left,top (%d)", i), "%.03f , %.03f",
+                            recognition.getLeft(), recognition.getTop());
+                    telemetry.addData(String.format("  right,bottom (%d)", i), "%.03f , %.03f",
+                            recognition.getRight(), recognition.getBottom());
+
+                    if(recognition.getLabel().equals("Skystone")) {
+                        return true;
+                    }
+                }
+                telemetry.update();
+            }
+
+
+
+        }
+        return false;
+    }
+
+    private void initVuforia() {
+        /*
+         * Configure Vuforia by creating a Parameter object, and passing it to the Vuforia engine.
+         */
+        VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters();
+
+        parameters.vuforiaLicenseKey = VUFORIA_KEY;
+        parameters.cameraDirection = VuforiaLocalizer.CameraDirection.BACK;
+
+
+        //  Instantiate the Vuforia engine
+        vuforia = ClassFactory.getInstance().createVuforia(parameters);
+
+        // Loading trackables is not necessary for the TensorFlow Object Detection engine.
+    }
+
+    //Method to strafe
     public void driveWithStrafe(double speed, double strafe, double rotate) {
 
         int newLeftTarget;
@@ -279,6 +299,13 @@ public class AutoRightSkystone extends LinearOpMode {
 
         //  sleep(250);
 
+
+
+
+
+
+
+
     }
 
     public void strafeWithTime(double time, double power, char direction){
@@ -315,6 +342,27 @@ public class AutoRightSkystone extends LinearOpMode {
             backRight.setPower(power);
             frontLeft.setPower(-power);
             frontRight.setPower(power);
+        }
+
+        //arcLeft
+        if(direction == 'a')  {
+
+
+            backLeft.setPower(power/7);
+            backRight.setPower(power);
+            frontLeft.setPower(power/7);
+            frontRight.setPower(power);
+
+        }
+
+        if(direction == 'e') {
+
+            backLeft.setPower(power);
+            backRight.setPower(power/7);
+            frontLeft.setPower(power);
+            frontRight.setPower(power/7);
+
+
         }
         while (System.currentTimeMillis() < finalTime){
 
@@ -380,4 +428,5 @@ public class AutoRightSkystone extends LinearOpMode {
         //  sleep(250);
 
     }
+
 }

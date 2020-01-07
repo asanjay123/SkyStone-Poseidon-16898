@@ -41,7 +41,8 @@ public class OneSkyStoneOneTrayRight extends LinearOpMode {
     double     DRIVE_GEAR_REDUCTION;
     double     WHEEL_DIAMETER_INCHES;
     double position;
-    Servo servo2;
+    Servo servo1;
+    DcMotor armmotor;
 
 
     double     COUNTS_PER_INCH;
@@ -69,14 +70,15 @@ public class OneSkyStoneOneTrayRight extends LinearOpMode {
         waitForStart();
         position = 0.7;
         servo.setPosition(position);
-        sleep(500);
+        sleep(200);
         //    hook.setPosition(0.65);
         //driveWithStrafe(.2, -200, 0);
 
-        driveWithEncoder(.4, 18.5, 18.5, 30);
-        sleep(1000);
+        driveWithEncoder(.4, 19.5, 19.5, 30);
+        sleep(500);
 
             servo.setPosition(.7);
+            int i = 0;
             while (!runScanner())
             {
                 backLeft.setPower(.15);
@@ -87,32 +89,81 @@ public class OneSkyStoneOneTrayRight extends LinearOpMode {
                 strafeWithTime(.03, .5, 'e');
                 //strafeWithTime(.02, .3, 'q');
                 sleep(500);
+                i++;
             }
 
-            driveWithEncoder(.2, 8, 8, 30);
-            servo.setPosition(0);
-            sleep(1000);
-            strafeWithTime(.65, 0.3, 'b');
-            strafeWithTime(1.65, .225, 'p');
-            driveWithEncoder(.3, 82.5, 82.5, 30);
-            servo.setPosition(.7);
+            strafeWithTime(.3, .5, 'b');
+            servo.setPosition(0.14);
+            sleep(200);
+            driveWithEncoder(.3, 13, 13, 30);
+            servo1.setPosition(0);
+            sleep(200);
+
+            strafeWithTime(.65, 0.35, 'b');
+            if (i==0) {
+                strafeWithTime(0.1, .4, 'p');
+            }
+            else {
+                strafeWithTime(0.8, .4, 'p');
+            }
+
+            if (i>4){
+                driveWithEncoder(.4, 90, 90, 30);
+
+            }
+            else if (i>3){
+                driveWithEncoder(.4, 85, 85, 30);
+
+            }
+            else {
+                driveWithEncoder(.4, 80, 80, 30);
+
+            }
+            strafeWithTime(.3, .5, 'r');
+            sleep(200);
+            strafeWithTime(0.75, .4, 'q');
+
+            servo1.setPosition(0);
+            servo.setPosition(0.14);
+
+            armmotor.setPower(0.9);
+            sleep(700);
+            armmotor.setPower(0);
+            sleep(200);
+
+            driveWithEncoder(.3, 25, 25, 30);
+            sleep(200);
+            servo1.setPosition(0.8);
             sleep(500);
-            strafeWithTime(1.2, .3, 'p');
-            strafeWithTime(1.5, .2, 'b');
+
+            strafeWithTime(0.3, 0.5, 'b');
+            servo.setPosition(0.14);
+
+            armmotor.setPower(-0.9);
+            sleep(700);
+            armmotor.setPower(0);
+
+            servo.setPosition(0.7);
+            sleep(250);
+
+            strafeWithTime(1, .65, 'p');
+            strafeWithTime(.5, .4, 'b');
 
 
-        hook.setPosition(0.3);
-        sleep(1000);
-        strafeWithTime(2.3,1,'e');
-        strafeWithTime(1.5,0.8,'b');
-        hook.setPosition(0.65);
-        servo.setPosition(0);
-        sleep(1000);
-        strafeWithTime(0.25, .3, 'q');
-        strafeWithTime(.3, .3, 'b');
-        servo.setPosition(0.14);
-        driveWithEncoder(.4, 36, 36, 30);
-        servo2.setPosition(1);
+            hook.setPosition(0.3);
+            sleep(1000);
+            strafeWithTime(2.7,1,'e');
+            strafeWithTime(0.9,1,'b');
+            hook.setPosition(0.65);
+            servo.setPosition(0.14);
+            sleep(500);
+            //strafeWithTime(0.25, .3, 'q');
+
+            //strafeWithTime(.3, .3, 'b');
+            sleep(200);
+            servo.setPosition(0.14);
+            driveWithEncoder(.4, 36, 36, 30);
+            servo1.setPosition(1);
 
 
 
@@ -143,14 +194,13 @@ public class OneSkyStoneOneTrayRight extends LinearOpMode {
 
 
         servo = hardwareMap.servo.get("servo");
-
-
+        armmotor = hardwareMap.dcMotor.get("arm");
         frontLeft = hardwareMap.dcMotor.get("frontleft");
         backLeft = hardwareMap.dcMotor.get("backleft");
         frontRight = hardwareMap.dcMotor.get("frontright");
         backRight = hardwareMap.dcMotor.get("backright");
         hook = hardwareMap.servo.get("hook");
-        servo2 = hardwareMap.servo.get("servo2");
+        servo1 = hardwareMap.servo.get("servo1");
 
 
         //Defining front and back using clockwise and counterclockwise movement
