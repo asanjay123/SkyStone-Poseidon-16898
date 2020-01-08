@@ -82,6 +82,7 @@ public class AutoRightSkystone extends LinearOpMode {
         while (!runScanner())
         {
             backLeft.setPower(.15);
+
             backRight.setPower(-.15);
             frontLeft.setPower(-.45);
             frontRight.setPower(.15);
@@ -92,52 +93,67 @@ public class AutoRightSkystone extends LinearOpMode {
             i++;
         }
 
-
         strafeWithTime(.2, .5, 'b');
         servo.setPosition(0.14);
         sleep(200);
         driveWithEncoder(.3, 13, 13, 30);
         servo1.setPosition(0);
-        sleep(200);
+        sleep(500);
+        strafeWithTime(.4, 0.5, 'b');
 
-        strafeWithTime(.45, 0.35, 'b');
         if (i==0) {
-            strafeWithTime(0.1, .4, 'p');
+            strafeWithTime(0.73, .4, 'p');
         }
         else {
-            strafeWithTime(0.8, .4, 'p');
+            strafeWithTime(0.75, .4, 'p');
         }
 
         driveWithEncoder(.4, 40, 40, 30);
 
-        servo1.setPosition(0.8);
-        sleep(500);
+            strafeWithTime(.1, .3, 'p');
+            servo1.setPosition(0.8);
+            sleep(500);
 
-        strafeWithTime(3, .3, 'b');
+            strafeWithTime(1.5, .5, 'b');
+            strafeWithTime(.3, .2, 'r');
+
+            if (i>=4) {
+                driveWithEncoder(.5, 10, 10, 30);
+                strafeWithTime(0.7, .52, 'q');
+                strafeWithTime(0.9, .6, 'l');
+
+                sleep(200);
+                driveWithEncoder(.3, 15, 15, 30);
+                servo1.setPosition(0);
+                sleep(200);
+
+                strafeWithTime(.7, 0.3, 'b');
+                strafeWithTime(0.66, .5, 'p');
+                driveWithEncoder(.4, 58, 58, 30);
+                strafeWithTime(.3, 0.6, 'l');
+                servo1.setPosition(0.8);
+
+            }
+            else {
+                //servo.setPosition(0.7);
+                sleep(500);
+                strafeWithTime(0.64, .5, 'q');
 
 
+                //strafeWithTime(.15, .5, 'b');
+                //servo.setPosition(0.14);
+                sleep(200);
+                driveWithEncoder(.3, 10, 10, 30);
+                servo1.setPosition(0);
+                sleep(200);
 
-        servo.setPosition(0.7);
-        sleep(500);
-        strafeWithTime(0.7, .4, 'q');
+                strafeWithTime(.7, 0.3, 'b');
+                strafeWithTime(0.62, .5, 'p');
+                driveWithEncoder(.4, 58, 58, 30);
+                strafeWithTime(.3, 0.6, 'l');
+                servo1.setPosition(0.8);
+            }
 
-
-        strafeWithTime(.15, .5, 'b');
-        servo.setPosition(0.14);
-        sleep(200);
-        driveWithEncoder(.3, 18, 18, 30);
-        servo1.setPosition(0);
-        sleep(200);
-
-        strafeWithTime(.65, 0.35, 'b');
-        if (i==0) {
-            strafeWithTime(0.1, .4, 'p');
-        }
-        else {
-            strafeWithTime(0.65, .4, 'p');
-        }
-        driveWithEncoder(.4, 35, 35, 30);
-        servo1.setPosition(0.8);
 
 
 

@@ -127,7 +127,7 @@ public class OneSkyStoneOneTrayRight extends LinearOpMode {
             servo.setPosition(0.14);
 
             armmotor.setPower(0.9);
-            sleep(700);
+            sleep(850);
             armmotor.setPower(0);
             sleep(200);
 
@@ -140,14 +140,14 @@ public class OneSkyStoneOneTrayRight extends LinearOpMode {
             servo.setPosition(0.14);
 
             armmotor.setPower(-0.9);
-            sleep(700);
+            sleep(850);
             armmotor.setPower(0);
 
             servo.setPosition(0.7);
             sleep(250);
 
             strafeWithTime(1, .65, 'p');
-            strafeWithTime(.5, .4, 'b');
+            strafeWithTime(.7, .4, 'b');
 
 
             hook.setPosition(0.3);
