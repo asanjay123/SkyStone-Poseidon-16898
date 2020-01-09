@@ -114,7 +114,7 @@ public class AutoRightSkystone extends LinearOpMode {
             servo1.setPosition(0.8);
             sleep(500);
 
-            strafeWithTime(1.5, .5, 'b');
+            strafeWithTime(1.7, .5, 'b');
             strafeWithTime(.3, .2, 'r');
 
             if (i>=4) {
@@ -143,7 +143,7 @@ public class AutoRightSkystone extends LinearOpMode {
                 //strafeWithTime(.15, .5, 'b');
                 //servo.setPosition(0.14);
                 sleep(200);
-                driveWithEncoder(.3, 10, 10, 30);
+                driveWithEncoder(.3, 11, 11, 30);
                 servo1.setPosition(0);
                 sleep(200);
 
@@ -152,6 +152,7 @@ public class AutoRightSkystone extends LinearOpMode {
                 driveWithEncoder(.4, 58, 58, 30);
                 strafeWithTime(.3, 0.6, 'l');
                 servo1.setPosition(0.8);
+                strafeWithTime(.35, .2, 'b');
             }
 
 

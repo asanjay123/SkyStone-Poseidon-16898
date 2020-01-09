@@ -101,7 +101,7 @@ public class OneSkyStoneOneTrayRight extends LinearOpMode {
 
             strafeWithTime(.65, 0.35, 'b');
             if (i==0) {
-                strafeWithTime(0.1, .4, 'p');
+                strafeWithTime(0.76, .4, 'p');
             }
             else {
                 strafeWithTime(0.8, .4, 'p');
@@ -116,7 +116,7 @@ public class OneSkyStoneOneTrayRight extends LinearOpMode {
 
             }
             else {
-                driveWithEncoder(.4, 80, 80, 30);
+                driveWithEncoder(.4, 76, 76, 30);
 
             }
             strafeWithTime(.3, .5, 'r');
@@ -143,16 +143,22 @@ public class OneSkyStoneOneTrayRight extends LinearOpMode {
             sleep(850);
             armmotor.setPower(0);
 
+
             servo.setPosition(0.7);
             sleep(250);
 
             strafeWithTime(1, .65, 'p');
-            strafeWithTime(.7, .4, 'b');
+            strafeWithTime(1.5, .2, 'b');
 
 
             hook.setPosition(0.3);
             sleep(1000);
-            strafeWithTime(2.7,1,'e');
+            if (i==0){
+                strafeWithTime(2,1,'e');
+            }else{
+                strafeWithTime(2.3,1,'e');
+            }
+
             strafeWithTime(0.9,1,'b');
             hook.setPosition(0.65);
             servo.setPosition(0.14);
