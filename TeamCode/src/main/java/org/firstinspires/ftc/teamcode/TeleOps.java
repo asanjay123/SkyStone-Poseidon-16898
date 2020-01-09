@@ -142,6 +142,7 @@ public class TeleOps extends OpMode {
             }
 
         }
+
         if (gamepad2.dpad_down){
             try{
                 servo1.setPosition(servo1.getPosition() - .01);
