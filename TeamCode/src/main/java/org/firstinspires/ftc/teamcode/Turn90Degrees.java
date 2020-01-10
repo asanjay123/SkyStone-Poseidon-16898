@@ -40,10 +40,11 @@ public class Turn90Degrees extends LinearOpMode
         telemetry.addData("2 global heading", globalAngle);
         telemetry.update();
 
-        driveStraightWithCorrection(5, .2, 'f');
-        strafeWithCorrection(5, .2, 'r');
-        rotate(90, .15);
-        sleep(500);
+        driveStraightWithCorrection(25, .1, 'f');
+        //strafeWithCorrection(5, .2, 'r');
+
+
+
 
 
 
@@ -112,7 +113,7 @@ public class Turn90Degrees extends LinearOpMode
         else if (degrees > 0)
         {   // turn left.
             leftPower = power;
-            rightPower = power;
+            rightPower = -power;
         }
         else return;
 
@@ -124,12 +125,19 @@ public class Turn90Degrees extends LinearOpMode
 
         if (degrees < 0)
         {
-            while (opModeIsActive() && getAngle() == 0) {}
 
-            while (opModeIsActive() && getAngle() > degrees) {}
+            while (opModeIsActive() && getAngle() < -degrees) {
+                telemetry.addData("Target", degrees);
+                telemetry.addData("Actual", getAngle());
+                telemetry.update();
+            }
         }
         else
-            while (opModeIsActive() && getAngle() < degrees) {}
+            while (opModeIsActive() && -getAngle() < degrees) {
+                telemetry.addData("Target", degrees);
+                telemetry.addData("Actual", getAngle());
+                telemetry.update();
+            }
 
         frontLeft.setPower(0);
         backLeft.setPower(0);
