@@ -40,9 +40,10 @@ public class Turn90Degrees extends LinearOpMode
         telemetry.addData("2 global heading", globalAngle);
         telemetry.update();
 
-        driveStraightWithCorrection(25, .1, 'f');
+        //driveStraightWithCorrection(5, .2, 'f');
         //strafeWithCorrection(5, .2, 'r');
-
+    
+            rotate(-90, .1);
 
 
 
