@@ -87,7 +87,7 @@ public class AutoLeftSkystone extends LinearOpMode {
             frontLeft.setPower(.45);
             frontRight.setPower(-.15);
             sleep(350);
-            strafeWithTime(.03, .5, 'a');
+            //strafeWithTime(.03, .3, 'e');
             //strafeWithTime(.02, .3, 'q');
             sleep(500);
             i++;
@@ -185,7 +185,8 @@ public class AutoLeftSkystone extends LinearOpMode {
 //        armmotor.setPower(0.8);
 //        sleep(800);
 //        armmotor.setPower(0);
-//        sleep(800);
+//        sleep(800);'
+
 //
 //        driveWithEncoder(.3, 5, 5, 30);
 //        sleep(800);
