@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -8,6 +9,10 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
+import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
 import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
@@ -42,6 +47,9 @@ public class OneSkyStoneOneTrayLeft extends LinearOpMode {
     double     WHEEL_DIAMETER_INCHES;
     double position;
     Servo servo2;
+    BNO055IMU imu;
+    Orientation lastAngles = new Orientation();
+    double                  globalAngle, correction;
 
 
     double     COUNTS_PER_INCH;
@@ -65,6 +73,8 @@ public class OneSkyStoneOneTrayLeft extends LinearOpMode {
         initVuforia();
         initTfod();
         tfod.activate();
+        initIMU();
+
 
         waitForStart();
         position = 0.7;
@@ -419,5 +429,206 @@ public class OneSkyStoneOneTrayLeft extends LinearOpMode {
         //  sleep(250);
 
     }
+
+    private void resetAngle()
+    {
+        lastAngles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+
+        globalAngle = 0;
+    }
+
+
+    private double getAngle()
+    {
+        Orientation angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+
+        double deltaAngle = angles.firstAngle - lastAngles.firstAngle;
+
+        if (deltaAngle < -180)
+            deltaAngle += 360;
+        else if (deltaAngle > 180)
+            deltaAngle -= 360;
+
+        globalAngle += deltaAngle;
+
+        lastAngles = angles;
+
+        return globalAngle;
+    }
+
+    private double checkDirection()
+    {
+
+        double correction, angle, gain = .10;
+
+        angle = getAngle();
+
+        if (angle == 0)
+            correction = 0;
+        else
+            correction = -angle;
+
+        correction = correction * gain;
+
+        return correction;
+    }
+
+
+    private void rotate(double degrees, double power)
+    {
+        double  leftPower, rightPower;
+
+        // restart imu movement tracking.
+        resetAngle();
+
+        // getAngle() returns + when rotating counter clockwise (left) and - when rotating
+        // clockwise (right).
+
+        if (degrees < 0)
+        {   // turn right.
+            leftPower = -power;
+            rightPower = power;
+        }
+        else if (degrees > 0)
+        {   // turn left.
+            leftPower = power;
+            rightPower = -power;
+        }
+        else return;
+
+        // set power to rotate.
+        frontLeft.setPower(leftPower);
+        backLeft.setPower(leftPower);
+        frontRight.setPower(rightPower);
+        backRight.setPower(rightPower);
+
+        if (degrees < 0)
+        {
+
+            while (opModeIsActive() && getAngle() < -degrees) {
+                telemetry.addData("Target", degrees);
+                telemetry.addData("Actual", getAngle());
+                telemetry.update();
+            }
+        }
+        else
+            while (opModeIsActive() && -getAngle() < degrees) {
+                telemetry.addData("Target", degrees);
+                telemetry.addData("Actual", getAngle());
+                telemetry.update();
+            }
+
+        frontLeft.setPower(0);
+        backLeft.setPower(0);
+        frontRight.setPower(0);
+        frontLeft.setPower(0);
+
+
+        resetAngle();
+    }
+
+    private void driveStraightWithCorrection(double time, double power, char direction){
+        long initialTime = System.currentTimeMillis();
+        double finalTime = initialTime + time*1000;
+
+        if (direction == 'f') {
+
+            while (System.currentTimeMillis() < finalTime){
+                correction = checkDirection();
+                if (correction > .1){
+                    correction = .05;
+                }
+                frontLeft.setPower(power - correction);
+                backLeft.setPower(power - correction);
+                frontRight.setPower(power + correction);
+                backRight.setPower(power + correction);
+            }
+        }
+
+        if (direction == 'b') {
+            while (System.currentTimeMillis() < finalTime){
+                correction = checkDirection();
+                if (correction > .1){
+                    correction = .05;
+                }
+                frontLeft.setPower(-power - correction);
+                backLeft.setPower(-power - correction);
+                frontRight.setPower(-power + correction);
+                backRight.setPower(-power + correction);
+            }
+        }
+
+
+        backLeft.setPower(0);
+        backRight.setPower(0);
+        frontLeft.setPower(0);
+        frontRight.setPower(0);
+    }
+
+    private void strafeWithCorrection(double time, double power, char direction){
+        long initialTime = System.currentTimeMillis();
+        double finalTime = initialTime + time*1000;
+
+        if (direction == 'r') {
+            while (System.currentTimeMillis() < finalTime){
+                correction = checkDirection();
+                if (correction > .1){
+                    correction = .05;
+                }
+                frontLeft.setPower(power - correction);
+                backLeft.setPower(-power - correction);
+                frontRight.setPower(-power + correction);
+                backRight.setPower(power + correction);
+            }
+        }
+
+        if (direction == 'l') {
+            while (System.currentTimeMillis() < finalTime){
+                correction = checkDirection();
+                if (correction > .1){
+                    correction = -.05;
+                }
+                frontLeft.setPower(-power + correction);
+                backLeft.setPower(power + correction);
+                frontRight.setPower(power - correction);
+                backRight.setPower(-power - correction);
+            }
+        }
+
+
+        backLeft.setPower(0);
+        backRight.setPower(0);
+        frontLeft.setPower(0);
+        frontRight.setPower(0);
+    }
+
+    public void initIMU(){
+
+        BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
+
+        parameters.mode                = BNO055IMU.SensorMode.IMU;
+        parameters.angleUnit           = BNO055IMU.AngleUnit.DEGREES;
+        parameters.accelUnit           = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
+        parameters.loggingEnabled      = false;
+
+        imu = hardwareMap.get(BNO055IMU.class, "imu");
+
+        imu.initialize(parameters);
+
+        telemetry.addData("Mode", "calibrating...");
+        telemetry.update();
+
+        while (!isStopRequested() && !imu.isGyroCalibrated())
+        {
+            sleep(50);
+            idle();
+        }
+
+        telemetry.addData("Mode", "waiting for start");
+        telemetry.addData("imu calib status", imu.getCalibrationStatus().toString());
+        telemetry.update();
+
+    }
+
 
 }
