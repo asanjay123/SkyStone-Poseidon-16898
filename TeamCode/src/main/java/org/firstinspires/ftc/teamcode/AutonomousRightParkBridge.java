@@ -60,7 +60,7 @@ public class AutonomousRightParkBridge extends LinearOpMode {
         sleep(500);
 
 
-        strafeWithTime(1.9,1,'a');
+        strafeWithTime(1.5,1,'a');
 
         strafeWithTime(1.4,0.8,'b');
         hook.setPosition(0.65);

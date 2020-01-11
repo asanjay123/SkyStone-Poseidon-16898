@@ -60,10 +60,13 @@ public class AutonomousRightNew extends LinearOpMode {
         sleep(500);
 
 
-        strafeWithTime(1.9,1,'a');
+        strafeWithTime(1.5,1,'a');
         servo.setPosition(0.14);
         strafeWithTime(1.4,0.8,'b');
         hook.setPosition(0.65);
+        sleep(1000);
+        driveWithEncoder(.4, 5, 5, 30);
+        sleep(500);
         /**
         driveWithEncoder(.4, 36, 36, 30);
         servo2.setPosition(1);

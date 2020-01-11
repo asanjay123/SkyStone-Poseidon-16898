@@ -57,12 +57,14 @@ public class AutonomousLeftNew extends LinearOpMode {
         strafeWithTime(1.4, .3, 'b');
         hook.setPosition(0.3);
         sleep(500);
-
-
         strafeWithTime(2.3,1,'e');
 
         strafeWithTime(1.4,0.8,'b');
         hook.setPosition(0.65);
+        sleep(500);
+        driveWithEncoder(.4, 5, 5, 30);
+        servo.setPosition(0.14);
+        sleep(1000);
         /**
         driveWithEncoder(.4, 36, 36, 30);
         servo2.setPosition(1);

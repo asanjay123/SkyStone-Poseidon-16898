@@ -102,35 +102,36 @@ public class AutoRightSkystone extends LinearOpMode {
         strafeWithTime(.4, 0.5, 'b');
 
         if (i==0) {
-            strafeWithTime(0.73, .4, 'p');
+            strafeWithTime(0.75, .4, 'p');
         }
         else {
             strafeWithTime(0.75, .4, 'p');
         }
 
-        driveWithEncoder(.4, 40, 40, 30);
+        driveWithEncoder(.4, 36, 36, 30);
 
             strafeWithTime(.1, .3, 'p');
             servo1.setPosition(0.8);
             sleep(500);
 
-            strafeWithTime(1.7, .5, 'b');
+            strafeWithTime(1.78, .5, 'b');
             strafeWithTime(.3, .2, 'r');
 
-            if (i>=4) {
-                driveWithEncoder(.5, 10, 10, 30);
+            if (i>4) {
+                driveWithEncoder(.5, 12, 12, 30);
                 strafeWithTime(0.7, .52, 'q');
                 strafeWithTime(0.9, .6, 'l');
 
                 sleep(200);
-                driveWithEncoder(.3, 15, 15, 30);
+                driveWithEncoder(.25, 16, 16, 30);
+                sleep(500);
                 servo1.setPosition(0);
                 sleep(200);
 
                 strafeWithTime(.7, 0.3, 'b');
                 strafeWithTime(0.66, .5, 'p');
-                driveWithEncoder(.4, 58, 58, 30);
-                strafeWithTime(.3, 0.6, 'l');
+                driveWithEncoder(.4, 60, 60, 30);
+                strafeWithTime(.5, 0.6, 'l');
                 servo1.setPosition(0.8);
 
             }
@@ -149,10 +150,19 @@ public class AutoRightSkystone extends LinearOpMode {
 
                 strafeWithTime(.7, 0.3, 'b');
                 strafeWithTime(0.62, .5, 'p');
-                driveWithEncoder(.4, 58, 58, 30);
+                if (i != 0) {
+                    driveWithEncoder(.4, 8, 8, 30);
+                    strafeWithTime(.7, .3, 'l');
+
+                    driveWithEncoder(.4, 50, 50, 30);
+                }
+                else {
+                    driveWithEncoder(.4, 58, 58, 30);
+
+                }
                 strafeWithTime(.3, 0.6, 'l');
                 servo1.setPosition(0.8);
-                strafeWithTime(.35, .2, 'b');
+                strafeWithTime(.35, .35, 'b');
             }
 
 

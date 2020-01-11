@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -12,6 +13,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
 @Autonomous(name="IMU Testing Stuff", group="")
+@Disabled
 public class Turn90Degrees extends LinearOpMode
 {
     DcMotor                 frontLeft, frontRight, backLeft, backRight;
@@ -40,10 +42,10 @@ public class Turn90Degrees extends LinearOpMode
         telemetry.addData("2 global heading", globalAngle);
         telemetry.update();
 
-        //driveStraightWithCorrection(5, .2, 'f');
+        driveStraightWithCorrection(1, 1, 'b');
         //strafeWithCorrection(5, .2, 'r');
     
-            rotate(-90, .1);
+            //rotate(-90, .1);
 
 
 
@@ -157,6 +159,9 @@ public class Turn90Degrees extends LinearOpMode
 
             while (System.currentTimeMillis() < finalTime){
                 correction = checkDirection();
+                if (correction > .1){
+                    correction = .05;
+                }
                 frontLeft.setPower(power - correction);
                 backLeft.setPower(power - correction);
                 frontRight.setPower(power + correction);
@@ -167,10 +172,13 @@ public class Turn90Degrees extends LinearOpMode
         if (direction == 'b') {
             while (System.currentTimeMillis() < finalTime){
                 correction = checkDirection();
-                frontLeft.setPower(-power + correction);
-                backLeft.setPower(-power + correction);
-                frontRight.setPower(-power - correction);
-                backRight.setPower(-power - correction);
+                if (correction > .1){
+                    correction = .05;
+                }
+                frontLeft.setPower(-power - correction);
+                backLeft.setPower(-power - correction);
+                frontRight.setPower(-power + correction);
+                backRight.setPower(-power + correction);
             }
         }
 
@@ -185,23 +193,29 @@ public class Turn90Degrees extends LinearOpMode
         long initialTime = System.currentTimeMillis();
         double finalTime = initialTime + time*1000;
 
-        if (direction == 'f') {
+        if (direction == 'r') {
             while (System.currentTimeMillis() < finalTime){
                 correction = checkDirection();
+                if (correction > .1){
+                    correction = .05;
+                }
                 frontLeft.setPower(power - correction);
-                backLeft.setPower(-power + correction);
-                frontRight.setPower(power + correction);
-                backRight.setPower(-power - correction);
+                backLeft.setPower(-power - correction);
+                frontRight.setPower(-power + correction);
+                backRight.setPower(power + correction);
             }
         }
 
-        if (direction == 'b') {
+        if (direction == 'l') {
             while (System.currentTimeMillis() < finalTime){
                 correction = checkDirection();
-                frontLeft.setPower(+power - correction);
-                backLeft.setPower(-power + correction);
-                frontRight.setPower(-power - correction);
-                backRight.setPower(power + correction);
+                if (correction > .1){
+                    correction = -.05;
+                }
+                frontLeft.setPower(-power + correction);
+                backLeft.setPower(power + correction);
+                frontRight.setPower(power - correction);
+                backRight.setPower(-power - correction);
             }
         }
 
