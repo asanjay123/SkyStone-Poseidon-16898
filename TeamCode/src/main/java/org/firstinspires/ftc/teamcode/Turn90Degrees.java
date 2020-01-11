@@ -13,7 +13,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
 @Autonomous(name="IMU Testing Stuff", group="")
-@Disabled
+
 public class Turn90Degrees extends LinearOpMode
 {
     DcMotor                 frontLeft, frontRight, backLeft, backRight;
@@ -42,8 +42,8 @@ public class Turn90Degrees extends LinearOpMode
         telemetry.addData("2 global heading", globalAngle);
         telemetry.update();
 
-        driveStraightWithCorrection(1, 1, 'b');
-        //strafeWithCorrection(5, .2, 'r');
+
+        strafeWithCorrection(5, .2, 'l');
     
             //rotate(-90, .1);
 
@@ -209,13 +209,13 @@ public class Turn90Degrees extends LinearOpMode
         if (direction == 'l') {
             while (System.currentTimeMillis() < finalTime){
                 correction = checkDirection();
-                if (correction > .1){
+                if (correction < -.1){
                     correction = -.05;
                 }
-                frontLeft.setPower(-power + correction);
-                backLeft.setPower(power + correction);
-                frontRight.setPower(power - correction);
-                backRight.setPower(-power - correction);
+                frontLeft.setPower(-power - correction);
+                backLeft.setPower(power - correction);
+                frontRight.setPower(power + correction);
+                backRight.setPower(-power + correction);
             }
         }
 

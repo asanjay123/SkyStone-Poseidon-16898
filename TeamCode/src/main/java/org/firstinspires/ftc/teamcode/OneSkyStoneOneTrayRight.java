@@ -91,6 +91,7 @@ public class OneSkyStoneOneTrayRight extends LinearOpMode {
             int i = 0;
             while (!runScanner())
             {
+                /**
                 backLeft.setPower(.15);
                 backRight.setPower(-.15);
                 frontLeft.setPower(-.45);
@@ -99,8 +100,11 @@ public class OneSkyStoneOneTrayRight extends LinearOpMode {
                 strafeWithTime(.03, .5, 'e');
                 //strafeWithTime(.02, .3, 'q');
                 sleep(500);
+                 */
+                strafeWithCorrection(.3, .15, 'l');
                 i++;
             }
+
 
             strafeWithTime(.3, .5, 'b');
             servo.setPosition(0.14);
@@ -110,11 +114,14 @@ public class OneSkyStoneOneTrayRight extends LinearOpMode {
             sleep(200);
 
             strafeWithTime(.65, 0.35, 'b');
+
             if (i==0) {
-                strafeWithTime(0.76, .4, 'p');
+                //strafeWithTime(0.76, .4, 'p');
+                rotate(80, .2);
             }
             else {
-                strafeWithTime(0.8, .4, 'p');
+                //strafeWithTime(0.8, .4, 'p');
+                rotate(80, .2);
             }
 
             if (i>4){
@@ -141,7 +148,7 @@ public class OneSkyStoneOneTrayRight extends LinearOpMode {
             armmotor.setPower(0);
             sleep(200);
 
-            driveWithEncoder(.3, 25, 25, 30);
+            driveWithEncoder(.3, 12, 12, 30);
             sleep(200);
             servo1.setPosition(0.8);
             sleep(500);
@@ -156,20 +163,29 @@ public class OneSkyStoneOneTrayRight extends LinearOpMode {
             servo.setPosition(0.7);
             sleep(250);
 
-            rotate(180, .3);
+            rotate(170, .3);
             //strafeWithTime(1, .65, 'p');
-            strafeWithTime(1.5, .2, 'b');
+            strafeWithTime(1.1, .2, 'b');
+
+
+            frontLeft.setPower(-.3);
+            backLeft.setPower(-.3);
+            frontRight.setPower(-.1);
+            backRight.setPower(-.1);
+            sleep(400);
+            frontLeft.setPower(0);
+            backLeft.setPower(0);
+            frontRight.setPower(0);
+            backRight.setPower(0);
 
 
             hook.setPosition(0.3);
             sleep(1000);
-            if (i==0){
-                strafeWithTime(2,1,'e');
-            }else{
-                strafeWithTime(2.3,1,'e');
-            }
 
-            strafeWithTime(0.9,1,'b');
+            strafeWithTime(1.6,1,'e');
+
+
+            strafeWithTime(1.25,1,'b');
             hook.setPosition(0.65);
             servo.setPosition(0.14);
             sleep(500);
@@ -178,6 +194,9 @@ public class OneSkyStoneOneTrayRight extends LinearOpMode {
             //strafeWithTime(.3, .3, 'b');
             sleep(200);
             servo.setPosition(0.14);
+            driveWithEncoder(.3, 3,3, 30);
+            strafeWithTime(.5, .2, 'r');
+            strafeWithTime(.2, 1, 'b');
             driveWithEncoder(.4, 36, 36, 30);
             servo1.setPosition(1);
 
@@ -636,16 +655,15 @@ public class OneSkyStoneOneTrayRight extends LinearOpMode {
         if (direction == 'l') {
             while (System.currentTimeMillis() < finalTime){
                 correction = checkDirection();
-                if (correction > .1){
+                if (correction < -.05){
                     correction = -.05;
                 }
-                frontLeft.setPower(-power + correction);
-                backLeft.setPower(power + correction);
-                frontRight.setPower(power - correction);
-                backRight.setPower(-power - correction);
+                frontLeft.setPower(-power - correction);
+                backLeft.setPower(power - correction);
+                frontRight.setPower(power + correction);
+                backRight.setPower(-power + correction);
             }
         }
-
 
         backLeft.setPower(0);
         backRight.setPower(0);
