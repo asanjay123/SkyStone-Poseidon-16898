@@ -121,7 +121,7 @@ public class OneSkyStoneOneTrayRight extends LinearOpMode {
             }
             else {
                 //strafeWithTime(0.8, .4, 'p');
-                rotate(80, .2);
+                rotate(81, .2);
             }
 
             if (i>4){
@@ -129,7 +129,7 @@ public class OneSkyStoneOneTrayRight extends LinearOpMode {
 
             }
             else if (i>3){
-                driveWithEncoder(.4, 85, 85, 30);
+                driveWithEncoder(.4, 80, 80, 30);
 
             }
             else {
@@ -138,8 +138,10 @@ public class OneSkyStoneOneTrayRight extends LinearOpMode {
             }
             strafeWithTime(.3, .5, 'r');
             sleep(200);
-            strafeWithTime(0.75, .4, 'q');
-            driveWithEncoder(.3, 8, 8, 30);
+            strafeWithTime(0.7, .4, 'q');
+            sleep(500);
+            driveStraightWithCorrection(.8, .5, 'f');
+            //driveWithEncoder(.3, 8, 8, 30);
             servo1.setPosition(0);
             servo.setPosition(0.14);
 

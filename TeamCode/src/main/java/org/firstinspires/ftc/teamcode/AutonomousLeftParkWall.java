@@ -59,13 +59,13 @@ public class AutonomousLeftParkWall extends LinearOpMode {
         sleep(500);
 
 
-        strafeWithTime(2.3,1,'e');
+        strafeWithTime(2.5,1,'e');
 
         strafeWithTime(1.4,0.8,'b');
         hook.setPosition(0.65);
         //strafeWithTime(.7, .2, 'q');
         strafeWithTime(2, .3, 'l');
-        strafeWithTime(.3, .3, 'r');
+        strafeWithTime(.3, .2, 'r');
         servo.setPosition(0.14);
         driveWithEncoder(.4, 34, 34, 30);
         servo2.setPosition(1);
