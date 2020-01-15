@@ -17,9 +17,14 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 public class Turn90Degrees extends LinearOpMode
 {
     DcMotor                 frontLeft, frontRight, backLeft, backRight;
+    int currentOrientation = 0;
     BNO055IMU               imu;
     Orientation             lastAngles = new Orientation();
     double                  globalAngle, correction;
+    double COUNTS_PER_MOTOR_REV;
+    double     DRIVE_GEAR_REDUCTION;
+    double     WHEEL_DIAMETER_INCHES;
+    double COUNTS_PER_INCH;
 
     @Override
     public void runOpMode() throws InterruptedException
@@ -27,6 +32,7 @@ public class Turn90Degrees extends LinearOpMode
 
         initMotors();
         initIMU();
+
 
 
         waitForStart();
@@ -37,19 +43,54 @@ public class Turn90Degrees extends LinearOpMode
 
 
 
-
-        telemetry.addData("1 imu heading", lastAngles.firstAngle);
-        telemetry.addData("2 global heading", globalAngle);
-        telemetry.update();
-
-
-        strafeWithCorrection(5, .2, 'l');
-    
-            //rotate(-90, .1);
+        rotate(90, 55);
+        driveStraightWithCorrection(3, .3, 'f');
+        driveStraightWithCorrectionAndEncoder(10, 10, .3);
+        goToPoint(15, 15, .5, .5, 90);
 
 
 
 
+
+    }
+
+    private void goToPoint(double updown, double leftright, double movementspeed, double rotatespeed, int rotateangle){
+        int dirAngle;
+        try {
+
+
+            dirAngle = (int) Math.toDegrees(Math.atan(updown / leftright));
+            if (updown < 0 && leftright < 0) {
+                dirAngle = -dirAngle;
+            }
+            if (updown > 0 && leftright < 0) {
+                dirAngle = -dirAngle;
+            }
+        }catch (Exception e){
+            dirAngle = 0;
+        }
+
+
+        if (updown < 0 && leftright == 0){
+            dirAngle = 180;
+        }
+
+        if (leftright < 0 && updown == 0){
+            dirAngle = -90;
+        }
+        if (leftright < 0 && updown == 0){
+            dirAngle = 90;
+        }
+
+        rotate(dirAngle, rotatespeed);
+
+        double distance = Math.sqrt(Math.pow(Math.abs(updown), 2) + Math.pow(Math.abs(leftright), 2));
+
+
+        driveStraightWithCorrectionAndEncoder(distance, distance, movementspeed);
+
+
+        rotate(-dirAngle + rotateangle, rotatespeed);
 
     }
 
@@ -100,7 +141,8 @@ public class Turn90Degrees extends LinearOpMode
 
     private void rotate(int degrees, double power)
     {
-        double  leftPower, rightPower;
+        double  leftPower = 0;
+        double rightPower = 0;
 
         // restart imu movement tracking.
         resetAngle();
@@ -134,13 +176,48 @@ public class Turn90Degrees extends LinearOpMode
                 telemetry.addData("Actual", getAngle());
                 telemetry.update();
             }
+
         }
         else
+            if (degrees > 0){
+                while (opModeIsActive() && -getAngle() < degrees) {
+                    telemetry.addData("Target", degrees);
+                    telemetry.addData("Actual", getAngle());
+                    telemetry.update();
+                }
+            }
+
+
+        frontLeft.setPower(0);
+        backLeft.setPower(0);
+        frontRight.setPower(0);
+        frontLeft.setPower(0);
+
+        sleep(250);
+
+        if (degrees > 0){
+            frontLeft.setPower(.1);
+            backLeft.setPower(.1);
+            frontRight.setPower(-.1);
+            backRight.setPower(-.1);
             while (opModeIsActive() && -getAngle() < degrees) {
                 telemetry.addData("Target", degrees);
                 telemetry.addData("Actual", getAngle());
                 telemetry.update();
             }
+        }
+
+        if (degrees < 0){
+            frontLeft.setPower(.1);
+            backLeft.setPower(.1);
+            frontRight.setPower(-.1);
+            backRight.setPower(-.1);
+            while (opModeIsActive() && getAngle() < degrees) {
+                telemetry.addData("Target", degrees);
+                telemetry.addData("Actual", getAngle());
+                telemetry.update();
+            }
+        }
 
         frontLeft.setPower(0);
         backLeft.setPower(0);
@@ -154,6 +231,8 @@ public class Turn90Degrees extends LinearOpMode
     private void driveStraightWithCorrection(int time, double power, char direction){
         long initialTime = System.currentTimeMillis();
         double finalTime = initialTime + time*1000;
+
+        resetAngle();
 
         if (direction == 'f') {
 
@@ -187,7 +266,144 @@ public class Turn90Degrees extends LinearOpMode
         backRight.setPower(0);
         frontLeft.setPower(0);
         frontRight.setPower(0);
+        sleep(250);
+
+        if (getAngle() > 0){
+            while (getAngle() > 0){
+                frontLeft.setPower(.1);
+                backLeft.setPower(.1);
+                frontRight.setPower(-.1);
+                backRight.setPower(-.1);
+            }
+
+        }
+        if (getAngle() < 0){
+            while (getAngle() < 0){
+                frontLeft.setPower(-.1);
+                backLeft.setPower(-.1);
+                frontRight.setPower(.1);
+                backRight.setPower(.1);
+            }
+
+        }
+
+        backLeft.setPower(0);
+        backRight.setPower(0);
+        frontLeft.setPower(0);
+        frontRight.setPower(0);
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    private void driveStraightWithCorrectionAndEncoder(double leftInches, double rightInches, double power){
+
+
+        resetAngle();
+
+        int newLeftTarget;
+        int newRightTarget;
+        newLeftTarget = backLeft.getCurrentPosition() + (int)(leftInches * COUNTS_PER_INCH);
+        newRightTarget = backRight.getCurrentPosition() + (int)(rightInches * COUNTS_PER_INCH);
+
+        backLeft.setTargetPosition(newLeftTarget);
+        backRight.setTargetPosition(newRightTarget);
+
+        backLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        backRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+
+        while (backLeft.getCurrentPosition() < newLeftTarget &&
+                backRight.getCurrentPosition() < newRightTarget){
+            correction = checkDirection();
+            if (correction > .1){
+                correction = .05;
+            }
+            frontLeft.setPower(power - correction);
+            backLeft.setPower(power - correction);
+            frontRight.setPower(power + correction);
+            backRight.setPower(power + correction);
+
+            telemetry.addData("Path1",  "Running to %7d :%7d", newLeftTarget,  newRightTarget);
+            telemetry.addData("Path2",  "Running at %7d :%7d",
+                    backLeft.getCurrentPosition(),
+                    backRight.getCurrentPosition());
+            telemetry.update();
+        }
+
+
+
+
+        backLeft.setPower(0);
+        backRight.setPower(0);
+        frontLeft.setPower(0);
+        frontRight.setPower(0);
+        sleep(250);
+
+        if (getAngle() > 0){
+            while (getAngle() > 0){
+                frontLeft.setPower(.1);
+                backLeft.setPower(.1);
+                frontRight.setPower(-.1);
+                backRight.setPower(-.1);
+            }
+
+        }
+        if (getAngle() < 0){
+            while (getAngle() < 0){
+                frontLeft.setPower(-.1);
+                backLeft.setPower(-.1);
+                frontRight.setPower(.1);
+                backRight.setPower(.1);
+            }
+
+        }
+
+        backLeft.setPower(0);
+        backRight.setPower(0);
+        frontLeft.setPower(0);
+        frontRight.setPower(0);
+
+        backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     private void strafeWithCorrection(int time, double power, char direction){
         long initialTime = System.currentTimeMillis();
@@ -209,7 +425,7 @@ public class Turn90Degrees extends LinearOpMode
         if (direction == 'l') {
             while (System.currentTimeMillis() < finalTime){
                 correction = checkDirection();
-                if (correction < -.1){
+                if (correction < -.05){
                     correction = -.05;
                 }
                 frontLeft.setPower(-power - correction);
@@ -267,5 +483,10 @@ public class Turn90Degrees extends LinearOpMode
         frontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         backLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         backRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+        COUNTS_PER_MOTOR_REV    = 28;
+        DRIVE_GEAR_REDUCTION    = 19.2 ;
+        WHEEL_DIAMETER_INCHES   = 3.93701 ;
+        COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) / (WHEEL_DIAMETER_INCHES * 3.1415);
     }
 }
