@@ -43,10 +43,10 @@ public class Turn90Degrees extends LinearOpMode
 
 
 
-        rotate(90, 55);
-        driveStraightWithCorrection(3, .3, 'f');
-        driveStraightWithCorrectionAndEncoder(10, 10, .3);
-        goToPoint(15, 15, .5, .5, 90);
+        rotate(-90, 1);
+        //driveStraightWithCorrection(3, .3, 'f');
+        //driveStraightWithCorrectionAndEncoder(10, 10, .3);
+        //goToPoint(15, 15, .5, .5, 90);
 
 
 
@@ -139,7 +139,7 @@ public class Turn90Degrees extends LinearOpMode
     }
 
 
-    private void rotate(int degrees, double power)
+    private void rotate(double degrees, double power)
     {
         double  leftPower = 0;
         double rightPower = 0;
@@ -191,20 +191,22 @@ public class Turn90Degrees extends LinearOpMode
         frontLeft.setPower(0);
         backLeft.setPower(0);
         frontRight.setPower(0);
-        frontLeft.setPower(0);
+        backRight.setPower(0);
 
-        sleep(250);
+
 
         if (degrees > 0){
-            frontLeft.setPower(.1);
-            backLeft.setPower(.1);
-            frontRight.setPower(-.1);
-            backRight.setPower(-.1);
-            while (opModeIsActive() && -getAngle() < degrees) {
-                telemetry.addData("Target", degrees);
-                telemetry.addData("Actual", getAngle());
-                telemetry.update();
+            frontLeft.setPower(-.1);
+            backLeft.setPower(-.1);
+            frontRight.setPower(.1);
+            backRight.setPower(.1);
+
+            if (Math.abs(Math.abs(getAngle()) - Math.abs(degrees)) >= 0.5){
+
+                    rotate(-(Math.abs(getAngle()) - Math.abs(degrees)), Math.abs(Math.abs(getAngle()) - Math.abs(degrees))/50);
+
             }
+
         }
 
         if (degrees < 0){
@@ -212,17 +214,17 @@ public class Turn90Degrees extends LinearOpMode
             backLeft.setPower(.1);
             frontRight.setPower(-.1);
             backRight.setPower(-.1);
-            while (opModeIsActive() && getAngle() < degrees) {
-                telemetry.addData("Target", degrees);
-                telemetry.addData("Actual", getAngle());
-                telemetry.update();
+            if (Math.abs(Math.abs(getAngle()) - Math.abs(degrees)) >= 0.5){
+
+                    rotate((Math.abs(getAngle()) - Math.abs(degrees)), Math.abs(Math.abs(getAngle()) - Math.abs(degrees))/50);
+
             }
         }
 
         frontLeft.setPower(0);
         backLeft.setPower(0);
         frontRight.setPower(0);
-        frontLeft.setPower(0);
+        backRight.setPower(0);
 
 
         resetAngle();
