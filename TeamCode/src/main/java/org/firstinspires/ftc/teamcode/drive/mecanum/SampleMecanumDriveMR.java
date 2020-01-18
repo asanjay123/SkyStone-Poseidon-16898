@@ -9,6 +9,8 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.DifferentialControlLoopCoefficients;
+import com.acmerobotics.dashboard.FtcDashboard;
+
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -49,10 +51,10 @@ public class SampleMecanumDriveMR extends SampleMecanumDriveBase {
         // upward (normal to the floor) using a command like the following:
         // BNO055IMUUtil.remapAxes(imu, AxesOrder.XYZ, AxesSigns.NPN);
 
-        leftFront = hardwareMap.dcMotor.get("leftFront");
-        leftRear = hardwareMap.dcMotor.get("leftRear");
-        rightRear = hardwareMap.dcMotor.get("rightRear");
-        rightFront = hardwareMap.dcMotor.get("rightFront");
+        leftFront = hardwareMap.dcMotor.get("frontleft");
+        leftRear = hardwareMap.dcMotor.get("backleft");
+        rightRear = hardwareMap.dcMotor.get("backright");
+        rightFront = hardwareMap.dcMotor.get("frontright");
 
         motors = Arrays.asList(leftFront, leftRear, rightRear, rightFront);
 

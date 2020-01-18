@@ -46,7 +46,7 @@ public class DriveConstants {
      */
     public static double WHEEL_RADIUS = 3.93701;
     public static double GEAR_RATIO = 1; // output (wheel) speed / input (motor) speed
-    public static double TRACK_WIDTH = 13; //width between wheels
+    public static double TRACK_WIDTH = 11.417; //width between wheels
 
     /*
      * These are the feedforward parameters used to model the drive motor behavior. If you are using
@@ -73,7 +73,7 @@ public class DriveConstants {
 
 
     public static double encoderTicksToInches(double ticks) {
-        return WHEEL_RADIUS * 2 * Math.PI * GEAR_RATIO * ticks / MOTOR_CONFIG.getTicksPerRev();
+        return WHEEL_RADIUS * 2 * Math.PI * GEAR_RATIO * ticks / 537.6/**MOTOR_CONFIG.getTicksPerRev()*/;
     }
 
     public static double rpmToVelocity(double rpm) {
@@ -82,12 +82,12 @@ public class DriveConstants {
 
     public static double getMaxRpm() {
         return MOTOR_CONFIG.getMaxRPM() *
-                (RUN_USING_ENCODER ? MOTOR_CONFIG.getAchieveableMaxRPMFraction() : 1.0);
+                (RUN_USING_ENCODER ? 312/**MOTOR_CONFIG.getAchieveableMaxRPMFraction()*/ : 1.0);
     }
 
     public static double getTicksPerSec() {
         // note: MotorConfigurationType#getAchieveableMaxTicksPerSecond() isn't quite what we want
-        return (MOTOR_CONFIG.getMaxRPM() * MOTOR_CONFIG.getTicksPerRev() / 60.0);
+        return (/**MOTOR_CONFIG.getMaxRPM()*/312 * /**MOTOR_CONFIG.getTicksPerRev()*/537.6 / 60.0);
     }
 
     public static double getMotorVelocityF() {
