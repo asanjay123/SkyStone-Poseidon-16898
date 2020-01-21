@@ -33,17 +33,17 @@ import static org.firstinspires.ftc.teamcode.drive.DriveConstants.rpmToVelocity;
  */
 @Config
 @Autonomous(group = "drive")
-@Disabled
+
 public class DriveFeedforwardTuner extends LinearOpMode {
     public static final double MAX_POWER = 0.7;
     public static final double DISTANCE = 100;
 
     @Override
     public void runOpMode() throws InterruptedException {
-        if (RUN_USING_ENCODER) {
-            RobotLog.setGlobalErrorMsg("Feedforward constants usually don't need to be tuned " +
-                    "when using the built-in drive motor velocity PID.");
-        }
+        //if (RUN_USING_ENCODER) {
+        //    RobotLog.setGlobalErrorMsg("Feedforward constants usually don't need to be tuned " +
+        //            "when using the built-in drive motor velocity PID.");
+        //}
 
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
 
@@ -86,16 +86,23 @@ public class DriveFeedforwardTuner extends LinearOpMode {
         telemetry.addLine("Press (A) to begin");
         telemetry.update();
 
+telemetry.addLine("1");
+telemetry.update();
+
         while (!isStopRequested() && !gamepad1.a) {
             idle();
         }
         while (!isStopRequested() && gamepad1.a) {
             idle();
         }
-
-        telemetry.clearAll();
-        telemetry.addLine("Running...");
+        telemetry.addLine("2");
         telemetry.update();
+        //telemetry.clearAll();
+        //telemetry.addLine("Running...");
+        //telemetry.update();
+        telemetry.addLine("3");
+        telemetry.update();
+
 
         double maxVel = rpmToVelocity(getMaxRpm());
         double finalVel = MAX_POWER * maxVel;
@@ -104,8 +111,9 @@ public class DriveFeedforwardTuner extends LinearOpMode {
 
         double startTime = clock.seconds();
         RampRegression rampRegression = new RampRegression();
-
         drive.setPoseEstimate(new Pose2d());
+
+
         while (!isStopRequested()) {
             double elapsedTime = clock.seconds() - startTime;
             if (elapsedTime > rampTime) {

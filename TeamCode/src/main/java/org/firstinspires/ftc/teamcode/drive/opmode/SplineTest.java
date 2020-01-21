@@ -12,7 +12,7 @@ import org.firstinspires.ftc.teamcode.drive.mecanum.SampleMecanumDriveREV;
  * This is an example of a more complex path to really test the tuning.
  */
 @Autonomous(group = "drive")
-@Disabled
+
 public class SplineTest extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
@@ -28,7 +28,7 @@ public class SplineTest extends LinearOpMode {
                         .build()
         );
 
-        sleep(2000);
+        sleep(5000);
 
         drive.followTrajectorySync(
                 drive.trajectoryBuilder()
