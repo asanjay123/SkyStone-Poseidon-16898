@@ -275,6 +275,19 @@ public class Turn90Degrees extends LinearOpMode
                 telemetry.addData("Target", degrees);
                 telemetry.addData("Actual", getAngle());
                 telemetry.update();
+
+                double m = Math.abs(getAngle()/degrees);
+                if (Math.abs(rightPower * (1-m)) < .1){
+                    frontLeft.setPower(-.1);
+                    backLeft.setPower(-.1);
+                    frontRight.setPower(.1);
+                    backRight.setPower(.1);
+                }else {
+                    frontLeft.setPower(leftPower * (1 - m));
+                    backLeft.setPower(leftPower * (1 - m));
+                    frontRight.setPower(rightPower * (1 - m));
+                    backRight.setPower(rightPower * (1 - m));
+                }
             }
 
         }
@@ -284,42 +297,26 @@ public class Turn90Degrees extends LinearOpMode
                     telemetry.addData("Target", degrees);
                     telemetry.addData("Actual", getAngle());
                     telemetry.update();
+
+
+
+                    double m = Math.abs(getAngle()/degrees);
+                    if (Math.abs(leftPower * (1-m)) < .1){
+                        frontLeft.setPower(.1);
+                        backLeft.setPower(.1);
+                        frontRight.setPower(-.1);
+                        backRight.setPower(-.1);
+                    }else{
+                        frontLeft.setPower(leftPower * (1 - m));
+                        backLeft.setPower(leftPower * (1 - m));
+                        frontRight.setPower(rightPower * (1 - m));
+                        backRight.setPower(rightPower * (1 - m));
+                    }
+
+
                 }
             }
 
-
-        frontLeft.setPower(0);
-        backLeft.setPower(0);
-        frontRight.setPower(0);
-        backRight.setPower(0);
-
-
-
-        if (degrees > 0){
-            frontLeft.setPower(-.1);
-            backLeft.setPower(-.1);
-            frontRight.setPower(.1);
-            backRight.setPower(.1);
-
-            if (Math.abs(Math.abs(getAngle()) - Math.abs(degrees)) >= 0.5){
-
-                    rotate(-(Math.abs(getAngle()) - Math.abs(degrees)), Math.abs(Math.abs(getAngle()) - Math.abs(degrees))/50);
-
-            }
-
-        }
-
-        if (degrees < 0){
-            frontLeft.setPower(.1);
-            backLeft.setPower(.1);
-            frontRight.setPower(-.1);
-            backRight.setPower(-.1);
-            if (Math.abs(Math.abs(getAngle()) - Math.abs(degrees)) >= 0.5){
-
-                    rotate((Math.abs(getAngle()) - Math.abs(degrees)), Math.abs(Math.abs(getAngle()) - Math.abs(degrees))/50);
-
-            }
-        }
 
         frontLeft.setPower(0);
         backLeft.setPower(0);
@@ -452,29 +449,6 @@ public class Turn90Degrees extends LinearOpMode
         frontRight.setPower(0);
         sleep(250);
 
-        if (getAngle() > 0){
-            while (getAngle() > 0){
-                frontLeft.setPower(.1);
-                backLeft.setPower(.1);
-                frontRight.setPower(-.1);
-                backRight.setPower(-.1);
-            }
-
-        }
-        if (getAngle() < 0){
-            while (getAngle() < 0){
-                frontLeft.setPower(-.1);
-                backLeft.setPower(-.1);
-                frontRight.setPower(.1);
-                backRight.setPower(.1);
-            }
-
-        }
-
-        backLeft.setPower(0);
-        backRight.setPower(0);
-        frontLeft.setPower(0);
-        frontRight.setPower(0);
 
         backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
