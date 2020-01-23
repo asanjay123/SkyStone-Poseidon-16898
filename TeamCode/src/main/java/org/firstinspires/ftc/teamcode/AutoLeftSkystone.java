@@ -70,12 +70,12 @@ public class AutoLeftSkystone extends LinearOpMode {
          * Unlatch
          * Drive forward and stop under bar
          */
+
         initValues();
         initVuforia();
         initTfod();
         tfod.activate();
         initIMU();
-
 
         waitForStart();
 

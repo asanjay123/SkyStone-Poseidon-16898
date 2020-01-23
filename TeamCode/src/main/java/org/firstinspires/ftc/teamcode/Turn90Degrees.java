@@ -7,10 +7,16 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
+import org.firstinspires.ftc.robotcore.external.ClassFactory;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
+import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
+import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
+import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
+
+import java.util.List;
 
 @Autonomous(name="IMU Testing Stuff", group="")
 
@@ -18,7 +24,7 @@ public class Turn90Degrees extends LinearOpMode
 {
     DcMotor                 frontLeft, frontRight, backLeft, backRight;
     int currentOrientation = 0;
-    BNO055IMU               imu;
+//    BNO055IMU               imu;
     Orientation             lastAngles = new Orientation();
     double                  globalAngle, correction;
     double COUNTS_PER_MOTOR_REV;
@@ -26,32 +32,126 @@ public class Turn90Degrees extends LinearOpMode
     double     WHEEL_DIAMETER_INCHES;
     double COUNTS_PER_INCH;
 
+
+
+    private static final String TFOD_MODEL_ASSET = "Skystone.tflite";
+    private static final String LABEL_FIRST_ELEMENT = "Stone";
+    private static final String LABEL_SECOND_ELEMENT = "Skystone";
+    int objectsSize;
+    double position;
+
+    boolean skystoneFound;
+    int skystonePos;
+    double  ElapsedTime;
+
+    private static final String VUFORIA_KEY =
+            "AYB3aIf/////AAABmVsFy8hU5UyTr8m8XGdHacUpYHHs5DLZRsZZEecjQWh++KemDvtSZd2zzmehn3XuFnGrndzQv7Py1zgNj7A27g4QunIq3mUlk/Z7A6vHHjQ0f+DJ1yG2k+r7TcDUakert9hDcu8xmsrzl2Zvw3uj0o4zPB0ASxrTaV8/0J3/Pg3uo5nn6gBk8oBt/jlhJuvtS5l8Ayw/wKJbtbM0xBnQBovbT8GVyGO0V/bDN+gdBegIznVYk0rx/2EYXRBB9+Id/DWbdSX/4laPQT0zpc5CHyxLcSY7ZdoBi8+NLn7g80nRFhAiM+KRMeHOghdTu0QHVGXgWVMZR4ZWEdqU+xmPX/X1Hm5MZvYfams5nZP/JjRL";
+
+
+
+
+    /**
+     * {@link #vuforia} is the variable we will use to store our instance of the Vuforia
+     * localization engine.
+     */
+    private VuforiaLocalizer vuforia;
+
+    /**
+     * {@link #tfod} is the variable we will use to store our instance of the TensorFlow Object
+     * Detection engine.
+     */
+    private TFObjectDetector tfod;
+
+
     @Override
-    public void runOpMode() throws InterruptedException
+    public void runOpMode()
     {
 
-        initMotors();
-        initIMU();
 
 
+
+        initVuforia();
+        initTfod();
+        tfod.activate();
+        telemetry.addLine("Ready@");
+        telemetry.update();
 
         waitForStart();
 
-        telemetry.addData("Mode", "running");
-        telemetry.update();
+
+
+         {
+            telemetry.addLine("Position of SkyStone: " + runScanner());
+            telemetry.update();
+
+        }
+
+    }
 
 
 
+    public int runScanner(){
+        int i = 1;
+        if (tfod != null) {
+            // getUpdatedRecognitions() will return null if no new information is available since
+            // the last time that call was made.
+            List<Recognition> updatedRecognitions = tfod.getUpdatedRecognitions();
+            if (updatedRecognitions != null) {
+                telemetry.addData("# Object Detected", updatedRecognitions.size());
 
-        rotate(-90, 1);
-        //driveStraightWithCorrection(3, .3, 'f');
-        //driveStraightWithCorrectionAndEncoder(10, 10, .3);
-        //goToPoint(15, 15, .5, .5, 90);
+                // step through the list of recognitions and display boundary info.
+
+                for (Recognition recognition : updatedRecognitions) {
+                    telemetry.addData(String.format("label (%d)", i), recognition.getLabel());
+                    telemetry.addData(String.format("  left,top (%d)", i), "%.03f , %.03f",
+                            recognition.getLeft(), recognition.getTop());
+                    telemetry.addData(String.format("  right,bottom (%d)", i), "%.03f , %.03f",
+                            recognition.getRight(), recognition.getBottom());
+
+                    if(recognition.getLabel().equals("Skystone")) {
+                        skystoneFound = true;
+                        skystonePos = i;
+                    }
+                    i++;
+                }
+                telemetry.update();
+                return skystonePos;
+            }
 
 
 
+        }
+        return i;
+    }
 
 
+
+    private void initVuforia() {
+        /*
+         * Configure Vuforia by creating a Parameter object, and passing it to the Vuforia engine.
+         */
+        VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters();
+
+        parameters.vuforiaLicenseKey = VUFORIA_KEY;
+        parameters.cameraDirection = VuforiaLocalizer.CameraDirection.BACK;
+
+
+        //  Instantiate the Vuforia engine
+        vuforia = ClassFactory.getInstance().createVuforia(parameters);
+
+        // Loading trackables is not necessary for the TensorFlow Object Detection engine.
+    }
+
+    /**
+     * Initialize the TensorFlow Object Detection engine.
+     */
+    private void initTfod() {
+        int tfodMonitorViewId = hardwareMap.appContext.getResources().getIdentifier(
+                "tfodMonitorViewId", "id", hardwareMap.appContext.getPackageName());
+        TFObjectDetector.Parameters tfodParameters = new TFObjectDetector.Parameters(tfodMonitorViewId);
+        tfodParameters.minimumConfidence = 0.8;
+        tfod = ClassFactory.getInstance().createTFObjectDetector(tfodParameters, vuforia);
+        tfod.loadModelFromAsset(TFOD_MODEL_ASSET, LABEL_FIRST_ELEMENT, LABEL_SECOND_ELEMENT);
     }
 
     private void goToPoint(double updown, double leftright, double movementspeed, double rotatespeed, int rotateangle){
@@ -97,7 +197,7 @@ public class Turn90Degrees extends LinearOpMode
 
     private void resetAngle()
     {
-        lastAngles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+        lastAngles = null; //imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
 
         globalAngle = 0;
     }
@@ -105,7 +205,7 @@ public class Turn90Degrees extends LinearOpMode
 
     private double getAngle()
     {
-        Orientation angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+        Orientation angles = null; // imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
 
         double deltaAngle = angles.firstAngle - lastAngles.firstAngle;
 
@@ -444,7 +544,7 @@ public class Turn90Degrees extends LinearOpMode
         frontRight.setPower(0);
     }
 
-    public void initIMU(){
+ /*   public void initIMU(){
 
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
 
@@ -470,7 +570,7 @@ public class Turn90Degrees extends LinearOpMode
         telemetry.addData("imu calib status", imu.getCalibrationStatus().toString());
         telemetry.update();
 
-    }
+    } */
 
     public void initMotors(){
         frontLeft = hardwareMap.dcMotor.get("frontleft");
