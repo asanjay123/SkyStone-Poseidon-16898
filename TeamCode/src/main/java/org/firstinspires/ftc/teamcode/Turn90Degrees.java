@@ -16,6 +16,8 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
 import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 @Autonomous(name="IMU Testing Stuff", group="")
@@ -83,6 +85,7 @@ public class Turn90Degrees extends LinearOpMode
          {
             telemetry.addLine("Position of SkyStone: " + runScanner());
             telemetry.update();
+            sleep(8000);
 
         }
 
@@ -92,36 +95,45 @@ public class Turn90Degrees extends LinearOpMode
 
     public int runScanner(){
         int i = 1;
-        if (tfod != null) {
-            // getUpdatedRecognitions() will return null if no new information is available since
-            // the last time that call was made.
-            List<Recognition> updatedRecognitions = tfod.getUpdatedRecognitions();
-            if (updatedRecognitions != null) {
-                telemetry.addData("# Object Detected", updatedRecognitions.size());
-
-                // step through the list of recognitions and display boundary info.
-
-                for (Recognition recognition : updatedRecognitions) {
-                    telemetry.addData(String.format("label (%d)", i), recognition.getLabel());
-                    telemetry.addData(String.format("  left,top (%d)", i), "%.03f , %.03f",
-                            recognition.getLeft(), recognition.getTop());
-                    telemetry.addData(String.format("  right,bottom (%d)", i), "%.03f , %.03f",
-                            recognition.getRight(), recognition.getBottom());
-
-                    if(recognition.getLabel().equals("Skystone")) {
-                        skystoneFound = true;
-                        skystonePos = i;
-                    }
-                    i++;
-                }
-                telemetry.update();
-                return skystonePos;
-            }
-
-
+        while (tfod == null) {
+        }
+        sleep(1000);
+        List<Recognition> updatedRecognitions = tfod.getUpdatedRecognitions();
+        sleep(2000);
+        while (updatedRecognitions == null){
 
         }
-        return i;
+
+        if (updatedRecognitions.size() < 3){
+            return runScanner();
+        }
+        Collections.sort(updatedRecognitions, new Comparator<Recognition>(){
+            @Override
+            public int compare(Recognition p1, Recognition p2){
+                return (int)(p1.getLeft() - p2.getLeft());
+            }
+
+        });
+        for (Recognition recognition : updatedRecognitions) {
+            telemetry.addData(String.format("label (%d)", i), recognition.getLabel());
+            telemetry.addData(String.format("  left,top (%d)", i), "%.03f , %.03f",
+                    recognition.getLeft(), recognition.getTop());
+            telemetry.addData(String.format("  right,bottom (%d)", i), "%.03f , %.03f",
+                    recognition.getRight(), recognition.getBottom());
+            telemetry.update();
+            sleep(5000);
+            if (recognition.getLabel().equals("Skystone")) {
+                skystoneFound = true;
+                skystonePos = i;
+                break;
+            }
+            i++;
+        }
+        if (!skystoneFound){
+            return runScanner();
+        }
+        return skystonePos;
+
     }
 
 
