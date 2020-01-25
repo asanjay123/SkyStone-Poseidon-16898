@@ -51,7 +51,7 @@ public class TeleOps extends OpMode {
         servo1 = hardwareMap.servo.get("servo1");
         servo2 = hardwareMap.servo.get("servo2");
         servo2.setPosition(1.0);
-        servo2.setPosition(servo1.getPosition()+0.5);
+        //servo2.setPosition(servo1.getPosition()+0.5);
 
 
 //
@@ -113,11 +113,11 @@ public class TeleOps extends OpMode {
 
 
         if (gamepad2.left_bumper){
-            armmotor.setPower(-0.9);
-            armmotor2.setPower(-0.9);
+            armmotor.setPower(-1);
+            armmotor2.setPower(-1);
         }else if (gamepad2.right_bumper){
-            armmotor.setPower(0.9);
-            armmotor2.setPower(0.9);
+            armmotor.setPower(1);
+            armmotor2.setPower(1);
         }else{
             armmotor.setPower(0);
             armmotor2.setPower(0);

@@ -101,7 +101,8 @@ public class AutoDriveStraight extends LinearOpMode {
         initValues();
         waitForStart();
         servo.setPosition(0.14);
-        driveWithEncoder(0.4,25,25,30);
+        sleep(29500);
+        //driveWithEncoder(0.4,25,25,30);
         //for(int i = 0; i<3; i++) {
 
         pickUp();
