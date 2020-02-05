@@ -82,12 +82,12 @@ public class Turn90Degrees extends LinearOpMode
 
 
 
-         {
+
             telemetry.addLine("Position of SkyStone: " + runScanner());
             telemetry.update();
             sleep(8000);
 
-        }
+
 
     }
 
@@ -115,17 +115,15 @@ public class Turn90Degrees extends LinearOpMode
 
         });
         for (Recognition recognition : updatedRecognitions) {
-            telemetry.addData(String.format("label (%d)", i), recognition.getLabel());
+         /*   telemetry.addData(String.format("label (%d)", i), recognition.getLabel());
             telemetry.addData(String.format("  left,top (%d)", i), "%.03f , %.03f",
                     recognition.getLeft(), recognition.getTop());
             telemetry.addData(String.format("  right,bottom (%d)", i), "%.03f , %.03f",
                     recognition.getRight(), recognition.getBottom());
-            telemetry.update();
-            sleep(5000);
+            telemetry.update(); */
             if (recognition.getLabel().equals("Skystone")) {
                 skystoneFound = true;
                 skystonePos = i;
-                break;
             }
             i++;
         }
