@@ -104,7 +104,7 @@ public class Turn90Degrees extends LinearOpMode
 
         }
 
-        if (updatedRecognitions.size() < 3){
+        if (updatedRecognitions.size() < 2){
             return runScanner();
         }
         Collections.sort(updatedRecognitions, new Comparator<Recognition>(){
@@ -130,7 +130,7 @@ public class Turn90Degrees extends LinearOpMode
             i++;
         }
         if (!skystoneFound){
-            return runScanner();
+            return 3;
         }
         return skystonePos;
 
