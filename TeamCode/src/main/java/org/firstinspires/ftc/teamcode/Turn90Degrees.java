@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.vuforia.CameraDevice;
 
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
@@ -75,6 +76,8 @@ public class Turn90Degrees extends LinearOpMode
         initVuforia();
         initTfod();
         tfod.activate();
+        CameraDevice.getInstance().setField("opti-zoom", "opti-zoom-on");
+        CameraDevice.getInstance().setField("zoom", "61");
         telemetry.addLine("Ready@");
         telemetry.update();
 
@@ -82,11 +85,14 @@ public class Turn90Degrees extends LinearOpMode
 
 
 
+            for (int a = 0; a < 5; a++){
+                telemetry.addData("Position of SkyStone: ", runScanner());
+             }
 
-            telemetry.addLine("Position of SkyStone: " + runScanner());
+
             telemetry.update();
-            sleep(8000);
 
+            sleep(10000);
 
 
     }
@@ -94,19 +100,22 @@ public class Turn90Degrees extends LinearOpMode
 
 
     public int runScanner(){
-        int i = 1;
+        int i = 2;
         while (tfod == null) {
         }
-        sleep(1000);
+
+
+
+        sleep(300);
         List<Recognition> updatedRecognitions = tfod.getUpdatedRecognitions();
-        sleep(2000);
+        sleep(300);
+
         while (updatedRecognitions == null){
 
         }
 
-        if (updatedRecognitions.size() < 2){
-            return runScanner();
-        }
+
+
         Collections.sort(updatedRecognitions, new Comparator<Recognition>(){
             @Override
             public int compare(Recognition p1, Recognition p2){
@@ -114,23 +123,23 @@ public class Turn90Degrees extends LinearOpMode
             }
 
         });
+
         for (Recognition recognition : updatedRecognitions) {
-         /*   telemetry.addData(String.format("label (%d)", i), recognition.getLabel());
+            telemetry.addData(String.format("label (%d)", i), recognition.getLabel());
             telemetry.addData(String.format("  left,top (%d)", i), "%.03f , %.03f",
                     recognition.getLeft(), recognition.getTop());
             telemetry.addData(String.format("  right,bottom (%d)", i), "%.03f , %.03f",
                     recognition.getRight(), recognition.getBottom());
-            telemetry.update(); */
+            telemetry.addData("ALL THE BLOCKS", recognition);
+            telemetry.update();
             if (recognition.getLabel().equals("Skystone")) {
                 skystoneFound = true;
                 skystonePos = i;
+                return i;
             }
             i++;
         }
-        if (!skystoneFound){
-            return 3;
-        }
-        return skystonePos;
+        return 1;
 
     }
 
@@ -159,7 +168,7 @@ public class Turn90Degrees extends LinearOpMode
         int tfodMonitorViewId = hardwareMap.appContext.getResources().getIdentifier(
                 "tfodMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         TFObjectDetector.Parameters tfodParameters = new TFObjectDetector.Parameters(tfodMonitorViewId);
-        tfodParameters.minimumConfidence = 0.8;
+        tfodParameters.minimumConfidence = 0.65;
         tfod = ClassFactory.getInstance().createTFObjectDetector(tfodParameters, vuforia);
         tfod.loadModelFromAsset(TFOD_MODEL_ASSET, LABEL_FIRST_ELEMENT, LABEL_SECOND_ELEMENT);
     }

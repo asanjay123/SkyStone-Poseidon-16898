@@ -8,6 +8,7 @@ import com.acmerobotics.roadrunner.util.Angle;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.MovingStatistics;
 
 import org.firstinspires.ftc.robotcore.internal.system.Misc;
@@ -34,6 +35,14 @@ public class TrackWidthTuner extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
+
+        Servo servo;
+        servo = hardwareMap.servo.get("servo");
+        servo.setPosition(.14);
+        Servo servo1;
+        servo1 = hardwareMap.servo.get("servo1");
+        servo1.setPosition(0);
+
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
 
         SampleMecanumDriveBase drive = new SampleMecanumDriveREV(hardwareMap);
