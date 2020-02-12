@@ -77,7 +77,7 @@ public class Turn90Degrees extends LinearOpMode
         initTfod();
         tfod.activate();
         CameraDevice.getInstance().setField("opti-zoom", "opti-zoom-on");
-        CameraDevice.getInstance().setField("zoom", "61");
+        CameraDevice.getInstance().setField("zoom", "40");
         telemetry.addLine("Ready@");
         telemetry.update();
 
