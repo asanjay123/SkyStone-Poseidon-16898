@@ -43,6 +43,14 @@ public class TeleOps extends OpMode {
         backRight.setDirection(DcMotorSimple.Direction.REVERSE);
         armmotor2.setDirection(DcMotorSimple.Direction.REVERSE);
 
+
+        frontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        backLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        frontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        backRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        armmotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        armmotor2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
         nitro = 2.0;
 
         servo = hardwareMap.servo.get("servo");
@@ -113,11 +121,11 @@ public class TeleOps extends OpMode {
 
 
         if (gamepad2.left_bumper){
-            armmotor.setPower(-1);
-            armmotor2.setPower(-1);
+            armmotor.setPower(-0.5);
+            armmotor2.setPower(-0.5);
         }else if (gamepad2.right_bumper){
-            armmotor.setPower(1);
-            armmotor2.setPower(1);
+            armmotor.setPower(0.5);
+            armmotor2.setPower(0.5);
         }else{
             armmotor.setPower(0);
             armmotor2.setPower(0);

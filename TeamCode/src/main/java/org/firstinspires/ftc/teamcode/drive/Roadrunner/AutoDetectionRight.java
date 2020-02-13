@@ -45,34 +45,140 @@ public class AutoDetectionRight extends LinearOpMode {
         initTfod();
         tfod.activate();
         CameraDevice.getInstance().setField("opti-zoom", "opti-zoom-on");
-        CameraDevice.getInstance().setField("zoom", "61");
+        CameraDevice.getInstance().setField("zoom", "35");
         SampleMecanumDriveBase drive = new SampleMecanumDriveREV(hardwareMap);
         telemetry.addLine("Ready@");
         telemetry.update();
 
         waitForStart();
 
-        ArrayList<Integer> sPosition = new ArrayList<Integer>();
-        for (int a = 0; a < 5; a++){
-            telemetry.addData("Position of SkyStone: ", runScanner());
-            sPosition.add(runScanner());
+        tfod.setClippingMargins(100,20,100,850);
+        sleep(300);
+        if (runScanner()){
+            position = 1;
+        }else{
+            tfod.setClippingMargins(0,0,0,0);
+            CameraDevice.getInstance().setField("zoom", "58");
+            sleep(1000);
+            if (runScanner()){
+                position = 2;
+            }else{
+                position = 3;
+            }
         }
 
         servo.setPosition(.14);
 
-
-        for (int a = 0; a < 5; a++){
-            position += sPosition.get(a);
-
-        }
-
-        position = Math.round(position/5);
-
-        telemetry.addData("Position: ", position);
+        telemetry.addData("Position of SkyStone: ", position);
         telemetry.update();
+
+        tfod.deactivate();
+
+
+
 
         if (position == 1){
 
+            drive.followTrajectorySync(
+                    drive.trajectoryBuilder().strafeTo(new Vector2d(1, 0))
+                            .build()
+            );
+
+
+
+            drive.followTrajectorySync(
+                    drive.trajectoryBuilder().strafeTo(new Vector2d(12, 9))
+                            .build()
+            );
+
+            servo1.setPosition(0);
+            sleep(500);
+
+
+            drive.followTrajectorySync(
+                    drive.trajectoryBuilder().back(5)
+                            .build()
+            );
+
+            servo.setPosition(.3);
+
+            drive.followTrajectorySync(
+                    drive.trajectoryBuilder().strafeRight(70)
+                            .build()
+            );
+
+            drive.followTrajectorySync(
+                    drive.trajectoryBuilder().forward(7)
+                            .build()
+            );
+
+
+            servo1.setPosition(1);
+
+//            drive.followTrajectorySync(
+//                    drive.trajectoryBuilder().forward(3)
+//                            .build()
+//            );
+
+            servo.setPosition(.3);
+
+            sleep(600);
+
+            drive.followTrajectorySync(
+                    drive.trajectoryBuilder().back(4)
+                            .build()
+            );
+
+            servo.setPosition((0.14));
+
+            sleep(500);
+
+            drive.followTrajectorySync(
+                    drive.trajectoryBuilder().strafeLeft(82)
+                            .build()
+            );
+
+            drive.followTrajectorySync(
+                    drive.trajectoryBuilder().back(7)
+                            .build()
+            );
+
+            servo.setPosition(0.14);
+
+            drive.followTrajectorySync(
+                    drive.trajectoryBuilder().forward(14)
+                            .build()
+            );
+
+            servo1.setPosition(0);
+            sleep(500);
+
+
+            drive.followTrajectorySync(
+                    drive.trajectoryBuilder().back(6)
+                            .build()
+            );
+
+            servo.setPosition(.3);
+
+            drive.followTrajectorySync(
+                    drive.trajectoryBuilder().strafeRight(75)
+                            .build()
+            );
+
+            drive.followTrajectorySync(
+                    drive.trajectoryBuilder().forward(6)
+                            .build()
+            );
+
+            servo1.setPosition(1);
+
+//            drive.followTrajectorySync(
+//                    drive.trajectoryBuilder().forward(3)
+//                            .build()
+//            );
+
+            servo.setPosition(.3);
         }
         if (position == 2){
 
@@ -86,24 +192,200 @@ public class AutoDetectionRight extends LinearOpMode {
 
 
             drive.followTrajectorySync(
-                    drive.trajectoryBuilder().back(3)
+                    drive.trajectoryBuilder().back(5)
                             .build()
             );
 
-            drive.turnSync(Math.toRadians(-90));
+            servo.setPosition(.3);
 
             drive.followTrajectorySync(
-                    drive.trajectoryBuilder().forward(52)
+                    drive.trajectoryBuilder().strafeRight(55)
+                    .build()
+            );
+
+            drive.followTrajectorySync(
+                    drive.trajectoryBuilder().forward(6)
+                    .build()
+            );
+
+
+            servo1.setPosition(1);
+
+//            drive.followTrajectorySync(
+//                    drive.trajectoryBuilder().forward(3)
+//                            .build()
+//            );
+
+            servo.setPosition(.3);
+
+            sleep(600);
+
+            drive.followTrajectorySync(
+                    drive.trajectoryBuilder().back(5)
                             .build()
             );
 
-            drive.turnSync(Math.toRadians(90));
+            servo.setPosition((0.14));
+
+            sleep(500);
+
+            drive.followTrajectorySync(
+                    drive.trajectoryBuilder().strafeLeft(74)
+                            .build()
+            );
+
+            drive.followTrajectorySync(
+                    drive.trajectoryBuilder().back(7)
+                            .build()
+            );
+
+            servo.setPosition(0.14);
+
+            drive.followTrajectorySync(
+                    drive.trajectoryBuilder().forward(12)
+                            .build()
+            );
 
             servo1.setPosition(0);
+            sleep(500);
+
+
+            drive.followTrajectorySync(
+                    drive.trajectoryBuilder().back(6)
+                            .build()
+            );
+
+            servo.setPosition(.3);
+
+            drive.followTrajectorySync(
+                    drive.trajectoryBuilder().strafeRight(75)
+                            .build()
+            );
+
+            drive.followTrajectorySync(
+                    drive.trajectoryBuilder().forward(8)
+                            .build()
+            );
+
+            servo1.setPosition(1);
+
+//            drive.followTrajectorySync(
+//                    drive.trajectoryBuilder().forward(3)
+//                            .build()
+//            );
+
+            servo.setPosition(.3);
+
+
+
+
+
+
+
 
         }
         if (position == 3){
+            drive.followTrajectorySync(
+                    drive.trajectoryBuilder().strafeTo(new Vector2d(1, 0))
+                            .build()
+            );
 
+
+
+            drive.followTrajectorySync(
+                    drive.trajectoryBuilder().strafeTo(new Vector2d(12, -9))
+                            .build()
+            );
+
+            servo1.setPosition(0);
+            sleep(500);
+
+
+            drive.followTrajectorySync(
+                    drive.trajectoryBuilder().back(5)
+                            .build()
+            );
+
+            servo.setPosition(.3);
+
+            drive.followTrajectorySync(
+                    drive.trajectoryBuilder().strafeRight(65)
+                            .build()
+            );
+
+            drive.followTrajectorySync(
+                    drive.trajectoryBuilder().forward(7)
+                            .build()
+            );
+
+
+            servo1.setPosition(1);
+
+//            drive.followTrajectorySync(
+//                    drive.trajectoryBuilder().forward(3)
+//                            .build()
+//            );
+
+            servo.setPosition(.3);
+
+            sleep(600);
+
+            drive.followTrajectorySync(
+                    drive.trajectoryBuilder().back(4)
+                            .build()
+            );
+
+            servo.setPosition((0.14));
+
+            sleep(500);
+
+
+            drive.followTrajectorySync(
+                    drive.trajectoryBuilder().strafeLeft(82)
+                            .build()
+            );
+
+
+            drive.followTrajectorySync(
+                    drive.trajectoryBuilder().back(7)
+                            .build()
+            );
+
+
+            drive.followTrajectorySync(
+                    drive.trajectoryBuilder().forward(14)
+                            .build()
+            );
+
+            servo1.setPosition(0);
+            sleep(500);
+
+
+            drive.followTrajectorySync(
+                    drive.trajectoryBuilder().back(6)
+                            .build()
+            );
+
+            servo.setPosition(.3);
+
+            drive.followTrajectorySync(
+                    drive.trajectoryBuilder().strafeRight(75)
+                            .build()
+            );
+
+            drive.followTrajectorySync(
+                    drive.trajectoryBuilder().forward(6)
+                            .build()
+            );
+
+            servo1.setPosition(1);
+
+//            drive.followTrajectorySync(
+//                    drive.trajectoryBuilder().forward(3)
+//                            .build()
+//            );
+
+            servo.setPosition(.3);
         }
 
 
@@ -118,7 +400,7 @@ public class AutoDetectionRight extends LinearOpMode {
         servo1 = hardwareMap.servo.get("servo1");
     }
 
-    public int runScanner(){
+    public boolean runScanner(){
         int i = 2;
         while (tfod == null) {
         }
@@ -152,11 +434,11 @@ public class AutoDetectionRight extends LinearOpMode {
             if (recognition.getLabel().equals("Skystone")) {
                 skystoneFound = true;
                 skystonePos = i;
-                return i;
+                return true;
             }
             i++;
         }
-        return 1;
+        return false;
 
     }
 
@@ -185,7 +467,7 @@ public class AutoDetectionRight extends LinearOpMode {
         int tfodMonitorViewId = hardwareMap.appContext.getResources().getIdentifier(
                 "tfodMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         TFObjectDetector.Parameters tfodParameters = new TFObjectDetector.Parameters(tfodMonitorViewId);
-        tfodParameters.minimumConfidence = 0.65;
+        tfodParameters.minimumConfidence = 0.5;
         tfod = ClassFactory.getInstance().createTFObjectDetector(tfodParameters, vuforia);
         tfod.loadModelFromAsset(TFOD_MODEL_ASSET, LABEL_FIRST_ELEMENT, LABEL_SECOND_ELEMENT);
     }

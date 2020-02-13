@@ -77,31 +77,45 @@ public class Turn90Degrees extends LinearOpMode
         initTfod();
         tfod.activate();
         CameraDevice.getInstance().setField("opti-zoom", "opti-zoom-on");
-        CameraDevice.getInstance().setField("zoom", "40");
+        CameraDevice.getInstance().setField("zoom", "30");
         telemetry.addLine("Ready@");
         telemetry.update();
 
         waitForStart();
 
 
+        tfod.setClippingMargins(100,20,100,800);
+        if (runScanner()){
+            position = 3;
+        }else{
+            tfod.setClippingMargins(0,0,0,0);
+            CameraDevice.getInstance().setField("zoom", "55");
+            if (runScanner()){
+                sleep(500);
+                position = 2;
+            }else{
+                position = 1;
+            }
+        }
 
-            for (int a = 0; a < 20; a++){
-                telemetry.addData("Position of SkyStone: ", runScanner());
-             }
+        telemetry.addData("Position of SkyStone: ", position);
+                telemetry.update();
+
+                sleep(1000000);
 
 
 
-            telemetry.update();
 
-            sleep(10000);
+
+
 
 
     }
 
 
 
-    public int runScanner(){
-        int i = 2;
+    public boolean runScanner(){
+        int i = 1;
         while (tfod == null) {
         }
 
@@ -136,11 +150,11 @@ public class Turn90Degrees extends LinearOpMode
             if (recognition.getLabel().equals("Skystone")) {
                 skystoneFound = true;
                 skystonePos = i;
-                return i;
+                return true;
             }
             i++;
         }
-        return 1;
+        return false;
 
     }
 
@@ -169,7 +183,7 @@ public class Turn90Degrees extends LinearOpMode
         int tfodMonitorViewId = hardwareMap.appContext.getResources().getIdentifier(
                 "tfodMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         TFObjectDetector.Parameters tfodParameters = new TFObjectDetector.Parameters(tfodMonitorViewId);
-        tfodParameters.minimumConfidence = 0.65;
+        tfodParameters.minimumConfidence = 0.5;
         tfod = ClassFactory.getInstance().createTFObjectDetector(tfodParameters, vuforia);
         tfod.loadModelFromAsset(TFOD_MODEL_ASSET, LABEL_FIRST_ELEMENT, LABEL_SECOND_ELEMENT);
     }
