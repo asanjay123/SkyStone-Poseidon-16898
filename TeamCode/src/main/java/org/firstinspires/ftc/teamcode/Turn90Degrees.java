@@ -85,9 +85,10 @@ public class Turn90Degrees extends LinearOpMode
 
 
 
-            for (int a = 0; a < 5; a++){
+            for (int a = 0; a < 20; a++){
                 telemetry.addData("Position of SkyStone: ", runScanner());
              }
+
 
 
             telemetry.update();
