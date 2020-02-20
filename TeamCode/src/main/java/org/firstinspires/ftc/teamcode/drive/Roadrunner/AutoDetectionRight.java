@@ -68,6 +68,8 @@ public class AutoDetectionRight extends LinearOpMode {
         }
 
         servo.setPosition(.14);
+        servo.setPosition(.14);
+
 
         telemetry.addData("Position of SkyStone: ", position);
         telemetry.update();
@@ -76,6 +78,7 @@ public class AutoDetectionRight extends LinearOpMode {
 
 
 
+        servo.setPosition(.14);
 
         if (position == 1){
 
@@ -180,6 +183,9 @@ public class AutoDetectionRight extends LinearOpMode {
 
             servo.setPosition(.3);
         }
+
+        servo.setPosition(.14);
+
         if (position == 2){
 
             drive.followTrajectorySync(
@@ -230,7 +236,7 @@ public class AutoDetectionRight extends LinearOpMode {
             sleep(500);
 
             drive.followTrajectorySync(
-                    drive.trajectoryBuilder().strafeLeft(74)
+                    drive.trajectoryBuilder().strafeLeft(77)
                             .build()
             );
 
@@ -284,6 +290,9 @@ public class AutoDetectionRight extends LinearOpMode {
 
 
         }
+
+        servo.setPosition(.14);
+
         if (position == 3){
             drive.followTrajectorySync(
                     drive.trajectoryBuilder().strafeTo(new Vector2d(1, 0))
