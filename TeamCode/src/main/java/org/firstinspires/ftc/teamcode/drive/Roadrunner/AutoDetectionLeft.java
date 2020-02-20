@@ -20,8 +20,8 @@ import java.util.Comparator;
 import java.util.List;
 
 
-@Autonomous(name = "Auto Skystone Right ROadrunner")
-public class AutoDetectionRight extends LinearOpMode {
+@Autonomous(name = "Auto Skystone Left Roadrunner")
+public class AutoDetectionLeft extends LinearOpMode {
 
     private static final String TFOD_MODEL_ASSET = "Skystone.tflite";
     private static final String LABEL_FIRST_ELEMENT = "Stone";
@@ -106,7 +106,7 @@ public class AutoDetectionRight extends LinearOpMode {
             servo.setPosition(.3);
 
             drive.followTrajectorySync(
-                    drive.trajectoryBuilder().strafeRight(70)
+                    drive.trajectoryBuilder().strafeLeft(70)
                             .build()
             );
 
@@ -137,7 +137,7 @@ public class AutoDetectionRight extends LinearOpMode {
             sleep(500);
 
             drive.followTrajectorySync(
-                    drive.trajectoryBuilder().strafeLeft(82)
+                    drive.trajectoryBuilder().strafeRight(82)
                             .build()
             );
 
@@ -165,7 +165,7 @@ public class AutoDetectionRight extends LinearOpMode {
             servo.setPosition(.3);
 
             drive.followTrajectorySync(
-                    drive.trajectoryBuilder().strafeRight(75)
+                    drive.trajectoryBuilder().strafeLeft(75)
                             .build()
             );
 
@@ -205,13 +205,13 @@ public class AutoDetectionRight extends LinearOpMode {
             servo.setPosition(.3);
 
             drive.followTrajectorySync(
-                    drive.trajectoryBuilder().strafeRight(55)
-                    .build()
+                    drive.trajectoryBuilder().strafeLeft(55)
+                            .build()
             );
 
             drive.followTrajectorySync(
                     drive.trajectoryBuilder().forward(6)
-                    .build()
+                            .build()
             );
 
 
@@ -236,7 +236,7 @@ public class AutoDetectionRight extends LinearOpMode {
             sleep(500);
 
             drive.followTrajectorySync(
-                    drive.trajectoryBuilder().strafeLeft(77)
+                    drive.trajectoryBuilder().strafeRight(77)
                             .build()
             );
 
@@ -264,7 +264,7 @@ public class AutoDetectionRight extends LinearOpMode {
             servo.setPosition(.3);
 
             drive.followTrajectorySync(
-                    drive.trajectoryBuilder().strafeRight(75)
+                    drive.trajectoryBuilder().strafeLeft(75)
                             .build()
             );
 
@@ -312,7 +312,7 @@ public class AutoDetectionRight extends LinearOpMode {
             servo.setPosition(.3);
 
             drive.followTrajectorySync(
-                    drive.trajectoryBuilder().strafeRight(65)
+                    drive.trajectoryBuilder().strafeLeft(65)
                             .build()
             );
 
@@ -344,7 +344,7 @@ public class AutoDetectionRight extends LinearOpMode {
 
 
             drive.followTrajectorySync(
-                    drive.trajectoryBuilder().strafeLeft(82)
+                    drive.trajectoryBuilder().strafeRight(82)
                             .build()
             );
 
@@ -372,7 +372,7 @@ public class AutoDetectionRight extends LinearOpMode {
             servo.setPosition(.3);
 
             drive.followTrajectorySync(
-                    drive.trajectoryBuilder().strafeRight(75)
+                    drive.trajectoryBuilder().strafeLeft(75)
                             .build()
             );
 
