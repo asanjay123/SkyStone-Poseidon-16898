@@ -22,7 +22,8 @@ public class TeleOps extends OpMode {
     Servo   servo;
     Servo servo1;
     Servo servo2;
-    Servo hook;
+    Servo hookRight;
+    Servo hookLeft;
     double position;
 
     double nitro;
@@ -36,9 +37,8 @@ public class TeleOps extends OpMode {
 
         armmotor = hardwareMap.dcMotor.get("arm");
         armmotor2 = hardwareMap.dcMotor.get("arm2");
-        hook = hardwareMap.servo.get("hook");
-
-
+        hookRight = hardwareMap.servo.get("hookRight");
+        hookLeft = hardwareMap.servo.get("hookLeft");
         frontRight.setDirection(DcMotorSimple.Direction.REVERSE);
         backRight.setDirection(DcMotorSimple.Direction.REVERSE);
         armmotor2.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -61,6 +61,9 @@ public class TeleOps extends OpMode {
         servo2.setPosition(1.0);
         //servo2.setPosition(servo1.getPosition()+0.5);
 
+        hookLeft.setPosition(0.3);
+        hookRight.setPosition(0.3);
+
 
 //
 //        position = servo;
@@ -74,18 +77,21 @@ public class TeleOps extends OpMode {
 
 
 
+
         if(gamepad1.x) {
 
-            hook.setPosition(0.3);
-
+            hookRight.setPosition(0.45);
+            hookLeft.setPosition(0.9);
         }
 
 
         if(gamepad1.y) {
 
-            hook.setPosition(0.65);
+            hookRight.setPosition(0.9);
+            hookLeft.setPosition(0.45);
 
         }
+
 
 
         drive = -gamepad1.right_stick_y;
@@ -139,6 +145,8 @@ public class TeleOps extends OpMode {
             position = 0.8;
         }
 
+
+
         try {
             servo.setPosition(position);
         }
@@ -186,7 +194,6 @@ public class TeleOps extends OpMode {
 
         telemetry.addData("Nitro: ", (nitro == 1) ? "High":( (nitro==2) ? "Medium":"Low"));
         telemetry.addData("Twisty Position: ", servo2.getPosition());
-
         telemetry.update();
     }
 }

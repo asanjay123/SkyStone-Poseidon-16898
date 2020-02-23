@@ -37,6 +37,8 @@ public class AutoDetectionRight extends LinearOpMode {
 
     Servo servo;
     Servo servo1;
+    Servo hookRight;
+    Servo hookLeft;
 
     @Override
     public void runOpMode(){
@@ -198,19 +200,19 @@ public class AutoDetectionRight extends LinearOpMode {
 
 
             drive.followTrajectorySync(
-                    drive.trajectoryBuilder().back(5)
+                    drive.trajectoryBuilder().back(7)
                             .build()
             );
 
             servo.setPosition(.3);
 
             drive.followTrajectorySync(
-                    drive.trajectoryBuilder().strafeRight(55)
+                    drive.trajectoryBuilder().strafeRight(52)
                     .build()
             );
 
             drive.followTrajectorySync(
-                    drive.trajectoryBuilder().forward(6)
+                    drive.trajectoryBuilder().forward(8)
                     .build()
             );
 
@@ -236,7 +238,7 @@ public class AutoDetectionRight extends LinearOpMode {
             sleep(500);
 
             drive.followTrajectorySync(
-                    drive.trajectoryBuilder().strafeLeft(77)
+                    drive.trajectoryBuilder().strafeLeft(76)
                             .build()
             );
 
@@ -264,7 +266,7 @@ public class AutoDetectionRight extends LinearOpMode {
             servo.setPosition(.3);
 
             drive.followTrajectorySync(
-                    drive.trajectoryBuilder().strafeRight(75)
+                    drive.trajectoryBuilder().strafeRight(72)
                             .build()
             );
 
@@ -281,6 +283,7 @@ public class AutoDetectionRight extends LinearOpMode {
 //            );
 
             servo.setPosition(.3);
+
 
 
         }
@@ -391,6 +394,41 @@ public class AutoDetectionRight extends LinearOpMode {
             servo.setPosition(.3);
         }
 
+        servo.setPosition(.8);
+
+        drive.followTrajectorySync(
+                drive.trajectoryBuilder().forward(4)
+                        .build()
+        );
+
+        hookRight.setPosition(0.45);
+        hookLeft.setPosition(0.9);
+
+
+
+        sleep(500);
+        drive.followTrajectorySync(
+                drive.trajectoryBuilder().back(13)
+                    .build()
+        );
+
+
+        drive.turnSync(Math.toRadians(-90*3));
+
+        hookRight.setPosition(0.9);
+        hookLeft.setPosition(0.45);
+
+        drive.followTrajectorySync(
+                drive.trajectoryBuilder().forward(6)
+                        .build()
+        );
+
+        servo.setPosition(.14);
+
+        drive.followTrajectorySync(
+                drive.trajectoryBuilder().back(30)
+                        .build()
+        );
 
 
 
@@ -401,6 +439,9 @@ public class AutoDetectionRight extends LinearOpMode {
     public void initMotors(){
         servo = hardwareMap.servo.get("servo");
         servo1 = hardwareMap.servo.get("servo1");
+        hookRight = hardwareMap.servo.get("hookRight");
+        hookLeft = hardwareMap.servo.get("hookLeft");
+
     }
 
     public boolean runScanner(){
