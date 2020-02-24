@@ -80,15 +80,15 @@ public class TeleOps extends OpMode {
 
         if(gamepad1.x) {
 
-            hookRight.setPosition(0.45);
-            hookLeft.setPosition(0.9);
+            hookRight.setPosition(0.22);
+            hookLeft.setPosition(0.6);
         }
 
 
         if(gamepad1.y) {
 
-            hookRight.setPosition(0.9);
-            hookLeft.setPosition(0.45);
+            hookRight.setPosition(0.6);
+            hookLeft.setPosition(0.22);
 
         }
 
@@ -137,12 +137,12 @@ public class TeleOps extends OpMode {
             armmotor2.setPower(0);
         }
         if (gamepad2.x)
-            position = 0.02;
+            position = 0.06;
         if (gamepad2.y){
-            position = 0.14;
+            position = 0.17;
         }
         if (gamepad2.b){
-            position = 0.8;
+            position = 0.86;
         }
 
 
