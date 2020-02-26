@@ -55,6 +55,7 @@ public class AutoRightSkystone extends LinearOpMode {
     double                  globalAngle, correction;
 
 
+
     double     COUNTS_PER_INCH;
     ElapsedTime runtime = new ElapsedTime();
 
