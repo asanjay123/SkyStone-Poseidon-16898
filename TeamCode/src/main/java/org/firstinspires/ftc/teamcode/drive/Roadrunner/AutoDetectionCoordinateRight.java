@@ -197,30 +197,32 @@ public class AutoDetectionCoordinateRight extends LinearOpMode {
             servo.setPosition(0.35);
             drive.followTrajectorySync(drive.trajectoryBuilder().
                     strafeTo(new Vector2d(6,-24))
-                    .strafeTo(new Vector2d(17,-68)).build());
-            drive.setPoseEstimate(new Pose2d(0,0));
+                    .strafeTo(new Vector2d(25,-74)).build());
+            drive.setPoseEstimate(new Pose2d(25,-74));
 
             servo1.setPosition(.6);
             sleep(500);
+
+            servo1.setPosition(0);
             drive.followTrajectorySync(drive.trajectoryBuilder().
-                    strafeTo(new Vector2d(-2, 30)).
+                    strafeTo(new Vector2d(17, -41)).
                     build());
 
 
 
 
             servo.setPosition(.17);
-            sleep(500);
 
-            drive.setPoseEstimate(new Pose2d(0,0));
+            drive.setPoseEstimate(new Pose2d(17,-41));
+
 
             drive.followTrajectorySync(drive.trajectoryBuilder().
-                    strafeTo(new Vector2d(0, 29)).
+                    strafeTo(new Vector2d(18, -7)).
                     build());
-
-            drive.setPoseEstimate(new Pose2d(0,0));
+            /**
+            drive.setPoseEstimate(new Pose2d(0,-9));
             drive.followTrajectorySync(drive.trajectoryBuilder().
-                    strafeTo(new Vector2d(5, 0)).
+                    strafeTo(new Vector2d(5, -9)).
                     build());
 
             servo1.setPosition(0);
@@ -228,18 +230,18 @@ public class AutoDetectionCoordinateRight extends LinearOpMode {
             sleep(500);
 
             drive.followTrajectorySync(drive.trajectoryBuilder().
-                    strafeTo(new Vector2d(0, 0)).
+                    strafeTo(new Vector2d(5, -9)).
                     build());
 
             servo.setPosition(.3);
 
-            drive.setPoseEstimate(new Pose2d(0,0));
+            drive.setPoseEstimate(new Pose2d(5,-9));
 
             drive.followTrajectorySync(drive.trajectoryBuilder().
-                    strafeTo(new Vector2d(-2,-25))
-                    .strafeTo(new Vector2d(5,-71)).build());
+                    strafeTo(new Vector2d(3,-34))
+                    .strafeTo(new Vector2d(10,-80)).build());
 
-
+            */
 
         }
         /*
@@ -350,6 +352,7 @@ public class AutoDetectionCoordinateRight extends LinearOpMode {
         }
 
         */
+        /**
         drive.setPoseEstimate(new Pose2d(0,0));
         drive.followTrajectorySync(drive.trajectoryBuilder().
                 strafeTo(new Vector2d(5, 0)).
@@ -366,7 +369,7 @@ public class AutoDetectionCoordinateRight extends LinearOpMode {
                 build());
 
         drive.turnSync(-90*2);
-
+        */
     }
 
 
