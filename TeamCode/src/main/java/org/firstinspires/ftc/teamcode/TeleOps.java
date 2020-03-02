@@ -173,6 +173,13 @@ public class TeleOps extends OpMode {
             }
         }
 
+        if (gamepad1.left_stick_button){
+            servo1.setPosition(0);
+        }
+        if (gamepad1.right_stick_button){
+            servo1.setPosition(.6);
+        }
+
        // servo2.setPosition(0);
 
         if (gamepad2.dpad_left){
