@@ -65,7 +65,6 @@ public class AutoDriveStraight extends LinearOpMode {
     DcMotor backLeft;
     DcMotor frontRight;
     DcMotor backRight;
-    Servo hook;
     double  ElapsedTime;
     double COUNTS_PER_MOTOR_REV;
     double     DRIVE_GEAR_REDUCTION;
@@ -181,7 +180,6 @@ public class AutoDriveStraight extends LinearOpMode {
         backLeft = hardwareMap.dcMotor.get("backleft");
         frontRight = hardwareMap.dcMotor.get("frontright");
         backRight = hardwareMap.dcMotor.get("backright");
-        hook = hardwareMap.servo.get("hook");
 
         //Defining front and back using clockwise and counterclockwise movement
         // of the wheels

@@ -56,7 +56,7 @@ public class DriveConstants {
      */
     public static double kV = 0.03127;
     public static double kA = 0.00418;
-    public static double kStatic = .09874;
+    public static double kStatic = 0.09874 ;
 
     /*
      * These values are used to generate the trajectories for you robot. To ensure proper operation,
@@ -67,7 +67,7 @@ public class DriveConstants {
      * forces acceleration-limited profiling).
      */
     public static DriveConstraints BASE_CONSTRAINTS = new DriveConstraints(
-            100, 25, 0.0,
+            50, 25, 0.0,
             Math.toRadians(180.0), Math.toRadians(180.0), 0.0
     );
 

@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.vuforia.CameraDevice;
 
+import org.firstinspires.ftc.robotcontroller.external.samples.PushbotAutoDriveByGyro_Linear;
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
@@ -23,11 +24,11 @@ import java.util.List;
 
 @Autonomous(name="IMU Testing Stuff", group="")
 
-public class Turn90Degrees extends LinearOpMode
+public class Turn90Degrees extends PushbotAutoDriveByGyro_Linear
 {
     DcMotor                 frontLeft, frontRight, backLeft, backRight;
     int currentOrientation = 0;
-//    BNO055IMU               imu;
+    BNO055IMU               imu;
     Orientation             lastAngles = new Orientation();
     double                  globalAngle, correction;
     double COUNTS_PER_MOTOR_REV;
@@ -70,19 +71,20 @@ public class Turn90Degrees extends LinearOpMode
     public void runOpMode()
     {
 
+        initIMU();
+        initMotors();
 
 
-
-        initVuforia();
-        initTfod();
-        tfod.activate();
-        CameraDevice.getInstance().setField("opti-zoom", "opti-zoom-on");
-        CameraDevice.getInstance().setField("zoom", "30");
-        telemetry.addLine("Ready@");
-        telemetry.update();
+        //initVuforia();
+        //initTfod();
+        //tfod.activate();
+        //CameraDevice.getInstance().setField("opti-zoom", "opti-zoom-on");
+        //CameraDevice.getInstance().setField("zoom", "30");
+        //telemetry.addLine("Ready@");
+        //telemetry.update();
 
         waitForStart();
-
+        /**
 
         tfod.setClippingMargins(100,20,100,800);
         if (runScanner()){
@@ -102,12 +104,12 @@ public class Turn90Degrees extends LinearOpMode
                 telemetry.update();
 
                 sleep(1000000);
+        */
 
 
 
-
-
-
+        //rotate(-90, .6);
+        driveStraightWithCorrectionAndEncoder(40,40,.4);
 
 
     }
@@ -231,7 +233,7 @@ public class Turn90Degrees extends LinearOpMode
 
     private void resetAngle()
     {
-        lastAngles = null; //imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+        lastAngles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
 
         globalAngle = 0;
     }
@@ -239,7 +241,7 @@ public class Turn90Degrees extends LinearOpMode
 
     private double getAngle()
     {
-        Orientation angles = null; // imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+        Orientation angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
 
         double deltaAngle = angles.firstAngle - lastAngles.firstAngle;
 
@@ -275,8 +277,8 @@ public class Turn90Degrees extends LinearOpMode
 
     private void rotate(double degrees, double power)
     {
-        double  leftPower = 0;
-        double rightPower = 0;
+        double  leftPower;
+        double rightPower;
 
         // restart imu movement tracking.
         resetAngle();
@@ -295,7 +297,6 @@ public class Turn90Degrees extends LinearOpMode
             rightPower = -power;
         }
         else return;
-
         // set power to rotate.
         frontLeft.setPower(leftPower);
         backLeft.setPower(leftPower);
@@ -459,8 +460,8 @@ public class Turn90Degrees extends LinearOpMode
         while (backLeft.getCurrentPosition() < newLeftTarget &&
                 backRight.getCurrentPosition() < newRightTarget){
             correction = checkDirection();
-            if (correction > .1){
-                correction = .05;
+            if (correction > .02){
+                correction = .02;
             }
             frontLeft.setPower(power - correction);
             backLeft.setPower(power - correction);
@@ -552,7 +553,7 @@ public class Turn90Degrees extends LinearOpMode
         frontRight.setPower(0);
     }
 
- /*   public void initIMU(){
+    public void initIMU(){
 
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
 
@@ -578,7 +579,7 @@ public class Turn90Degrees extends LinearOpMode
         telemetry.addData("imu calib status", imu.getCalibrationStatus().toString());
         telemetry.update();
 
-    } */
+    }
 
     public void initMotors(){
         frontLeft = hardwareMap.dcMotor.get("frontleft");

@@ -46,10 +46,10 @@ public class DriveFeedforwardTuner extends LinearOpMode {
         servo = hardwareMap.servo.get("servo");
         servo.setPosition(.14);
 
-        //if (RUN_USING_ENCODER) {
-        //    RobotLog.setGlobalErrorMsg("Feedforward constants usually don't need to be tuned " +
-        //            "when using the built-in drive motor velocity PID.");
-        //}
+        if (RUN_USING_ENCODER) {
+            RobotLog.setGlobalErrorMsg("Feedforward constants usually don't need to be tuned " +
+                    "when using the built-in drive motor velocity PID.");
+        }
 
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
 
