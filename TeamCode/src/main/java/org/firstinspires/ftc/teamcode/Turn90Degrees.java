@@ -107,7 +107,6 @@ public class Turn90Degrees extends PushbotAutoDriveByGyro_Linear
         */
 
 
-
         //rotate(-90, .6);
         driveStraightWithCorrectionAndEncoder(40,40,.4);
 
@@ -463,15 +462,19 @@ public class Turn90Degrees extends PushbotAutoDriveByGyro_Linear
             if (correction > .02){
                 correction = .02;
             }
+            /**
             frontLeft.setPower(power - correction);
             backLeft.setPower(power - correction);
             frontRight.setPower(power + correction);
             backRight.setPower(power + correction);
+             **/
 
             telemetry.addData("Path1",  "Running to %7d :%7d", newLeftTarget,  newRightTarget);
-            telemetry.addData("Path2",  "Running at %7d :%7d",
+            telemetry.addData("Path2",  "Running at %7d :%7d :%7d :%7d",
                     backLeft.getCurrentPosition(),
-                    backRight.getCurrentPosition());
+                    backRight.getCurrentPosition(),
+                    frontLeft.getCurrentPosition(),
+                    frontRight.getCurrentPosition());
             telemetry.update();
         }
 

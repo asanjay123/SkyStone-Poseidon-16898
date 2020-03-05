@@ -10,6 +10,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.util.LynxModuleUtil;
 
 import java.util.ArrayList;
@@ -33,7 +34,6 @@ public class SampleMecanumDriveREV extends SampleMecanumDriveBase {
 
     public SampleMecanumDriveREV(HardwareMap hardwareMap) {
         super();
-
         LynxModuleUtil.ensureMinimumFirmwareVersion(hardwareMap);
 
         // TODO: adjust the names of the following hardware devices to match your configuration

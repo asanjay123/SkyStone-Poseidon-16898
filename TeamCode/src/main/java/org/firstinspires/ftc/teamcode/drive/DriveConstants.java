@@ -26,15 +26,15 @@ public class DriveConstants {
      * discrepancies. Additional motor types can be defined via an interface with the
      * @DeviceProperties and @MotorType annotations.
      */
-    private static final MotorConfigurationType MOTOR_CONFIG =
-            MotorConfigurationType.getMotorType(NeveRest20Gearmotor.class);
+    //private static final MotorConfigurationType MOTOR_CONFIG =
+    //        MotorConfigurationType.getMotorType(NeveRest20Gearmotor.class);
 
     /*
      * Set the first flag appropriately. If using the built-in motor velocity PID, update
      * MOTOR_VELO_PID with the tuned coefficients from DriveVelocityPIDTuner.
      */
     public static final boolean RUN_USING_ENCODER = true;
-    public static final PIDCoefficients MOTOR_VELO_PID = null;
+    public static final PIDCoefficients MOTOR_VELO_PID = new PIDCoefficients(10,0,0);
 
     /*
      * These are physical constants that can be determined from your robot (including the track
@@ -44,9 +44,11 @@ public class DriveConstants {
      * angular distances although most angular parameters are wrapped in Math.toRadians() for
      * convenience. Make sure to exclude any gear ratio included in MOTOR_CONFIG from GEAR_RATIO.
      */
-    public static double WHEEL_RADIUS = 3.93701;
+    public static double WHEEL_RADIUS = 1.9685; // inches
+    //Experimentally Determine a constant to make a correct distance
     public static double GEAR_RATIO = 1; // output (wheel) speed / input (motor) speed
-    public static double TRACK_WIDTH = 5.57; //width between wheels
+    public static double TRACK_WIDTH = 10.96;
+    public static double WHEEL_BASE = 12;
 
     /*
      * These are the feedforward parameters used to model the drive motor behavior. If you are using
@@ -54,9 +56,9 @@ public class DriveConstants {
      * motor encoders or have elected not to use them for velocity control, these values should be
      * empirically tuned.
      */
-    public static double kV = 0.03127;
-    public static double kA = 0.00418;
-    public static double kStatic = 0.09874 ;
+    public static double kV = 1.0 / rpmToVelocity(getMaxRpm());
+    public static double kA = 0;
+    public static double kStatic = 0;
 
     /*
      * These values are used to generate the trajectories for you robot. To ensure proper operation,
@@ -65,29 +67,37 @@ public class DriveConstants {
      * small and gradually increase them later after everything is working. The velocity and
      * acceleration values are required, and the jerk values are optional (setting a jerk of 0.0
      * forces acceleration-limited profiling).
+     *
+     * Gobilda 19.2:
+     * Ticks per rev: 537.6
+     * Max RPM: 312
      */
+
     public static DriveConstraints BASE_CONSTRAINTS = new DriveConstraints(
-            50, 25, 0.0,
+            30.0, 30.0, 0.0,
             Math.toRadians(180.0), Math.toRadians(180.0), 0.0
     );
 
 
     public static double encoderTicksToInches(double ticks) {
-        return WHEEL_RADIUS * 2 * Math.PI * GEAR_RATIO * ticks / 537.6/**MOTOR_CONFIG.getTicksPerRev()*/;
+        return WHEEL_RADIUS * 2 * Math.PI * GEAR_RATIO * ticks / 537.6;
     }
 
     public static double rpmToVelocity(double rpm) {
         return rpm * GEAR_RATIO * 2 * Math.PI * WHEEL_RADIUS / 60.0;
     }
 
+    //possibly modify getMaxPRM LAST RESORT
+
     public static double getMaxRpm() {
-        return MOTOR_CONFIG.getMaxRPM() *
-                (RUN_USING_ENCODER ? 312/**MOTOR_CONFIG.getAchieveableMaxRPMFraction()*/ : 1.0);
+        return 312; /***
+                (RUN_USING_ENCODER ? MOTOR_CONFIG.getAchieveableMaxRPMFraction() : 1.0);*/
     }
 
+    //Possibly change these values (RPM is 312, TicksPerRev is 537.6
     public static double getTicksPerSec() {
         // note: MotorConfigurationType#getAchieveableMaxTicksPerSecond() isn't quite what we want
-        return (/**MOTOR_CONFIG.getMaxRPM()*/312 * /**MOTOR_CONFIG.getTicksPerRev()*/537.6 / 60.0);
+        return (312 * 537.6 / 60.0);
     }
 
     public static double getMotorVelocityF() {
