@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.drive.Roadrunner;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.vuforia.CameraDevice;
@@ -21,6 +22,7 @@ import java.util.List;
 
 
 @Autonomous(name = "Auto Skystone Left Roadrunner")
+@Disabled
 public class AutoDetectionLeft extends LinearOpMode {
 
     private static final String TFOD_MODEL_ASSET = "Skystone.tflite";

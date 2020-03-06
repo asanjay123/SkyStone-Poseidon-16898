@@ -74,6 +74,8 @@ public class AutoDetectionCoordinateRight extends LinearOpMode {
         telemetry.addData("Position of SkyStone: ", position);
         telemetry.update();
 
+        drive.setPoseEstimate(new Pose2d(-36, -63, Math.PI/2));
+
         tfod.deactivate();
 
 
@@ -81,344 +83,70 @@ public class AutoDetectionCoordinateRight extends LinearOpMode {
         servo.setPosition(.17);
 
 
-      /*  if (position == 1){
+        if (position == 1){
 
-            drive.followTrajectorySync(
-                    drive.trajectoryBuilder().strafeTo(new Vector2d(1, 0))
-                            .build()
-            );
-
-
-
-            drive.followTrajectorySync(
-                    drive.trajectoryBuilder().strafeTo(new Vector2d(12, 9))
-                            .build()
-            );
-
-            servo1.setPosition(0);
-            sleep(500);
-
-
-            drive.followTrajectorySync(
-                    drive.trajectoryBuilder().back(5)
-                            .build()
-            );
-
-            servo.setPosition(.35);
-
-            drive.followTrajectorySync(
-                    drive.trajectoryBuilder().strafeRight(70)
-                            .build()
-            );
-
-            drive.followTrajectorySync(
-                    drive.trajectoryBuilder().forward(7)
-                            .build()
-            );
-
-
-            servo1.setPosition(1);
-
-//            drive.followTrajectorySync(
-//                    drive.trajectoryBuilder().forward(3)
-//                            .build()
-//            );
-
-            servo.setPosition(.35);
-
-            sleep(600);
-
-            drive.followTrajectorySync(
-                    drive.trajectoryBuilder().back(4)
-                            .build()
-            );
-
-            servo.setPosition(0.17);
-
-            sleep(500);
-
-            drive.followTrajectorySync(
-                    drive.trajectoryBuilder().strafeLeft(82)
-                            .build()
-            );
-
-            drive.followTrajectorySync(
-                    drive.trajectoryBuilder().back(7)
-                            .build()
-            );
-
-            servo.setPosition(0.17);
-
-            drive.followTrajectorySync(
-                    drive.trajectoryBuilder().forward(14)
-                            .build()
-            );
-
-            servo1.setPosition(0);
-            sleep(500);
-
-
-            drive.followTrajectorySync(
-                    drive.trajectoryBuilder().back(6)
-                            .build()
-            );
-
-            servo.setPosition(.35);
-
-            drive.followTrajectorySync(
-                    drive.trajectoryBuilder().strafeRight(75)
-                            .build()
-            );
-
-            drive.followTrajectorySync(
-                    drive.trajectoryBuilder().forward(6)
-                            .build()
-            );
-
-            servo1.setPosition(1);
-
-//            drive.followTrajectorySync(
-//                    drive.trajectoryBuilder().forward(3)
-//                            .build()
-//            );
-
-            servo.setPosition(.35);
         }
 
         servo.setPosition(.17);
-        */
+
         if (position == 2){
-            drive.setPoseEstimate(new Pose2d(0,0));
-            drive.followTrajectorySync(drive.trajectoryBuilder().strafeTo(new Vector2d(12,0)).build());
+
+
+
+            drive.followTrajectorySync(
+                    drive.trajectoryBuilder()
+                            .forward(30)
+                            .build()
+            );
+
+
             servo1.setPosition(0);
             sleep(500);
-
-
-            servo.setPosition(0.35);
-            drive.followTrajectorySync(drive.trajectoryBuilder()
-                    .strafeTo(new Vector2d(3,-25)).build());
-
-            drive.setPoseEstimate(new Pose2d(3,-25));
-
-
-            drive.followTrajectorySync(drive.trajectoryBuilder()
-                    .strafeTo(new Vector2d(25,-80)).build());
-
-            drive.setPoseEstimate(new Pose2d(25,-80));
-
-            servo1.setPosition(.6);
-            sleep(500);
-
-            servo1.setPosition(0);
-            drive.followTrajectorySync(drive.trajectoryBuilder().
-                    strafeTo(new Vector2d(14, -40)).
-                    build());
-
-
-
-
-            servo.setPosition(.17);
-            servo1.setPosition(.6);
-
-
-            drive.setPoseEstimate(new Pose2d(14,-40));
-
-
-            drive.followTrajectorySync(drive.trajectoryBuilder().
-                    strafeTo(new Vector2d(15, -10)).
-                            build());
-
-            drive.setPoseEstimate(new Pose2d(15, -10));
-
-
-            drive.followTrajectorySync(drive.trajectoryBuilder().
-                    strafeTo(new Vector2d(20, -10)).
-                    build());
-
-            drive.setPoseEstimate(new Pose2d(20, -10));
-
-            servo1.setPosition(0);
-
-            sleep(500);
-
-
             servo.setPosition(.3);
 
-            drive.setPoseEstimate(new Pose2d(20, -10));
+            drive.followTrajectorySync(
+                    drive.trajectoryBuilder()
+                            .back(6)
+                            .reverse()
+                            .splineTo(new Pose2d(-20, -40, Math.PI))
+                            .splineTo(new Pose2d(48, -40, Math.PI))
+                            .build()
+            );
 
-            drive.followTrajectorySync(drive.trajectoryBuilder().
-                    strafeTo(new Vector2d(13, -10)).
-                    build());
-
-            drive.setPoseEstimate(new Pose2d(13, -10));
-
-
-            drive.followTrajectorySync(drive.trajectoryBuilder().
-                    strafeTo(new Vector2d(13,-38)).build());
-
-            drive.setPoseEstimate(new Pose2d(13,-38));
-
-            drive.followTrajectorySync(drive.trajectoryBuilder().
-                    strafeTo(new Vector2d(20,-75)).build());
-            drive.setPoseEstimate(new Pose2d(20,-75));
-
-
-            drive.followTrajectorySync(drive.trajectoryBuilder().
-                    strafeTo(new Vector2d(35,-75)).build());
-
-            servo1.setPosition(0.6);
-            servo.setPosition(0.17);
-            drive.setPoseEstimate(new Pose2d(35,-75));
-            sleep(800);
-
-            drive.setPoseEstimate(new Pose2d(0,0));
-            drive.followTrajectorySync(drive.trajectoryBuilder().
-                    strafeTo(new Vector2d(5, 0)).
-                    build());
-
-
-            hookRight.setPosition(0.6);
-            hookLeft.setPosition(0.22);
-
-            sleep(500);
-
-            drive.followTrajectorySync(drive.trajectoryBuilder().
-                    strafeTo(new Vector2d(-5, 0)).
-                    build());
-
-            drive.turnSync(-90*2);
-
-
-//            hookLeft.setPosition(0.6);
-//            hookRight.setPosition(0.22);
-//
-//            drive.followTrajectorySync(drive.trajectoryBuilder().
-//                    strafeTo(new Vector2d(15,-75)).build());
-//            drive.setPoseEstimate(new Pose2d(15, -75));
-//
-//            hookRight.setPosition(0.6);
-//            hookLeft.setPosition(0.22);
-//            servo.setPosition(0.14);
+            drive.turnSync(Math.toRadians(-90));
+            drive.followTrajectorySync(
+                    drive.trajectoryBuilder()
+                            .forward(5)
+                    .build()
+            );
 
 
 
+            servo1.setPosition(1);
+
+            drive.followTrajectorySync(
+                    drive.trajectoryBuilder()
+                            .back(5)
+                            .splineTo(new Pose2d(48, -40, Math.PI))
+                            .splineTo(new Pose2d(-20, -40, Math.PI))
+                            .splineTo(new Pose2d(-40, -40, Math.PI/2))
+                            .strafeTo(new Vector2d(-45, -35))
+                            .build()
+            );
+
+            servo1.setPosition(0);
 
 
-
-//            drive.followTrajectorySync(drive.trajectoryBuilder().
-//                    strafeTo(new Vector2d(15, -30)).
-//                    build());
-//
 
         }
-        /*
+
         servo.setPosition(.17);
 
         if (position == 3){
-            drive.followTrajectorySync(
-                    drive.trajectoryBuilder().strafeTo(new Vector2d(1, 0))
-                            .build()
-            );
 
-
-
-            drive.followTrajectorySync(
-                    drive.trajectoryBuilder().strafeTo(new Vector2d(12, -9))
-                            .build()
-            );
-
-            servo1.setPosition(0);
-            sleep(500);
-
-
-            drive.followTrajectorySync(
-                    drive.trajectoryBuilder().back(5)
-                            .build()
-            );
-
-            servo.setPosition(.35);
-
-            drive.followTrajectorySync(
-                    drive.trajectoryBuilder().strafeRight(65)
-                            .build()
-            );
-
-            drive.followTrajectorySync(
-                    drive.trajectoryBuilder().forward(7)
-                            .build()
-            );
-
-
-            servo1.setPosition(1);
-
-//            drive.followTrajectorySync(
-//                    drive.trajectoryBuilder().forward(3)
-//                            .build()
-//            );
-
-            servo.setPosition(.35);
-
-            sleep(600);
-
-            drive.followTrajectorySync(
-                    drive.trajectoryBuilder().back(4)
-                            .build()
-            );
-
-            servo.setPosition((0.17));
-
-            sleep(500);
-
-
-            drive.followTrajectorySync(
-                    drive.trajectoryBuilder().strafeLeft(82)
-                            .build()
-            );
-
-
-            drive.followTrajectorySync(
-                    drive.trajectoryBuilder().back(7)
-                            .build()
-            );
-
-
-            drive.followTrajectorySync(
-                    drive.trajectoryBuilder().forward(14)
-                            .build()
-            );
-
-            servo1.setPosition(0);
-            sleep(500);
-
-
-            drive.followTrajectorySync(
-                    drive.trajectoryBuilder().back(6)
-                            .build()
-            );
-
-            servo.setPosition(.35);
-
-            drive.followTrajectorySync(
-                    drive.trajectoryBuilder().strafeRight(75)
-                            .build()
-            );
-
-            drive.followTrajectorySync(
-                    drive.trajectoryBuilder().forward(6)
-                            .build()
-            );
-
-            servo1.setPosition(1);
-
-//            drive.followTrajectorySync(
-//                    drive.trajectoryBuilder().forward(3)
-//                            .build()
-//            );
-
-            servo.setPosition(.35);
         }
 
-        */
+
         /**
         drive.setPoseEstimate(new Pose2d(0,0));
         drive.followTrajectorySync(drive.trajectoryBuilder().

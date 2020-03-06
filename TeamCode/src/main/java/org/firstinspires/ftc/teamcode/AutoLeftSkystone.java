@@ -22,6 +22,7 @@ import java.util.List;
 @Disabled
 
 @Autonomous(name = "Auto Left Skystone", group = "")
+
 public class AutoLeftSkystone extends LinearOpMode {
 
     /**Define all values */
