@@ -126,7 +126,7 @@ public class AutoDetectionCoordinateRight extends LinearOpMode {
                     .build()
             );
 
-            servo1.setPosition(1);
+            servo1.setPosition(.6);
             sleep(200);
 
 
@@ -135,7 +135,7 @@ public class AutoDetectionCoordinateRight extends LinearOpMode {
 
             drive.followTrajectorySync(
                     drive.trajectoryBuilder()
-                            .forward(1)
+                            .forward(2)
                             .build()
             );
 
@@ -149,37 +149,68 @@ public class AutoDetectionCoordinateRight extends LinearOpMode {
             );
 
 
-            drive.turnSync(Math.toRadians(-100));
+            drive.turnSync(Math.toRadians(-85));
 
-            drive.followTrajectorySync(
-                    drive.trajectoryBuilder()
-                            .forward(24)
-                            .build()
-            );
+
+            drive.setMotorPowers(1, 1, 1, 1);
+            sleep(1000);
+            drive.setMotorPowers(0,0,0,0);
 
             drive.setPoseEstimate(new Pose2d(41,-34, 0));
 
 
 
-            sleep(300);
+
             hookRight.setPosition(0.6);
             hookLeft.setPosition(0.22);
+            sleep(300);
 
-            if(1==1) {
+            drive.followTrajectorySync(
+                    drive.trajectoryBuilder()
+                            .back(2)
+                    .build()
+            );
 
-                return;
-            }
+            servo.setPosition(.17);
+            drive.followTrajectorySync(
+                    drive.trajectoryBuilder()
+                            .reverse()
+                            .splineTo(new Pose2d(-10, -35, 0))
+                            .splineTo(new Pose2d(-30, -50, Math.PI/2))
+                            .reverse()
+                            .splineTo(new Pose2d(-55, -33, Math.PI/2))
+                            .forward(9)
+                            .build()
+            );
+
+            servo1.setPosition(0);
+            sleep(500);
+            servo.setPosition(.3);
+
+
+            drive.followTrajectorySync(
+                    drive.trajectoryBuilder()
+                            //Move back
+                            .back(5)
+
+                            //Move to the board
+                            .splineTo(new Pose2d(-20, -24, 0))
+                            .splineTo(new Pose2d(54, -28, 0))
+                            .build()
+            );
+
+            servo1.setPosition(1);
 
             drive.followTrajectorySync(
                     drive.trajectoryBuilder()
                             .reverse()
-                            .splineTo(new Pose2d(-10, -45, 0))
-                            .splineTo(new Pose2d(-80, -50, 0))
-                            .build()
+                            .splineTo(new Pose2d(5, -24, 0))
+                    .build()
+
             );
 
-            sleep(200);
-            drive.turnSync(Math.PI / 2);
+
+
 //
 //
 //
