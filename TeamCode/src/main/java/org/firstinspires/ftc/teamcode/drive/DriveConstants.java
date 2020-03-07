@@ -47,7 +47,7 @@ public class DriveConstants {
     public static double WHEEL_RADIUS = 1.9685; // inches
     //Experimentally Determine a constant to make a correct distance
     public static double GEAR_RATIO = 1; // output (wheel) speed / input (motor) speed
-    public static double TRACK_WIDTH = 10.96;
+    public static double TRACK_WIDTH = 10.74;
     public static double WHEEL_BASE = 12;
 
     /*
