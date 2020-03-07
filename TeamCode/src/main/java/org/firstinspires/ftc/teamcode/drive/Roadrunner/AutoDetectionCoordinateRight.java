@@ -178,7 +178,7 @@ public class AutoDetectionCoordinateRight extends LinearOpMode {
                             .splineTo(new Pose2d(-10, -35, 0))
                             .splineTo(new Pose2d(-30, -50, Math.PI/2))
                             .reverse()
-                            .splineTo(new Pose2d(-55, -33, Math.PI/2))
+                            .strafeTo(new Vector2d(-55, -33))
                             .forward(9)
                             .build()
             );
