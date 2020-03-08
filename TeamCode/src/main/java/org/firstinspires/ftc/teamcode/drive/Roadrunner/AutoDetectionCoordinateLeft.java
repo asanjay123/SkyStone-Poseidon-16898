@@ -20,8 +20,8 @@ import java.util.Comparator;
 import java.util.List;
 
 
-@Autonomous(name = "Auto Skystone Right Roadrunner w/ Coordinate (Red)")
-public class AutoDetectionCoordinateRight extends LinearOpMode {
+@Autonomous(name = "Auto Skystone Left Roadrunner w/ Coordinate (Blue)")
+public class AutoDetectionCoordinateLeft extends LinearOpMode {
 
     private static final String TFOD_MODEL_ASSET = "Skystone.tflite";
     private static final String LABEL_FIRST_ELEMENT = "Stone";
@@ -74,12 +74,13 @@ public class AutoDetectionCoordinateRight extends LinearOpMode {
         telemetry.addData("Position of SkyStone: ", position);
         telemetry.update();
 
-        drive.setPoseEstimate(new Pose2d(-36, -63, Math.PI/2));
+        drive.setPoseEstimate(new Pose2d(-36, -63, 0));
 
         tfod.deactivate();
 
 
         servo.setPosition(.17);
+        
 
 
         if (position == 1){
@@ -111,14 +112,15 @@ public class AutoDetectionCoordinateRight extends LinearOpMode {
                             .back(10)
                             .reverse()
                             //Move to the board
-                            .splineTo(new Pose2d(-20, -39, Math.PI))
-                            .splineTo(new Pose2d(54, -44, Math.PI))
-                            .reverse()
-                            //Ram into board for drop and clamp
-                            .splineTo(new Pose2d(48, -34, Math.PI/2))
+                            .splineTo(new Pose2d(-5, -5, 0))
+//                            .splineTo(new Pose2d(54, 44, Math.PI))
+//                            .reverse()
+//                            //Ram into board for drop and clamp
+//                            .splineTo(new Pose2d(48, 34, -Math.PI/2))
                             .build()
             );
             sleep(100);
+
 
             // Movie forward
             drive.followTrajectorySync(
@@ -150,14 +152,14 @@ public class AutoDetectionCoordinateRight extends LinearOpMode {
             );
 
 
-            drive.turnSync(Math.toRadians(-80));
+            drive.turnSync(Math.toRadians(80));
 
 
             drive.setMotorPowers(1, 1, 1, 1);
             sleep(1000);
             drive.setMotorPowers(0,0,0,0);
 
-            drive.setPoseEstimate(new Pose2d(41,-34, 0));
+            drive.setPoseEstimate(new Pose2d(-41,-34, 0));
 
 
 
@@ -178,20 +180,20 @@ public class AutoDetectionCoordinateRight extends LinearOpMode {
                     drive.trajectoryBuilder()
                             .strafeLeft(1)
                             .reverse()
-                            .splineTo(new Pose2d(-10, -36, 0))
-                            .splineTo(new Pose2d(-30, -50, Math.PI/2))
+                            .splineTo(new Pose2d(10, -36, 0))
+                            .splineTo(new Pose2d(30, -50, Math.PI/2))
                             .reverse()
-                            .strafeTo(new Vector2d(-55, -35))
+                            .strafeTo(new Vector2d(55, -35))
                             .forward(4)
-                            .strafeLeft(5)
+                            .strafeRight(5)
                             .build()
             );
 
-            drive.turnSync(Math.toRadians(15));
+            drive.turnSync(Math.toRadians(-15));
             drive.followTrajectorySync(
                     drive.trajectoryBuilder()
                             .forward(10)
-                    .build()
+                            .build()
             );
 
             servo1.setPosition(0);
@@ -209,8 +211,8 @@ public class AutoDetectionCoordinateRight extends LinearOpMode {
                             .back(5)
 
                             //Move to the board
-                            .splineTo(new Pose2d(-20, -26, 0))
-                            .splineTo(new Pose2d(47, -30, 0))
+                            .splineTo(new Pose2d(20, -26, 0))
+                            .splineTo(new Pose2d(-47, -30, 0))
                             .build()
             );
 
@@ -219,7 +221,7 @@ public class AutoDetectionCoordinateRight extends LinearOpMode {
             drive.followTrajectorySync(
                     drive.trajectoryBuilder()
                             .reverse()
-                            .splineTo(new Pose2d(15, -29, 0))
+                            .splineTo(new Pose2d(-15, -29, 0))
                             .splineTo(new Pose2d(10, -29, 0))
                             .build()
 
@@ -266,8 +268,8 @@ public class AutoDetectionCoordinateRight extends LinearOpMode {
             // Movie forward
             drive.followTrajectorySync(
                     drive.trajectoryBuilder()
-                    .forward(3)
-                    .build()
+                            .forward(3)
+                            .build()
             );
 
             servo1.setPosition(.6);
@@ -313,7 +315,7 @@ public class AutoDetectionCoordinateRight extends LinearOpMode {
                     drive.trajectoryBuilder()
                             .back(2)
                             .strafeLeft(1)
-                    .build()
+                            .build()
             );
 
             servo.setPosition(.17);
@@ -331,8 +333,8 @@ public class AutoDetectionCoordinateRight extends LinearOpMode {
             servo1.setPosition(0);
             drive.followTrajectorySync(
                     drive.trajectoryBuilder()
-                    .forward(2)
-                    .build()
+                            .forward(2)
+                            .build()
             );
             servo.setPosition(.3);
 
@@ -355,7 +357,7 @@ public class AutoDetectionCoordinateRight extends LinearOpMode {
                             .reverse()
                             .splineTo(new Pose2d(12, -29, 0))
                             .splineTo(new Pose2d(7, -29, 0))
-                    .build()
+                            .build()
 
             );
 
@@ -373,7 +375,7 @@ public class AutoDetectionCoordinateRight extends LinearOpMode {
                             .forward(10)
                             .strafeRight(12)
                             .forward(20)
-                    .build()
+                            .build()
             );
 
 
