@@ -53,6 +53,8 @@ public class AutoDetectionCoordinateRight extends LinearOpMode {
         telemetry.update();
 
         waitForStart();
+        hookRight.setPosition(0.6);
+        hookLeft.setPosition(0.22);
 
         tfod.setClippingMargins(100,20,100,850);
         sleep(300);
@@ -145,12 +147,12 @@ public class AutoDetectionCoordinateRight extends LinearOpMode {
 
             drive.followTrajectorySync(
                     drive.trajectoryBuilder()
-                            .back(36)
+                            .back(43)
                             .build()
             );
 
 
-            drive.turnSync(Math.toRadians(-80));
+            drive.turnSync(Math.toRadians(-85));
 
 
             drive.setMotorPowers(1, 1, 1, 1);
@@ -288,7 +290,7 @@ public class AutoDetectionCoordinateRight extends LinearOpMode {
 
             drive.followTrajectorySync(
                     drive.trajectoryBuilder()
-                            .back(36)
+                            .back(43)
                             .build()
             );
 
@@ -427,12 +429,12 @@ public class AutoDetectionCoordinateRight extends LinearOpMode {
 
             drive.followTrajectorySync(
                     drive.trajectoryBuilder()
-                            .back(36)
+                            .back(43)
                             .build()
             );
 
 
-            drive.turnSync(Math.toRadians(-80));
+            drive.turnSync(Math.toRadians(-85));
 
 
             drive.setMotorPowers(1, 1, 1, 1);
@@ -515,8 +517,6 @@ public class AutoDetectionCoordinateRight extends LinearOpMode {
 
         servo.setPosition(0.9);
         servo1.setPosition(0.5);
-        hookRight.setPosition(0.6);
-        hookLeft.setPosition(0.22);
 
     }
 

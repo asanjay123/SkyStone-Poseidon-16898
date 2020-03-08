@@ -101,10 +101,10 @@ public class AutoDriveStraight extends LinearOpMode {
         waitForStart();
 
         //strafeWithTime(2, .3, 'r');
-        //servo.setPosition(0.14);
-        //sleep(29000);
+        servo.setPosition(0.17);
+        sleep(1000);
         //strafeWithTime(30, .5, 'b');
-        driveWithEncoder(0.2,25,25,30);
+        driveWithEncoder(0.2,20,20,30);
         //for(int i = 0; i<3; i++) {
 
         pickUp();
