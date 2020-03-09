@@ -65,7 +65,7 @@ public class AutoDetectionCoordinateLeft extends LinearOpMode {
             if (runScanner()){
                 position = 2;
             }else{
-                position = 3;
+                position = 2;
             }
         }
 
@@ -78,6 +78,7 @@ public class AutoDetectionCoordinateLeft extends LinearOpMode {
 
         tfod.deactivate();
 
+        position = 1;
 
         servo.setPosition(.17);
 
@@ -121,7 +122,7 @@ public class AutoDetectionCoordinateLeft extends LinearOpMode {
             // Movie forward
             drive.followTrajectorySync(
                     drive.trajectoryBuilder()
-                            .forward(6)
+                            .forward(8)
                             .build()
             );
 
@@ -129,10 +130,10 @@ public class AutoDetectionCoordinateLeft extends LinearOpMode {
 
             servo1.setPosition(.6);
             sleep(200);
-
+            /**
             // Clamp foundation
-            hookRight.setPosition(0.22);
-            hookLeft.setPosition(0.6);
+            hookRight.setPosition(0.26);
+            hookLeft.setPosition(0.56);
 
             drive.followTrajectorySync(
                     drive.trajectoryBuilder()
@@ -144,7 +145,7 @@ public class AutoDetectionCoordinateLeft extends LinearOpMode {
 
             drive.followTrajectorySync(
                     drive.trajectoryBuilder()
-                            .back(50)
+                            .back(60)
                             .build()
             );
 
@@ -165,10 +166,10 @@ public class AutoDetectionCoordinateLeft extends LinearOpMode {
             hookRight.setPosition(0.6);
             hookLeft.setPosition(0.22);
             sleep(200);
-
+            */
             drive.followTrajectorySync(
                     drive.trajectoryBuilder()
-                            .back(5)
+                            .back(20)
                             .build()
             );
 
@@ -181,7 +182,7 @@ public class AutoDetectionCoordinateLeft extends LinearOpMode {
                             .reverse()
                             .splineTo(new Pose2d(-10, 35, 0) )
                             .splineTo(new Pose2d(-40, 50, -Math.PI/2))
-                            .strafeTo(new Vector2d(-48, 30))
+                            .strafeTo(new Vector2d(-53, 30))
 
                             .build()
             );
@@ -208,8 +209,8 @@ public class AutoDetectionCoordinateLeft extends LinearOpMode {
                             .back(20)
 
                             //Move to the board
-                            .splineTo(new Pose2d(-10, 28, 0))
-                            .splineTo(new Pose2d(40, 23, 0))
+                            .splineTo(new Pose2d(-12, 28, 0))
+                            .splineTo(new Pose2d(44, 10, -Math.PI/2))
                             .build()
             );
 
@@ -218,7 +219,7 @@ public class AutoDetectionCoordinateLeft extends LinearOpMode {
             drive.followTrajectorySync(
                     drive.trajectoryBuilder()
                             .reverse()
-                            .splineTo(new Pose2d(0, 20, 0))
+                            .splineTo(new Pose2d(-15, 20, 0))
                             .build()
 
             );
@@ -258,9 +259,9 @@ public class AutoDetectionCoordinateLeft extends LinearOpMode {
                             .back(10)
                             .reverse()
                             .splineTo(new Pose2d(6, 42, Math.PI))
-                            .splineTo(new Pose2d(36, 60, -Math.PI/2))
+                            .splineTo(new Pose2d(34, 60, -Math.PI/2))
                             .reverse()
-                            .splineTo(new Pose2d(37, 33, -Math.PI/2))
+                            .splineTo(new Pose2d(35, 33, -Math.PI/2))
                             .build()
             );
             sleep(300);
@@ -276,41 +277,41 @@ public class AutoDetectionCoordinateLeft extends LinearOpMode {
             servo1.setPosition(.6);
             sleep(200);
 
-            // Clamp foundation
-            hookRight.setPosition(0.22);
-            hookLeft.setPosition(0.6);
-
-            drive.followTrajectorySync(
-                    drive.trajectoryBuilder()
-                            .forward(2)
-                            .build()
-            );
-
-            sleep(300);
-
-            drive.followTrajectorySync(
-                    drive.trajectoryBuilder()
-                            .back(53)
-                            .build()
-            );
-
-
-            drive.turnSync(Math.toRadians(87));
-
-
-            drive.setMotorPowers(1, 1, 1, 1);
-            sleep(1000);
-            drive.setMotorPowers(0,0,0,0);
-
-            drive.setPoseEstimate(new Pose2d(45, 37, 0));
-
-
-
-
-            // Release foundation
-            hookRight.setPosition(0.6);
-            hookLeft.setPosition(0.22);
-            sleep(200);
+//            // Clamp foundation
+//            hookRight.setPosition(0.25);
+//            hookLeft.setPosition(0.57);
+//
+//            drive.followTrajectorySync(
+//                    drive.trajectoryBuilder()
+//                            .forward(2)
+//                            .build()
+//            );
+//
+//            sleep(300);
+//
+//            drive.followTrajectorySync(
+//                    drive.trajectoryBuilder()
+//                            .back(62)
+//                            .build()
+//            );
+//
+//
+//            drive.turnSync(Math.toRadians(87));
+//
+//
+//            drive.setMotorPowers(1, 1, 1, 1);
+//            sleep(1000);
+//            drive.setMotorPowers(0,0,0,0);
+//
+//            drive.setPoseEstimate(new Pose2d(45, 37, 0));
+//
+//
+//
+//
+//            // Release foundation
+//            hookRight.setPosition(0.6);
+//            hookLeft.setPosition(0.22);
+//            sleep(200);
 
             drive.followTrajectorySync(
                     drive.trajectoryBuilder()
@@ -355,7 +356,7 @@ public class AutoDetectionCoordinateLeft extends LinearOpMode {
 
                             //Move to the board
                             .splineTo(new Pose2d(-10, 28, 0))
-                            .splineTo(new Pose2d(40, 23, 0))
+                            .splineTo(new Pose2d(42, 23, 0))
                             .build()
             );
 
@@ -415,8 +416,8 @@ public class AutoDetectionCoordinateLeft extends LinearOpMode {
             sleep(200);
 
             // Clamp foundation
-            hookRight.setPosition(0.22);
-            hookLeft.setPosition(0.6);
+            hookRight.setPosition(0.25);
+            hookLeft.setPosition(0.56);
 
             drive.followTrajectorySync(
                     drive.trajectoryBuilder()
@@ -428,7 +429,7 @@ public class AutoDetectionCoordinateLeft extends LinearOpMode {
 
             drive.followTrajectorySync(
                     drive.trajectoryBuilder()
-                            .back(64)
+                            .back(60)
                             .build()
             );
 

@@ -133,12 +133,12 @@ public class AutoDetectionCoordinateRight extends LinearOpMode {
             sleep(200);
 
             // Clamp foundation
-            hookRight.setPosition(0.22);
-            hookLeft.setPosition(0.6);
+            hookRight.setPosition(0.26);
+            hookLeft.setPosition(0.56);
 
             drive.followTrajectorySync(
                     drive.trajectoryBuilder()
-                            .forward(2)
+                            .forward(4)
                             .build()
             );
 
@@ -147,7 +147,7 @@ public class AutoDetectionCoordinateRight extends LinearOpMode {
 
             drive.followTrajectorySync(
                     drive.trajectoryBuilder()
-                            .back(43)
+                            .back(48)
                             .build()
             );
 
@@ -156,7 +156,7 @@ public class AutoDetectionCoordinateRight extends LinearOpMode {
 
 
             drive.setMotorPowers(1, 1, 1, 1);
-            sleep(1000);
+            sleep(1100);
             drive.setMotorPowers(0,0,0,0);
 
             drive.setPoseEstimate(new Pose2d(41,-34, 0));
@@ -276,8 +276,8 @@ public class AutoDetectionCoordinateRight extends LinearOpMode {
             sleep(200);
 
 
-            hookRight.setPosition(0.22);
-            hookLeft.setPosition(0.6);
+            hookRight.setPosition(0.26);
+            hookLeft.setPosition(0.56);
 
             drive.followTrajectorySync(
                     drive.trajectoryBuilder()
