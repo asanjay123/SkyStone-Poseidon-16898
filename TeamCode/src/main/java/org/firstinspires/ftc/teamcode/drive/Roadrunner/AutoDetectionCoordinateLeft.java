@@ -78,7 +78,6 @@ public class AutoDetectionCoordinateLeft extends LinearOpMode {
 
         tfod.deactivate();
 
-        position = 1;
 
         servo.setPosition(.17);
 
@@ -130,7 +129,7 @@ public class AutoDetectionCoordinateLeft extends LinearOpMode {
 
             servo1.setPosition(.6);
             sleep(200);
-            /**
+
             // Clamp foundation
             hookRight.setPosition(0.26);
             hookLeft.setPosition(0.56);
@@ -166,7 +165,7 @@ public class AutoDetectionCoordinateLeft extends LinearOpMode {
             hookRight.setPosition(0.6);
             hookLeft.setPosition(0.22);
             sleep(200);
-            */
+
             drive.followTrajectorySync(
                     drive.trajectoryBuilder()
                             .back(20)

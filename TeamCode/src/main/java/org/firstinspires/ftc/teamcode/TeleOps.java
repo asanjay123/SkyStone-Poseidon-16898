@@ -54,7 +54,7 @@ public class TeleOps extends OpMode {
         nitro = 2.0;
 
         servo = hardwareMap.servo.get("servo");
-        //servo.setPosition(0.14);
+        servo.setPosition(0.14);
      //   servo.setPosition(position);
         servo1 = hardwareMap.servo.get("servo1");
         servo2 = hardwareMap.servo.get("servo2");
