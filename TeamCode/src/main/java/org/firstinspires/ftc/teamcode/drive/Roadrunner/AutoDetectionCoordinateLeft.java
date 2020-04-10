@@ -22,7 +22,7 @@ import java.util.List;
 
 @Autonomous(name = "Auto Skystone Left Roadrunner w/ Coordinate (Blue)")
 public class AutoDetectionCoordinateLeft extends LinearOpMode {
-
+//for achi
     private static final String TFOD_MODEL_ASSET = "Skystone.tflite";
     private static final String LABEL_FIRST_ELEMENT = "Stone";
     private static final String LABEL_SECOND_ELEMENT = "Skystone";
