@@ -65,17 +65,19 @@ public class AutoDriveStraight extends LinearOpMode {
     DcMotor backLeft;
     DcMotor frontRight;
     DcMotor backRight;
+    DcMotor ring;
+    DcMotor wobble;
     double  ElapsedTime;
     double COUNTS_PER_MOTOR_REV;
     double     DRIVE_GEAR_REDUCTION;
     double     WHEEL_DIAMETER_INCHES;
 
     double     COUNTS_PER_INCH;
-    DcMotor armmotor;
-
-    Servo   servo;
-    Servo servo1;
-    Servo servo2;
+//    DcMotor armmotor;
+//
+//    Servo   servo;
+//    Servo servo1;
+//    Servo servo2;
 
     com.qualcomm.robotcore.util.ElapsedTime runtime = new ElapsedTime();
     /*
@@ -101,10 +103,12 @@ public class AutoDriveStraight extends LinearOpMode {
         waitForStart();
 
         //strafeWithTime(2, .3, 'r');
-        servo.setPosition(0.17);
+//        servo.setPosition(0.17);
         sleep(1000);
+        //ringToss(1, 60);
+        clawRotation(0.4, 100);
         //strafeWithTime(30, .5, 'b');
-        driveWithEncoder(0.2,20,20,30);
+        //driveWithEncoder(0.7,90,90,30);
         //for(int i = 0; i<3; i++) {
 
         pickUp();
@@ -167,10 +171,10 @@ public class AutoDriveStraight extends LinearOpMode {
 
     }
     public void initValues(){
-        armmotor = hardwareMap.dcMotor.get("arm");
-        servo = hardwareMap.servo.get("servo");
-        servo1 = hardwareMap.servo.get("servo1");
-        servo2 = hardwareMap.servo.get("servo2");
+//        armmotor = hardwareMap.dcMotor.get("arm");
+//        servo = hardwareMap.servo.get("servo");
+//        servo1 = hardwareMap.servo.get("servo1");
+//        servo2 = hardwareMap.servo.get("servo2");
 //        position = 0.1;
 //        servo.setPosition(position);
 //        servo1.setPosition(0.216);
@@ -180,6 +184,8 @@ public class AutoDriveStraight extends LinearOpMode {
         backLeft = hardwareMap.dcMotor.get("backleft");
         frontRight = hardwareMap.dcMotor.get("frontright");
         backRight = hardwareMap.dcMotor.get("backright");
+        ring = hardwareMap.dcMotor.get("ring");
+        wobble = hardwareMap.dcMotor.get("wobble");
 
         //Defining front and back using clockwise and counterclockwise movement
         // of the wheels
@@ -203,6 +209,32 @@ public class AutoDriveStraight extends LinearOpMode {
         DRIVE_GEAR_REDUCTION    = 19.2 ;
         WHEEL_DIAMETER_INCHES   = 3.93701 ;
         COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) / (WHEEL_DIAMETER_INCHES * 3.1415);
+
+    }
+
+    public void clawRotation(double power, double time) {
+        long initialTime = System.currentTimeMillis();
+        double finalTime = initialTime + time;
+
+        wobble.setPower(power);
+        while (System.currentTimeMillis() < finalTime){
+
+        }
+        wobble.setPower(0);
+
+
+    }
+    public void ringToss(double power, double time) {
+        long initialTime = System.currentTimeMillis();
+        double finalTime = initialTime + time*1000;
+
+        ring.setPower(power);
+
+        while (System.currentTimeMillis() < finalTime){
+
+        }
+        ring.setPower(0);
+
 
     }
     public void driveWithStrafe(double speed, double strafe, double rotate) {

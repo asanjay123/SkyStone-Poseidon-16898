@@ -16,15 +16,15 @@ public class TeleOps extends OpMode {
     DcMotor backLeft;
     DcMotor frontRight;
     DcMotor backRight;
-    DcMotor armmotor;
-    DcMotor armmotor2;
-
-    Servo   servo;
-    Servo servo1;
-    Servo servo2;
-    Servo hookRight;
-    Servo hookLeft;
-    double position;
+//    DcMotor armmotor;
+//    DcMotor armmotor2;
+//
+//    Servo   servo;
+//    Servo servo1;
+//    Servo servo2;
+//    Servo hookRight;
+//    Servo hookLeft;
+//    double position;
 
     double nitro;
 
@@ -35,34 +35,34 @@ public class TeleOps extends OpMode {
         frontRight = hardwareMap.dcMotor.get("frontright");
         backRight = hardwareMap.dcMotor.get("backright");
 
-        armmotor = hardwareMap.dcMotor.get("arm");
-        armmotor2 = hardwareMap.dcMotor.get("arm2");
-        hookRight = hardwareMap.servo.get("hookRight");
-        hookLeft = hardwareMap.servo.get("hookLeft");
+//        armmotor = hardwareMap.dcMotor.get("arm");
+//        armmotor2 = hardwareMap.dcMotor.get("arm2");
+//        hookRight = hardwareMap.servo.get("hookRight");
+//        hookLeft = hardwareMap.servo.get("hookLeft");
         frontRight.setDirection(DcMotorSimple.Direction.REVERSE);
         backRight.setDirection(DcMotorSimple.Direction.REVERSE);
-        armmotor2.setDirection(DcMotorSimple.Direction.REVERSE);
+//        armmotor2.setDirection(DcMotorSimple.Direction.REVERSE);
 
 
         frontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         backLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         frontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         backRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        armmotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        armmotor2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+//        armmotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+//        armmotor2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         nitro = 2.0;
 
-        servo = hardwareMap.servo.get("servo");
-        servo.setPosition(0.14);
-     //   servo.setPosition(position);
-        servo1 = hardwareMap.servo.get("servo1");
-        servo2 = hardwareMap.servo.get("servo2");
-        servo2.setPosition(.6);
-        //servo2.setPosition(servo1.getPosition()+0.5);
-
-        hookLeft.setPosition(0.3);
-        hookRight.setPosition(0.3);
+//        servo = hardwareMap.servo.get("servo");
+//        servo.setPosition(0.14);
+//     //   servo.setPosition(position);
+//        servo1 = hardwareMap.servo.get("servo1");
+//        servo2 = hardwareMap.servo.get("servo2");
+//        servo2.setPosition(.6);
+//        //servo2.setPosition(servo1.getPosition()+0.5);
+//
+//        hookLeft.setPosition(0.3);
+//        hookRight.setPosition(0.3);
 
 
 //
@@ -78,19 +78,19 @@ public class TeleOps extends OpMode {
 
 
 
-        if(gamepad1.x) {
-
-            hookRight.setPosition(0.27);
-            hookLeft.setPosition(0.54);
-        }
-
-
-        if(gamepad1.y) {
-
-            hookRight.setPosition(0.6);
-            hookLeft.setPosition(.22);
-
-        }
+//        if(gamepad1.x) {
+//
+//            hookRight.setPosition(0.27);
+//            hookLeft.setPosition(0.54);
+//        }
+//
+//
+//        if(gamepad1.y) {
+//
+//            hookRight.setPosition(0.6);
+//            hookLeft.setPosition(.22);
+//
+//        }
 
 
 
@@ -125,85 +125,85 @@ public class TeleOps extends OpMode {
 
         }
 
+//
+//        if (gamepad2.left_bumper){
+//            armmotor.setPower(-1);
+//            armmotor2.setPower(-1);
+//        }else if (gamepad2.right_bumper){
+//            armmotor.setPower(1);
+//            armmotor2.setPower(1);
+//        }else{
+//            armmotor.setPower(0);
+//            armmotor2.setPower(0);
+//        }
+//        if (gamepad2.x)
+//            position = 0.06;
+//        if (gamepad2.y){
+//            position = 0.17;
+//        }
+//        if (gamepad2.b){
+//            position = 0.86;
+//        }
+//        if (gamepad2.a){
+//            position = .3;
+//        }
 
-        if (gamepad2.left_bumper){
-            armmotor.setPower(-1);
-            armmotor2.setPower(-1);
-        }else if (gamepad2.right_bumper){
-            armmotor.setPower(1);
-            armmotor2.setPower(1);
-        }else{
-            armmotor.setPower(0);
-            armmotor2.setPower(0);
-        }
-        if (gamepad2.x)
-            position = 0.06;
-        if (gamepad2.y){
-            position = 0.17;
-        }
-        if (gamepad2.b){
-            position = 0.86;
-        }
-        if (gamepad2.a){
-            position = .3;
-        }
 
-
-
-        try {
-            servo.setPosition(position);
-        }
-        catch(Exception e) {
-
-            int x = 5;
-
-        }
-
-        if (gamepad2.dpad_up){
-            try{
-                servo1.setPosition(servo1.getPosition() + .01);
-            }catch(Exception e){
-                int x = 5;
-            }
-
-        }
-
-        if (gamepad2.dpad_down){
-            try{
-                servo1.setPosition(servo1.getPosition() - .01);
-            }catch(Exception e){
-                int x = 5;
-            }
-        }
-
-        if (gamepad1.left_stick_button){
-            servo1.setPosition(0);
-        }
-        if (gamepad1.right_stick_button){
-            servo1.setPosition(.6);
-        }
-
-       // servo2.setPosition(0);
-
-        if (gamepad2.dpad_left){
-            try{
-                servo2.setPosition(0);
-            }catch(Exception e){
-                int x = 5;
-            }
-
-        }
-        if (gamepad2.dpad_right){
-            try{
-                servo2.setPosition(0);
-            }catch(Exception e){
-
-                int x = 5;
-            }
-        }
+//
+//        try {
+//            servo.setPosition(position);
+//        }
+//        catch(Exception e) {
+//
+//            int x = 5;
+//
+//        }
+//
+//        if (gamepad2.dpad_up){
+//            try{
+//                servo1.setPosition(servo1.getPosition() + .01);
+//            }catch(Exception e){
+//                int x = 5;
+//            }
+//
+//        }
+//
+//        if (gamepad2.dpad_down){
+//            try{
+//                servo1.setPosition(servo1.getPosition() - .01);
+//            }catch(Exception e){
+//                int x = 5;
+//            }
+//        }
+//
+//        if (gamepad1.left_stick_button){
+//            servo1.setPosition(0);
+//        }
+//        if (gamepad1.right_stick_button){
+//            servo1.setPosition(.6);
+//        }
+//
+//       // servo2.setPosition(0);
+//
+//        if (gamepad2.dpad_left){
+//            try{
+//                servo2.setPosition(0);
+//            }catch(Exception e){
+//                int x = 5;
+//            }
+//
+//        }
+//        if (gamepad2.dpad_right){
+//            try{
+//                servo2.setPosition(0);
+//            }catch(Exception e){
+//
+//                int x = 5;
+//            }
+//        }
 
         telemetry.addData("Nitro: ", (nitro == 1) ? "High":( (nitro==2) ? "Medium":"Low"));
-        telemetry.addData("Twisty Position: ", servo2.getPosition());
+//        telemetry.addData("Twisty Position: ", servo2.getPosition());
         telemetry.update();
     }
 }
